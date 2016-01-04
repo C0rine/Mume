@@ -46,8 +46,15 @@ I'm not sure wether this app will be diffucult or very easy to make.
 - Implement the [Adlib API](http://api.adlibsoft.com/site/). Adlib is a system used by most big museums for collection management. 
 - Add an activity to view the images of the Classical Art Memes Facebookpage (that stays up to date by using an [API](https://developers.facebook.com/docs/graph-api/reference/v2.5/album) to get the images from the photogallery of the Facebookpage).
 - Adding the possibility to edit pictures the user has made him-/herself.
+- Adding the option to tag artworks, so they are easy to find back later.
+
+Other problems and --> solutions:  
+- I can't get the Rijksmuseum API implemented --> manually pick a selection of artworks and only use those in the app
+- Get the metadata of the artworks and images in the right size/layout --> "
+- Running out of memory due to too big images, too much query results --> if fixing this problem programmatically won't work: "
 
 ### Review of similar application
 ##### [Meme Generator (Free)](https://play.google.com/store/apps/details?id=com.zombodroid.MemeGenerator&hl=en)
-An application that lets you create memes. 
-
+An application that lets you create memes.  
+A set of images is provided beforehand. One can pick a meme image and start editing, default text positions and text style for the meme are set, but everything can be customized. What I really like about the app it that they provide you with an example text for each meme so you know what kind of meme you are expected to make. I also like when you start typing the text, the image gets updated immediatly, so no need to constantly confirm changes you make. Also the share button using the "Share Activity" is really nice. This way I can, for example, immediatly upload to 9GAG (since I have that app installed) or Facebook, Twitter, Whatsapp, Google Drive etc.. It is also possible to mark memes as favorites so they will be easy to find later on. 
+What I don't like is the low resolution images that the app outputs. Sometimes it is even impossible to read the text, that kind off defies the purpose of the app.
