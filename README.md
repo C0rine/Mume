@@ -37,7 +37,7 @@ For the sharing of the images I plan to use an option already implemented in And
 
 ### Potential Problems  
 I'm not sure wether this app will be diffucult or very easy to make. 
-1) In case it is diffucult:
+1) In case it is diffucult:  
 - Use the [Aviary SDK](https://developers.aviary.com/) for the image editing, instead of coding this myself.
 
 2) In case it is easy:
