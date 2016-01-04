@@ -36,7 +36,8 @@ I plan to code this functionality myself. I have found [this question](http://st
 For the sharing of the images I plan to use an option already implemented in Android: the "Share Intent". Sending an image to this intent will show [all the apps](http://i0.wp.com/www.devcfgc.com/wp-content/uploads/2014/10/intent-chooser.jpg) already installed on the Android device that facilitate uploading/sharing images. More on this [Sending of Binary Content](http://developer.android.com/training/sharing/send.html).
 
 ### Potential Problems  
-I'm not sure wether this app will be diffucult or very easy to make. 
+I'm not sure wether this app will be diffucult or very easy to make.  
+  
 1) In case it is diffucult:  
 - Use the [Aviary SDK](https://developers.aviary.com/) for the image editing, instead of coding this myself.
 
