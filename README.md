@@ -2,8 +2,10 @@
 Corine Jacobs  
 10001326  
 Corine_J@MSN.com  
+
+##### Platform: Android Studio
   
-Mume (MUseum MEmes) will be an Android App (created with Android Studio) which uses images from the databases of museums (for this project only the database of the Rijksmuseum will be used) to create memes. 
+Mume (MUseum MEmes) will be an Android App which uses images from the databases of museums (for this project only the database of the Rijksmuseum will be used) to create memes. 
 
 Based on the popular Facebook-page: https://www.facebook.com/classicalartmemes  
 
