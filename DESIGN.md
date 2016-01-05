@@ -59,6 +59,7 @@ There are several editing options I wish to implement. I however do not know if 
 - Change font
 - Crop image
 - Add borders to image  
+
 To implement the image editing options an Android [Canvas](http://developer.android.com/reference/android/graphics/Canvas.html) will be used. The bitmap image can be used as the basis/background for the canvas.
 
 ### Image Sharing
