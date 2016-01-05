@@ -1,3 +1,39 @@
+# Design Document
+
+### Activities
+- Search
+- Results
+- Select
+- Edit 
+- Share
+
+### Classes and Public Methods
+
+### Advanced Sketches UI
+
+### API implementation
+**1) Connection to the search activity
+The search activity will have a searchbar the searchwords used in this bar will be provided to the API.
+
+Example query: https://www.rijksmuseum.nl/api/nl/collection?key=fakekey&format=json&imgonly=True
+
+Input for the query
+
+**https://www.rijksmuseum.nl/api**: standard
+**/en**: language 
+**/collection?**: we will search the collection
+/
+
+
+Things that I want to also put in the query:
+- imgonly true: I only want results with images
+If the results are too trivial:
+- toppieces true: only give work that are toppieces
+- 
+
+  
+  
+  
 *1) Searching the database using the Rijksmuseum API*  
 I should be able to figure out how to implement this with the [documentation](http://rijksmuseum.github.io/) and [demos](http://rijksmuseum.github.io/demos/) provided by the Rijksmuseum.  
 The API response will be in JSON, I have found a [tutorial](http://mobilesiri.com/json-parsing-in-android-using-android-studio/) that explains how to parse this in Android Studio.
