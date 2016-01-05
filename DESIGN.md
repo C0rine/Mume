@@ -1,38 +1,43 @@
 # Design Document
 
-### Activities
+### Basics
+**Activities**  
+(see sketches below)  
 - Search
 - Results
 - Select
 - Edit 
 - Share
-
-### Classes and Public Methods
+  
+**Permissions**  
+We need internet to make connection to the internet, we need to get permission for this in the Android Manifest file:
+```<uses-permission android:name="android.permission.INTERNET"/>```
 
 ### Advanced Sketches UI
 
+### Classes and Public Methods
+
 ### API implementation
-**1) Connection to the search activity
+**1) Connection to the search activity**
 The search activity will have a searchbar the searchwords used in this bar will be provided to the API.
 
-Example query: https://www.rijksmuseum.nl/api/nl/collection?key=fakekey&format=json&imgonly=True
+Example query: https://www.rijksmuseum.nl/api/en/collection?q=Q&imgonly=True&key=fakekey&format=json
 
-Input for the query
-
-**https://www.rijksmuseum.nl/api**: standard
-**/en**: language 
-**/collection?**: we will search the collection
-/
-
-
-Things that I want to also put in the query:
-- imgonly true: I only want results with images
-If the results are too trivial:
-- toppieces true: only give work that are toppieces
-- 
-
+Input for the query:  
+**/en**: language  
+**/collection**: we will search the collection   
+**?q=Q**: Q is the searchword provided by the user  
+**&imgonly=true**: we only want records of artworks that also have images in their record  
+**&key=fakekey**: fakekey gets replaced by my api key  
+**&format=json**: we will retrieve the results in json  
   
-  
+**2) Selecting one artwork** 
+When the user taps one artwork the objectNumber of that artwork should be retrieved and a new query should be made:  
+https://www.rijksmuseum.nl/api/en/collection/objnum?key=fakekey&format=json  
+**objnum**: object number (i.e. SK-C-5)
+
+**3) Editing the artwork**
+The image should be saved to the Android device in bitmap format.
   
 *1) Searching the database using the Rijksmuseum API*  
 I should be able to figure out how to implement this with the [documentation](http://rijksmuseum.github.io/) and [demos](http://rijksmuseum.github.io/demos/) provided by the Rijksmuseum.  
