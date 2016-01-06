@@ -5,7 +5,7 @@ Corine_J@MSN.com
 
 ##### Platform: Android Studio
   
-Mume (MUseum MEmes) will be an Android App which uses images from the databases of museums (for this project only the database of the Rijksmuseum will be used) to create memes. 
+Mume (MUseum MEmes) will be an Android App that uses images from the databases of museums (for this project only the database of the Rijksmuseum will be used) to create memes. 
 
 Based on the popular Facebook-page: https://www.facebook.com/classicalartmemes  
 
@@ -38,7 +38,7 @@ I plan to code this functionality myself. I have found [this question](http://st
 For the sharing of the images I plan to use an option already implemented in Android: the "Share Intent". Sending an image to this intent will show [all the apps](http://i0.wp.com/www.devcfgc.com/wp-content/uploads/2014/10/intent-chooser.jpg) already installed on the Android device that facilitate uploading/sharing images. More on this [Sending of Binary Content](http://developer.android.com/training/sharing/send.html).
 
 ### Potential Problems  
-I'm not sure wether this app will be diffucult or very easy to make.  
+I'm not sure whether this app will be diffucult or very easy to make.  
   
 1) In case it is difficult:  
 - Use the [Aviary SDK](https://developers.aviary.com/) for the image editing, instead of coding this myself.
@@ -51,12 +51,12 @@ I'm not sure wether this app will be diffucult or very easy to make.
 - Adding the option to tag artworks, so they are easy to find back later.
 
 Other problems and --> solutions:  
-- I can't get the Rijksmuseum API implemented --> manually pick a selection of artworks and only use those in the app
-- Get the metadata of the artworks and images in the right size/layout --> "
-- Running out of memory due to too big images, too much query results --> if fixing this problem programmatically won't work: "
+- I can't get the Rijksmuseum API implemented --> manually make a selection of artworks and only use those in the app.
+- Get the metadata of the artworks and images in the right size/layout --> manually make selection of images and metadata.
+- Running out of memory due to too big images, too much query results --> I prefer to fix this programmatically but if this does not work I could again make a manual selection of images and metadata.
 
 ### Review of similar application
 ##### [Meme Generator (Free)](https://play.google.com/store/apps/details?id=com.zombodroid.MemeGenerator&hl=en)
 An application that lets you create memes.  
-A set of images is provided beforehand. One can pick a meme image and start editing, default text positions and text style for the meme are set, but everything can be customized. What I really like about the app it that they provide you with an example text for each meme so you know what kind of meme you are expected to make. I also like when you start typing the text, the image gets updated immediatly, so no need to constantly confirm changes you make. Also the share button using the "Share Activity" is really nice. This way I can, for example, immediatly upload to 9GAG (since I have that app installed) or Facebook, Twitter, Whatsapp, Google Drive etc.. It is also possible to mark memes as favorites so they will be easy to find later on. 
-What I don't like is the low resolution images that the app outputs. Sometimes it is even impossible to read the text, that kind off defies the purpose of the app.
+A set of images is provided beforehand. The user can pick a meme image and start editing. Default text positions and text style for the meme are set, but everything can be customized. What I really like about the app is that they provide you with an example text for each meme so you know what kind of meme you are expected to make. I also like when you start typing the text, the image gets updated immediatly, so no need to constantly confirm changes you make and any changes are immediatly visible. Also the share button using the "Share Activity" is really nice. This way I can, for example, immediatly upload to 9GAG (since I have that app installed) or Facebook, Twitter, Whatsapp, Google Drive etc.. It is also possible to mark memes as favorites so they will be easy to find later on. 
+What I don't like is the low resolution images that the app outputs. Sometimes it is even impossible to read the text, this kind of defies the purpose of the app.
