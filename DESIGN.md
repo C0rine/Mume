@@ -5,7 +5,6 @@
 - Results
 - Selected
 - Edit 
-- Share
 
 ###Advanced Sketches UI
 ![Advanced Sketches UI](/doc/imagenamehere.jpg)  
@@ -36,10 +35,8 @@ Cases in which the system will fail or will stop processing before going through
 - There were no searchresults for the query that was made
 - The downloading of the image failed
 
-#####Steps of execution
-
 #####Requirements  
-*Shall (minimum)*  
+*Shall (MVP)*  
 - Searchbar to search Rijksmuseum collection
 - Ability to view searchresults 
 - Ability to select on of the searchresults and view more information about it 
@@ -55,7 +52,8 @@ Cases in which the system will fail or will stop processing before going through
 - Add borders to the image to be edited
 
 ###Class Diagram
-
+![Class Diagram](/doc/classdiagram.jpg) 
+  
 ---
 
 #Implementation Details
@@ -77,7 +75,7 @@ Example query: `https://www.rijksmuseum.nl/api/en/collection?q=Q&imgonly=True&ke
 - An image/thumbnail of the artwork --> can be found via another query:  `https://www.rijksmuseum.nl/api/nl/collection/SK-C-5/tiles?format=jsonp&key=fakekey`. This API returns a list of levels. These levels have a number of tiles. The tiles form the complete image. You can choose the right level by using the width and height. They describe the total resolution of the chosen level. You can also select a level by name. Level z0 contains the largest available image and z6 the smallest. The sizes of the z-levels differ considarably so I think I would be best off by selecting a level based on width in pixels.
 
 **Presenting this information in the UI**  
-Using a custom listview. For parsing the JSON data retrieved from the API AsyncTask will be used for multithreading. 
+Using a custom listview. For parsing the JSON data retrieved from the API AsyncTask will be used for multithreading. The searchresults are broken down in pages by the API parameters `p` (the result page) and `ps` (number of results per page) can be used to fetch more results. 
   
 ####2) Selecting one artwork
 When the user taps one artwork the objectNumber of that artwork should be retrieved and a new query should be made: `https://www.rijksmuseum.nl/api/en/collection/objnum?key=fakekey&format=json`.
