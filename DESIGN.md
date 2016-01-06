@@ -1,6 +1,5 @@
 # Design Document
-
-**Activities**  
+#####Activities  
 (see sketches below)
 - Search
 - Results
@@ -12,6 +11,48 @@
 ![Advanced Sketches UI](/doc/imagenamehere.jpg)  
 
 ###Use Case
+Based on tutorial by [Derek Banas](https://www.youtube.com/watch?v=OkC7HKtiZC0).
+
+#####Description
+The user types searchword(s) in the searchbar. These words are used to make a query to the Rijksmuseum database. The Rijksmuseum API sends back a list of results. The results as displayed to the user as images with artistname. The user selects one image. A query is made to the Rijksmuseum database to get more information on the specific artwork. The result is displayed with a bigger image and more metadata. The user presses a button that he/she wants to meme the image. The image gets downloaded to the device. The image gets opened to be edited. The user edits the image. The user presses a button to share the image. The user picks an app to share the image with. The image gets send to the appropriate app. 
+
+#####Actors
+- User
+- Rijksmuseum API
+
+#####Preconditions
+- Internet connection
+- Rijksmuseum website needs to be available
+
+#####Goals
+Succesful Conclusions:  
+- Retrieve data from Rijksmuseum
+- Send an edited image to another app  
+  
+Failed Conclusions:  
+Cases in which the system will fail or will stop processing before going through the entire use case.  
+- No connection could be made to the internet
+- No data is retrieved from the Rijksmuseum API because it is offline
+- There were no searchresults for the query that was made
+- The downloading of the image failed
+
+#####Steps of execution
+
+#####Requirements  
+*Shall (minimum)*  
+- Searchbar to search Rijksmuseum collection
+- Ability to view searchresults 
+- Ability to select on of the searchresults and view more information about it 
+- Functionality to add text to the image of that searchresult
+- Clear searchresults, image to edit, etc.. once the user leaves/closes these activities
+- Share image through other apps on the Android device
+
+*Should (possible and preferable extras, but not necessary)*
+- Help dialogbox for each activity in case the user does not understand how to use the app
+- Filter options for searchresults
+- Change size, color, font of the text to be added to the image
+- Crop image to be edited
+- Add borders to the image to be edited
 
 ###Class Diagram
 
@@ -52,15 +93,6 @@ When the user taps one artwork the objectNumber of that artwork should be retrie
 
 ###Image Editing
 [Download Image using AsyncTask in Android](http://javatechig.com/android/download-image-using-asynctask-in-android) (multithreading). I can convert to/download as a bitmp by using the [Android BitmapFactory Class](http://developer.android.com/reference/android/graphics/BitmapFactory.html). If I download the image from the tile-API of the Rijksmuseum then I do need to find a way to correctly display those tiles of the image next to eachother. They do have x, y values that indicate their position, but I do not know yet how to specifically implement this in Android Studio. 
-
-There are several editing options I wish to implement. I however do not know if I have enought time to implement all of these, so I wil at least implement the most above option, and will only implement those below it if I have enough time left.  
-- Add text
-- Add multiple text fields
-- Change text size
-- Change text color
-- Change font
-- Crop image
-- Add borders to image  
 
 To implement the image editing options an Android [Canvas](http://developer.android.com/reference/android/graphics/Canvas.html) will be used. The bitmap image can be used as the basis/background for the canvas.
 
