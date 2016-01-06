@@ -39,7 +39,7 @@ Cases in which the system will fail or will stop processing before going through
 *Shall (MVP)*  
 - Searchbar to search Rijksmuseum collection
 - Ability to view searchresults 
-- Ability to select on of the searchresults and view more information about it 
+- Ability to select one of the searchresults and view more information about it 
 - Functionality to add text to the image of that searchresult
 - Clear searchresults, image to edit, etc.. once the user leaves/closes these activities
 - Share image through other apps on the Android device
