@@ -1,6 +1,5 @@
 # Design Document
 
-### Basics
 **Activities**  
 (see sketches below)
 - Search
@@ -8,14 +7,18 @@
 - Selected
 - Edit 
 - Share
-  
-**Permissions**  
-We need internet to make http requests and download images. In the Android Manifest file we can get this permission: `<uses-permission android:name="android.permission.INTERNET"/>`
 
-### Advanced Sketches UI
+###Advanced Sketches UI
 ![Advanced Sketches UI](/doc/imagenamehere.jpg)  
 
-### API implementation
+###Use Case
+
+###Class Diagram
+
+---
+
+#Implementation Details
+###API implementation
 ####1) Connection to the search activity
 The search activity will have a searchbar. The searchwords used in this bar will be provided to the API.  
 Example query: `https://www.rijksmuseum.nl/api/en/collection?q=Q&imgonly=True&key=fakekey&format=json`  
@@ -47,7 +50,7 @@ When the user taps one artwork the objectNumber of that artwork should be retrie
 - "materials" : [] 
 - Also add a button to the Rijksmuseum webpage record of this image for more information. This could be sent from the previous activity ("links" : "web") or found in this activity by adding "links" : "search" to "objectNumber". 
 
-### Image Editing
+###Image Editing
 [Download Image using AsyncTask in Android](http://javatechig.com/android/download-image-using-asynctask-in-android) (multithreading). I can convert to/download as a bitmp by using the [Android BitmapFactory Class](http://developer.android.com/reference/android/graphics/BitmapFactory.html). If I download the image from the tile-API of the Rijksmuseum then I do need to find a way to correctly display those tiles of the image next to eachother. They do have x, y values that indicate their position, but I do not know yet how to specifically implement this in Android Studio. 
 
 There are several editing options I wish to implement. I however do not know if I have enought time to implement all of these, so I wil at least implement the most above option, and will only implement those below it if I have enough time left.  
@@ -61,6 +64,6 @@ There are several editing options I wish to implement. I however do not know if 
 
 To implement the image editing options an Android [Canvas](http://developer.android.com/reference/android/graphics/Canvas.html) will be used. The bitmap image can be used as the basis/background for the canvas.
 
-### Image Sharing
+###Image Sharing
 To share the canvas it has to be converted back to an image again. For this I can use a [OutputStream](http://stackoverflow.com/questions/13533471/how-to-save-view-from-canvas-to-png-file) and compress to JPG or PNG.
 After this is done the image can be shared through a "Share Intent" by [sending binary content](http://developer.android.com/training/sharing/send.html). This will show a pop-up to show all the apps on the Android Device that can do something (sharing/editing) with the image (i.e. WhatsApp, Facebook, Twitter, Google Drive, etc..). This way the actual sharing of the image is passed on to other apps. 
