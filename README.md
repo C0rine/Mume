@@ -49,6 +49,9 @@ I'm not sure whether this app will be diffucult or very easy to make.
 - Add an activity to view the images of the Classical Art Memes Facebookpage (that stays up to date by using an [API](https://developers.facebook.com/docs/graph-api/reference/v2.5/album) to get the images from the photogallery of the Facebookpage).
 - Adding the possibility to edit pictures the user has made him-/herself.
 - Adding the option to tag artworks, so they are easy to find back later.
+- Add a button to view a random artwork
+- Add a button to immediatly view a random artwork from the database
+- Add possibility to save the image to local storage
 
 Other problems and --> solutions:  
 - I can't get the Rijksmuseum API implemented --> manually make a selection of artworks and only use those in the app.
