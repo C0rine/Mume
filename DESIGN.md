@@ -7,7 +7,8 @@
 - Edit 
 
 ###Advanced Sketches UI
-![Advanced Sketches UI](/doc/imagenamehere.jpg)  
+![Advanced Sketches UI](/doc/advancedsketches_activities.jpg)    
+![Advanced Sketches UI](/doc/advancedsketches_other.jpg)
 
 ###Use Case
 Based on tutorial by [Derek Banas](https://www.youtube.com/watch?v=OkC7HKtiZC0).
