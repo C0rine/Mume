@@ -1,4 +1,4 @@
-package mprog.nl.mume;
+package nl.mprog.mume;
 
 import org.junit.Test;
 

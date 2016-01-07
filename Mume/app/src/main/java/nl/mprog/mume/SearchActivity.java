@@ -1,4 +1,4 @@
-package mprog.nl.mume;
+package nl.mprog.mume;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
