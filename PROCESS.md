@@ -29,4 +29,10 @@ I have also made a first version of a class diagram:
 
 #Day 4
 **Thu 7 Jan 2016**  
+- Completed DESIGN.md by making the advanced sketches in Photoshop.
+- I have made layouts and activities for two of the four activities to be made.
+- Instead of using a ListView I have decided to now use a GridView to display the searchresults. This better facilitates the grid-like way I wanted to diplay the results anyway.
+
+#Day 5
+**Fri 8 Jan 2016**  
 
