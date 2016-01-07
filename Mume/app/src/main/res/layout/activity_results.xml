@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Corine Jacobs
+     10001326
+     Corine_J@MSN.com -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="nl.mprog.mume.ResultsActivity">
+
+    <!-- Dummy item to prevent AutoCompleteTextView from receiving focus
+         http://stackoverflow.com/questions/1555109 -->
+    <LinearLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_width="0px"
+        android:layout_height="0px"/>
+
+    <EditText
+        android:id="@+id/searchbar_edittext"
+        android:hint="@string/searchbar_edittext_hint"
+        android:drawableRight="@android:drawable/ic_menu_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:padding="10dp"
+        android:textColor="#000000"
+        android:textColorHint="#999999"
+        android:background="#ffffff"
+        android:elevation="15dp" />
+
+    <GridView
+        android:id="@+id/gridview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="2"/>
+
+</LinearLayout>

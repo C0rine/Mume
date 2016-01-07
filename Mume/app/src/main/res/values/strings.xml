@@ -1,3 +1,11 @@
+<!-- Corine Jacobs
+     10001326
+     Corine_J@MSN.com -->
+
 <resources>
     <string name="app_name">Mume</string>
+    <string name="searchtitle_textview_text">Search</string>
+    <string name="startsearch_button_text">Go!</string>
+    <string name="searchbar_edittext_hint">search for...</string>
+    <string name="help_menuitem_title">Help</string>
 </resources>

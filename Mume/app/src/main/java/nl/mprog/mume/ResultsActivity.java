@@ -2,24 +2,42 @@
    10001326
    Corine_J@MSN.com */
 
-/* First activity that gets shown to the user upon opening the app*/
+/* The activity that shows all search results*/
 
 package nl.mprog.mume;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.GridView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
-public class SearchActivity extends AppCompatActivity {
+public class ResultsActivity extends AppCompatActivity {
+
+    private GridView gridview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+        setContentView(R.layout.activity_results);
+
+        gridview = (GridView) findViewById(R.id.gridview);
+        gridview.setAdapter(new ResultsAdapter(this));
+
+        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                Toast.makeText(ResultsActivity.this, "" + position,
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
@@ -44,11 +62,5 @@ public class SearchActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    // gets executed when the 'Go!' button gets pressed to perform the search
-    public void startSearch(View view){
-        Intent startSearch = new Intent(this, ResultsActivity.class);
-        startActivityForResult(startSearch, 1);
     }
 }
