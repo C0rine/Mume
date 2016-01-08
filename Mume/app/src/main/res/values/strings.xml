@@ -8,4 +8,5 @@
     <string name="startsearch_button_text">Go!</string>
     <string name="searchbar_edittext_hint">search for...</string>
     <string name="help_menuitem_title">Help</string>
+    <string name="rijksmuseumroyalties_textview_text">Image by Rijksmuseum</string>
 </resources>

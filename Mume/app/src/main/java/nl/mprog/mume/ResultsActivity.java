@@ -6,6 +6,7 @@
 
 package nl.mprog.mume;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -36,6 +37,12 @@ public class ResultsActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 Toast.makeText(ResultsActivity.this, "" + position,
                         Toast.LENGTH_SHORT).show();
+
+                // Open the next activity when the 9th (in this case last) item is clicked
+                if (position == 9){
+                    Intent showResult = new Intent(ResultsActivity.this, SelectedActivity.class);
+                    startActivityForResult(showResult, 1);
+                }
             }
         });
     }
