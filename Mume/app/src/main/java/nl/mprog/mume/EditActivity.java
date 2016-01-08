@@ -7,11 +7,13 @@
 package nl.mprog.mume;
 
 import android.app.DialogFragment;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
 
 
 public class EditActivity extends AppCompatActivity {
@@ -47,6 +49,21 @@ public class EditActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    // Gets executed once the button "share" is pressed
+    public void shareImage(View view) {
+
+        // get the uri of the image we want to send
+        Uri imageUri = Uri.parse("android.resource://nl.mprog.mume/mipmap/art_nightwatch");
+
+        // Opens a pop-up with all apps available to share an image
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
+        shareIntent.setType("image/jpg");
+        startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.sendto_shareintent_title)));
+
     }
 
 }

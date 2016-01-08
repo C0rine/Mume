@@ -54,7 +54,7 @@
                 android:adjustViewBounds="true" />
 
             <Button
-                android:id="@+id/memeit_button"
+                android:id="@+id/share_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/share_button_text"
@@ -62,7 +62,8 @@
                 android:textColor="#ffffff"
                 android:textSize="25sp"
                 android:background="#4c5db9"
-                android:elevation="10dp" />
+                android:elevation="10dp"
+                android:onClick="shareImage"/>
 
         </LinearLayout>
 
