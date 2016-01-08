@@ -16,5 +16,8 @@
     <string name="titletitle_textview_text">Title</string>
     <string name="datingtitle_textview_text">Dating</string>
     <string name="materialstitle_textview_text">Materials</string>
+    <string name="gobackhelp_dialog_negativebutton">Go back</string>
+    <string name="helptext_dialog_message">here is some unuseful help...</string>
+    <string name="helptitle_dialog_title">Help</string>
 
 </resources>

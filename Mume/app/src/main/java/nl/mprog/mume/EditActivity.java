@@ -6,6 +6,7 @@
 
 package nl.mprog.mume;
 
+import android.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -36,10 +37,13 @@ public class EditActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        // Open Help
+        // Open Help-dialog once the button gets pressed
         if (id == R.id.searchhelp_menubutton) {
-            Toast.makeText(this, "Help!", Toast.LENGTH_SHORT).show();
+
+            DialogFragment newFragment = new HelpDialog();
+            newFragment.show(getFragmentManager(), "help");
             return true;
+
         }
 
         return super.onOptionsItemSelected(item);
