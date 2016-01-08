@@ -6,7 +6,7 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearlayout"
+    android:id="@+id/top_linearlayout"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,32 +14,35 @@
     android:elevation="15dp">
 
     <ScrollView
+        android:id="@+id/edit_scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/innervertical_linearlayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-
             <LinearLayout
+                android:id="@+id/innerhorizontal_layout"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <EditText
+                    android:id="@+id/addtext_edittext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/editText"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1" />
 
                 <Button
+                    android:id="@+id/addtext_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="+"
-                    android:id="@+id/button" />
+                    android:text="+" />
+
             </LinearLayout>
 
             <ImageView
@@ -54,13 +57,12 @@
                 android:id="@+id/memeit_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/share_button"
+                android:text="@string/share_button_text"
                 android:layout_gravity="center_horizontal"
                 android:textColor="#ffffff"
                 android:textSize="25sp"
                 android:background="#4c5db9"
                 android:elevation="10dp" />
-
 
         </LinearLayout>
 

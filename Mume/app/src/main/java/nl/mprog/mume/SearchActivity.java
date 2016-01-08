@@ -23,7 +23,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
 
-    // Inflate menu facilitate help-button
+    // Inflate menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -32,12 +32,12 @@ public class SearchActivity extends AppCompatActivity {
     }
 
 
-    // Implementation of action-bar / menu functionalities
+    // Implementation of action-bar / menu functionality
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        // Open Help
+        // Open Help once the button gets pressed
         if (id == R.id.searchhelp_menubutton) {
             Toast.makeText(this, "Help!", Toast.LENGTH_SHORT).show();
             return true;
@@ -46,8 +46,10 @@ public class SearchActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
     // gets executed when the 'Go!' button gets pressed to perform the search
     public void startSearch(View view){
+        // open new activity to show the results of the search
         Intent startSearch = new Intent(this, ResultsActivity.class);
         startActivityForResult(startSearch, 1);
     }

@@ -1,11 +1,15 @@
+/* Corine Jacobs
+   10001326
+   Corine_J@MSN.com */
+
+/* Activity that provides the image editing*/
+
 package nl.mprog.mume;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 
@@ -17,7 +21,8 @@ public class EditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit);
     }
 
-    // Inflate menu facilitate help-button
+
+    // Inflate menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -26,7 +31,7 @@ public class EditActivity extends AppCompatActivity {
     }
 
 
-    // Implementation of action-bar / menu functionalities
+    // Implementation of menu functionality
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -39,4 +44,5 @@ public class EditActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

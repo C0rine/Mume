@@ -35,11 +35,11 @@ public class ResultsAdapter extends BaseAdapter {
         return 0;
     }
 
-    // create a new ImageView for each item referenced by the Adapter
+    // creates views for each item referenced by the Adapter
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        if( convertView == null ){
-            //We must create a View:
+        if (convertView == null){
+            //We must create a View, we will inflate it from a custom layout
             inflater = LayoutInflater.from(mContext);
             convertView = inflater.inflate(R.layout.gridview_layout, parent, false);
         }
@@ -47,10 +47,13 @@ public class ResultsAdapter extends BaseAdapter {
         // Placeholder text
         String artist = "Rembrandt";
 
-        TextView theTextview = (TextView) convertView.findViewById(R.id.textview);
+        // For each item create:
+        // 1) a textview to holder the artistname
+        TextView theTextview = (TextView) convertView.findViewById(R.id.thumbnailtitle_textview);
         theTextview.setText(artist);
 
-        ImageView theImageView = (ImageView) convertView.findViewById(R.id.imageview);
+        // 2) an imageview to hold the thumbnail
+        ImageView theImageView = (ImageView) convertView.findViewById(R.id.thumbnail_imageview);
         theImageView.setImageResource(R.mipmap.art_nightwatch_square);
         theImageView.setAdjustViewBounds(true);
 

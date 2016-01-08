@@ -6,7 +6,7 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearlayout"
+    android:id="@+id/top_linearlayout"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,10 +14,12 @@
     android:elevation="15dp">
 
     <ScrollView
+        android:id="@+id/selected_scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/inner_linearlayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -34,7 +36,7 @@
                 android:id="@+id/memeit_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Meme it!"
+                android:text="@string/startedit_button_text"
                 android:layout_gravity="center_horizontal"
                 android:textColor="#ffffff"
                 android:textSize="25sp"
@@ -43,102 +45,112 @@
                 android:onClick="startEdit" />
 
             <TextView
+                android:id="@+id/rijksmuseum_acknowledgement_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Image by Rijksmuseum"
-                android:id="@+id/textView"
+                android:text="@string/rijksmuseum_acknowledgement_textview_text"
                 android:layout_gravity="right"
                 android:textColor="#7b7b7b"
                 android:padding="5dp" />
 
             <TableLayout
+                android:id="@+id/metadata_tablelayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <TableRow
+                    android:id="@+id/metadata_tablerow_1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
                     <TextView
+                        android:id="@+id/artisttitle_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Artist"
-                        android:id="@+id/textView2"
+                        android:text="@string/artisttitle_textview_text"
                         android:padding="10dp"
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/artistnameholder_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Rembrandt Harmensz. van Rijn"
-                        android:id="@+id/textView3" />
+                        android:text="Rembrandt Harmensz. van Rijn"/>
+
                 </TableRow>
 
                 <TableRow
+                    android:id="@+id/metadata_tablerow_2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
                     <TextView
+                        android:id="@+id/titletitle_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Title"
-                        android:id="@+id/textView4"
+                        android:text="@string/titletitle_textview_text"
                         android:padding="10dp"
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/titleholder_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="The Night Watch"
-                        android:id="@+id/textView5" />
+                        android:text="The Night Watch"/>
+
                 </TableRow>
 
                 <TableRow
+                    android:id="@+id/metadata_tablerow_3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
                     <TextView
+                        android:id="@+id/datingtitle_textiew"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Dating"
-                        android:id="@+id/textView6"
+                        android:text="@string/datingtitle_textview_text"
                         android:padding="10dp"
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/datingholder_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="1642"
-                        android:id="@+id/textView7" />
+                        android:text="1642"/>
+
                 </TableRow>
 
                 <TableRow
+                    android:id="@+id/metadata_tablerow_4"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
                     <TextView
+                        android:id="@+id/materialstitle_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Materials"
-                        android:id="@+id/textView8"
+                        android:text="@string/materialstitle_textview_text"
                         android:padding="10dp"
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/materialsholder_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="Oil on canvas"
-                        android:id="@+id/textView9" />
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
+
                 </TableRow>
+
             </TableLayout>
 
         </LinearLayout>

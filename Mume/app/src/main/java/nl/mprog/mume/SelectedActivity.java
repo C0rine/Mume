@@ -2,6 +2,8 @@
    10001326
    Corine_J@MSN.com */
 
+/* Shows one artrecord (image and metadata). Has a button to start editing the image */
+
 package nl.mprog.mume;
 
 import android.content.Intent;
@@ -19,6 +21,7 @@ public class SelectedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selected);
     }
+
 
     // Inflate menu facilitate help-button
     @Override
@@ -46,7 +49,10 @@ public class SelectedActivity extends AppCompatActivity {
 
     // gets executed when the 'Meme it' button gets pressed
     public void startEdit(View view){
+        // open the EditActivity to start editing the image
         Intent startEdit = new Intent(this, EditActivity.class);
         startActivityForResult(startEdit, 1);
     }
+
 }
+

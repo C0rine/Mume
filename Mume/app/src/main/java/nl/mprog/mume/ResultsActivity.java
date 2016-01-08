@@ -30,11 +30,15 @@ public class ResultsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
 
-        gridview = (GridView) findViewById(R.id.gridview);
+        // initialize the Adapter for the custom layout of the gridview
+        gridview = (GridView) findViewById(R.id.results_gridview);
         gridview.setAdapter(new ResultsAdapter(this));
 
+        // What to do when an item in the gridview gets clicked?:
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+
+                // Show the position of the thumbnail the user clicked
                 Toast.makeText(ResultsActivity.this, "" + position,
                         Toast.LENGTH_SHORT).show();
 
@@ -48,7 +52,7 @@ public class ResultsActivity extends AppCompatActivity {
     }
 
 
-    // Inflate menu facilitate help-button
+    // Inflate menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -57,7 +61,7 @@ public class ResultsActivity extends AppCompatActivity {
     }
 
 
-    // Implementation of action-bar / menu functionalities
+    // Implementation menu functionality
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();

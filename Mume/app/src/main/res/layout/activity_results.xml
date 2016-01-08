@@ -6,15 +6,17 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearlayout"
+    android:id="@+id/top_linearlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="nl.mprog.mume.ResultsActivity">
 
-    <!-- Dummy item to prevent AutoCompleteTextView from receiving focus
+    <!-- Dummy item to prevent "searchbar_edittext" from receiving focus
          http://stackoverflow.com/questions/1555109 -->
     <LinearLayout
+        android:id="@+id/dummy_linearlayout"
+        android:orientation="horizontal"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:layout_width="0px"
@@ -34,7 +36,7 @@
         android:elevation="15dp" />
 
     <GridView
-        android:id="@+id/gridview"
+        android:id="@+id/results_gridview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:numColumns="2"/>

@@ -3,11 +3,18 @@
      Corine_J@MSN.com -->
 
 <resources>
+
     <string name="app_name">Mume</string>
     <string name="searchtitle_textview_text">Search</string>
     <string name="startsearch_button_text">Go!</string>
     <string name="searchbar_edittext_hint">search for...</string>
     <string name="help_menuitem_title">Help</string>
-    <string name="rijksmuseumroyalties_textview_text">Image by Rijksmuseum</string>
-    <string name="share_button">Share</string>
+    <string name="share_button_text">Share</string>
+    <string name="rijksmuseum_acknowledgement_textview_text">Rijksmuseum Collection</string>
+    <string name="startedit_button_text">Meme it!</string>
+    <string name="artisttitle_textview_text">Artist</string>
+    <string name="titletitle_textview_text">Title</string>
+    <string name="datingtitle_textview_text">Dating</string>
+    <string name="materialstitle_textview_text">Materials</string>
+
 </resources>
