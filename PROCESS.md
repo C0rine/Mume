@@ -35,9 +35,11 @@ I have also made a first version of a class diagram:
 
 #Day 5
 **Fri 8 Jan 2016**  
-Today I completed making the layout for the other two activities. The edit-activity is still not fully complete yet though since I am not sure what functionalities will exactly be implemented here. I will first implement the Rijksmuseum API, the searchfunction and showing the searchresults before moving on to the editing. I have also implemented the share-intent and help-dialog. The UI is now mostly finished (at least for now), so I can really start focussing on the API implementation next week.
+Today I completed making the layout for the other two activities. The edit-activity is still not fully complete yet though since I am not sure what functionalities will exactly be implemented here. I will first implement the Rijksmuseum API, the searchfunction and showing the searchresults before moving on to the editing. I have also implemented the share-intent and help-dialog. The UI is mostly finished (at least for now), so I can really start focussing on the API implementation next week.
   
 I have refactored the code I had so far. I have added plenty comments and removed useless code. I have set some standards/conventions for myself for uniform code:
 - In the layout XML files all `views` and `viewgroups` will show the `id`-tag at the top so the `id`s will be easy to look up.
 - Format of the `id`: "name_viewtype" in lowercase (i.e. artimage_imageview)
-- I have also set a format for string resources: "name_viewtype_texttype" in lowecase (i.e. search_edittext_hint or share_button_text)
+- I have also set a format for string resources: "name_viewtype_texttype" in lowercase (i.e. search_edittext_hint or share_button_text)
+
+Today we had presentations. I got a nice tip to use [Volley](http://developer.android.com/training/volley/index.html) for the API requests. I will look further into this this weekend or next week.
