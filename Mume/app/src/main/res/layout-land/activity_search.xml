@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Corine Jacobs
+     10001326
+     Corine_J@MSN.com -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/top_relativelayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context="nl.mprog.mume.SearchActivity">
+
+    <ImageView
+        android:id="@+id/background_imageview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/art_nightwatch" />
+
+    <LinearLayout
+        android:id="@+id/top_linearlayout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignTop="@+id/background_imageview"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_vertical"
+        android:background="#70000000">
+
+        <TextView
+            android:id="@+id/searchtitle_textview"
+            android:text="@string/searchtitle_textview_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:textSize="50sp"
+            android:paddingBottom="40dp" />
+
+        <EditText
+            android:id="@+id/searchbar_edittext"
+            android:hint="@string/searchbar_edittext_hint"
+            android:drawableRight="@android:drawable/ic_menu_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:padding="10dp"
+            android:textColor="#000000"
+            android:textColorHint="#999999"
+            android:background="#ffffff"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="20dp"
+            android:elevation="15dp" />
+
+        <Button
+            android:id="@+id/startsearch_button"
+            android:text="@string/startsearch_button_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:elevation="15dp"
+            android:onClick="startSearch" />
+
+    </LinearLayout>
+
+</RelativeLayout>
