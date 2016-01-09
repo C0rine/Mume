@@ -31,8 +31,13 @@ I have also made a first version of a class diagram:
 **Thu 7 Jan 2016**  
 - Completed DESIGN.md by making the advanced sketches in Photoshop.
 - I have made layouts and activities for two of the four activities to be made.
-- Instead of using a ListView I have decided to now use a GridView to display the searchresults. This better facilitates the grid-like way I wanted to diplay the results anyway.
+- Instead of using a `ListView` I have decided to now use a `GridView` to display the searchresults. This better facilitates the grid-like way I wanted to diplay the results anyway.
 
 #Day 5
 **Fri 8 Jan 2016**  
-
+Today I completed making the layout for the other two activities. The edit-activity is still not fully complete yet though since I am not sure what functionalities will exactly be implemented here. I will first implement the Rijksmuseum API, the searchfunction and showing the searchresults before moving on to the editing. I have also implemented the share-intent and help-dialog. The UI is now mostly finished (at least for now), so I can really start focussing on the API implementation next week.
+  
+I have refactored the code I had so far. I have added plenty comments and removed useless code. I have set some standards/conventions for myself for uniform code:
+- In the layout XML files all `views` and `viewgroups` will show the `id`-tag at the top so the `id`s will be easy to look up.
+- Format of the `id`: "name_viewtype" in lowercase (i.e. artimage_imageview)
+- I have also set a format for string resources: "name_viewtype_texttype" in lowecase (i.e. search_edittext_hint or share_button_text)
