@@ -43,3 +43,6 @@ I have refactored the code I had so far. I have added plenty comments and remove
 - I have also set a format for string resources: "name_viewtype_texttype" in lowercase (i.e. search_edittext_hint or share_button_text)
 
 Today we had presentations. I got a nice tip to use [Volley](http://developer.android.com/training/volley/index.html) for the API requests. I will look further into this this weekend or next week.
+  
+#Weekend
+- Added layouts for landscape orientation (gridview has 3 colums instead of 2 for better overview in landscape orientation)
