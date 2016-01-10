@@ -4,6 +4,10 @@ Corine Jacobs
 Corine_J@MSN.com  
 
 ##### Platform: Android Studio
+
+##### To run:
+- Open the project in Android Studio
+- This app uses Volley (https://github.com/mcxiaoke/android-volley)
   
 Mume (MUseum MEmes) will be an Android App that uses images from the databases of museums (for this project only the database of the Rijksmuseum will be used) to create memes. 
 
