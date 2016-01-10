@@ -15,7 +15,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
 
 public class ResultsActivity extends AppCompatActivity {
 
@@ -45,6 +54,35 @@ public class ResultsActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+        // Test code for Volley
+        String url = "http://php.net/";
+
+        final TextView mTextview = (TextView) findViewById(R.id.volleytest_textview);
+
+        RequestQueue requestQueue = VolleySingleton.getInstance().getmRequestQueue();
+        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response){
+
+                // handle the response of the request
+                mTextview.setText(response);
+
+            }
+        }, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error){
+
+                // handle any errors that might occur when trying to get the request
+                mTextview.setText(error.getMessage());
+
+            }
+        }
+        );
+
+        requestQueue.add(request);
+
     }
 
 
