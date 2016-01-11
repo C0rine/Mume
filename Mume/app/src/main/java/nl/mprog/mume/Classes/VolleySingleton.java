@@ -8,7 +8,7 @@
               https://www.youtube.com/watch?v=ohkPZw-gY3g&list=PLonJJ3BVjZW6CtAMbJz1XD8ELUs1KXaTD&index=29
               http://developer.android.com/training/volley/simple.html */
 
-package nl.mprog.mume;
+package nl.mprog.mume.Classes;
 
 import android.graphics.Bitmap;
 import android.util.LruCache;

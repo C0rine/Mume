@@ -5,7 +5,7 @@
 /*  Used to get the context for making the Volley RequestQueue in VolleySingleton.java
     Resources: https://www.youtube.com/watch?v=T4SF7S6pYfE&list=PLonJJ3BVjZW6CtAMbJz1XD8ELUs1KXaTD&index=31*/
 
-package nl.mprog.mume;
+package nl.mprog.mume.Classes;
 
 import android.app.Application;
 import android.content.Context;

@@ -4,7 +4,7 @@
 
 /* Shows one artrecord (image and metadata). Has a button to start editing the image */
 
-package nl.mprog.mume;
+package nl.mprog.mume.Activities;
 
 import android.app.DialogFragment;
 import android.content.Intent;
@@ -13,6 +13,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import nl.mprog.mume.Other.HelpDialog;
+import nl.mprog.mume.R;
 
 public class SelectedActivity extends AppCompatActivity {
 

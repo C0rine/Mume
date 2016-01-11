@@ -2,26 +2,27 @@
    10001326
    Corine_J@MSN.com */
 
-/* Activity that provides the image editing*/
+/* First activity that gets shown to the user upon opening the app*/
 
-package nl.mprog.mume;
+package nl.mprog.mume.Activities;
 
 import android.app.DialogFragment;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import nl.mprog.mume.Other.HelpDialog;
+import nl.mprog.mume.R;
 
-public class EditActivity extends AppCompatActivity {
+public class SearchActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit);
+        setContentView(R.layout.activity_search);
     }
 
 
@@ -34,7 +35,7 @@ public class EditActivity extends AppCompatActivity {
     }
 
 
-    // Implementation of menu functionality
+    // Implementation of action-bar / menu functionality
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -51,19 +52,11 @@ public class EditActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    // Gets executed once the button "share" is pressed
-    public void shareImage(View view) {
 
-        // get the uri of the image we want to send
-        Uri imageUri = Uri.parse("android.resource://nl.mprog.mume/mipmap/art_nightwatch");
-
-        // Opens a pop-up with all apps available to share an image
-        Intent shareIntent = new Intent();
-        shareIntent.setAction(Intent.ACTION_SEND);
-        shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
-        shareIntent.setType("image/jpg");
-        startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.sendto_shareintent_title)));
-
+    // gets executed when the 'Go!' button gets pressed to perform the search
+    public void startSearch(View view){
+        // open new activity to show the results of the search
+        Intent startSearch = new Intent(this, ResultsActivity.class);
+        startActivityForResult(startSearch, 1);
     }
-
 }

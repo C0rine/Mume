@@ -9,7 +9,7 @@
     android:id="@+id/top_relativelayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    tools:context="nl.mprog.mume.SearchActivity">
+    tools:context=".Activities.SearchActivity">
 
     <ImageView
         android:id="@+id/background_imageview"

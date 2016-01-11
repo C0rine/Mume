@@ -5,7 +5,7 @@
 /* Fits searchresults into a gridview
    Resource: http://developer.android.com/guide/topics/ui/layout/gridview.html */
 
-package nl.mprog.mume;
+package nl.mprog.mume.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import nl.mprog.mume.R;
 
 public class ResultsAdapter extends BaseAdapter {
 

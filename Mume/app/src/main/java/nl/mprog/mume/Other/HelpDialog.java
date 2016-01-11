@@ -5,13 +5,15 @@
 /* Dialog fragment to show help
    Resource: http://developer.android.com/guide/topics/ui/dialogs.html*/
 
-package nl.mprog.mume;
+package nl.mprog.mume.Other;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+
+import nl.mprog.mume.R;
 
 public class HelpDialog extends DialogFragment {
 

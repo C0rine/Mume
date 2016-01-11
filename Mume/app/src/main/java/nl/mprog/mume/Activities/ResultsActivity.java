@@ -4,7 +4,7 @@
 
 /* The activity that shows all search results*/
 
-package nl.mprog.mume;
+package nl.mprog.mume.Activities;
 
 import android.app.DialogFragment;
 import android.content.Intent;
@@ -22,7 +22,14 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONObject;
+
+import nl.mprog.mume.Other.HelpDialog;
+import nl.mprog.mume.R;
+import nl.mprog.mume.Adapters.ResultsAdapter;
+import nl.mprog.mume.Classes.VolleySingleton;
 
 
 public class ResultsActivity extends AppCompatActivity {
@@ -65,12 +72,12 @@ public class ResultsActivity extends AppCompatActivity {
         final TextView mTextview = (TextView) findViewById(R.id.volleytest_textview);
 
         RequestQueue requestQueue = VolleySingleton.getInstance().getmRequestQueue();
-        StringRequest request = new StringRequest(Request.Method.GET, query, new Response.Listener<String>() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, query, new Response.Listener<JSONObject>() {
             @Override
-            public void onResponse(String response){
+            public void onResponse(JSONObject response){
 
                 // handle the response of the request
-                mTextview.setText(response);
+                mTextview.setText(response.toString());
 
             }
         }, new Response.ErrorListener(){
@@ -81,9 +88,9 @@ public class ResultsActivity extends AppCompatActivity {
                 mTextview.setText(error.getMessage());
 
             }
-        }
-        );
+        });
 
+        // add the request to the queue
         requestQueue.add(request);
 
     }

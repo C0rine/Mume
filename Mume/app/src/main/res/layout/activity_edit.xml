@@ -10,7 +10,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="nl.mprog.mume.SelectedActivity"
+    tools:context=".Activities.SelectedActivity"
     android:elevation="15dp">
 
     <ScrollView
