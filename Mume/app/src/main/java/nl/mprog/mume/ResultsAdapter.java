@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ResultsAdapter extends BaseAdapter {
+
     private Context mContext;
     private LayoutInflater inflater;
 
@@ -24,14 +25,17 @@ public class ResultsAdapter extends BaseAdapter {
     }
 
     public int getCount() {
+        // how many items do we want in the gridview?
         return 10;
     }
 
     public Object getItem(int position) {
+
         return null;
     }
 
     public long getItemId(int position) {
+
         return 0;
     }
 
@@ -39,7 +43,7 @@ public class ResultsAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         if (convertView == null){
-            //We must create a View, we will inflate it from a custom layout
+            //There is nog view so we must create a View. We will inflate it from a custom layout
             inflater = LayoutInflater.from(mContext);
             convertView = inflater.inflate(R.layout.gridview_layout, parent, false);
         }
@@ -48,7 +52,7 @@ public class ResultsAdapter extends BaseAdapter {
         String artist = "Rembrandt";
 
         // For each item create:
-        // 1) a textview to holder the artistname
+        // 1) a textview to hold the artistname
         TextView theTextview = (TextView) convertView.findViewById(R.id.thumbnailtitle_textview);
         theTextview.setText(artist);
 

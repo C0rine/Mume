@@ -23,7 +23,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 
 
 public class ResultsActivity extends AppCompatActivity {
@@ -56,13 +55,17 @@ public class ResultsActivity extends AppCompatActivity {
         });
 
 
-        // Test code for Volley
-        String url = "http://php.net/";
+        // Building the query
+        String apikey = "e0SrHwkM";
+        String urlbase = "https://www.rijksmuseum.nl/api/en/collection?";
+        String searchwords = "q=" + "rembrandt";
+        String query = urlbase + searchwords + "&imgonly=True&key=" + apikey + "&format=json";
 
+        // Test code for Volley
         final TextView mTextview = (TextView) findViewById(R.id.volleytest_textview);
 
         RequestQueue requestQueue = VolleySingleton.getInstance().getmRequestQueue();
-        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.GET, query, new Response.Listener<String>() {
             @Override
             public void onResponse(String response){
 
