@@ -26,8 +26,9 @@ import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONObject;
 
+import nl.mprog.mume.Classes.Parser;
 import nl.mprog.mume.Classes.Searcher;
-import nl.mprog.mume.Other.HelpDialog;
+import nl.mprog.mume.Dialogs.HelpDialog;
 import nl.mprog.mume.R;
 import nl.mprog.mume.Adapters.ResultsAdapter;
 import nl.mprog.mume.Classes.VolleySingleton;
@@ -36,11 +37,16 @@ import nl.mprog.mume.Classes.VolleySingleton;
 public class ResultsActivity extends AppCompatActivity {
 
     private GridView gridview;
+    private String searchwords;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
+
+        // get the intent and the data from the previous (search) activity
+        Intent intent = getIntent();
+        searchwords = intent.getStringExtra("searchwords");
 
         // initialize the Adapter for the custom layout of the gridview
         gridview = (GridView) findViewById(R.id.results_gridview);
@@ -62,11 +68,11 @@ public class ResultsActivity extends AppCompatActivity {
             }
         });
 
-        String searchtype = "collection";
-
         // Building the query
+        String searchtype = "collection";
         Searcher searcher = new Searcher(searchtype);
-        searcher.createQuery("Rembrandt");
+        // use the searchwords sent along from the previous activity
+        searcher.createQuery(searchwords);
 
 
         // Test code for Volley
@@ -79,8 +85,11 @@ public class ResultsActivity extends AppCompatActivity {
 
                 // handle the response of the request
                 mTextview.setText(response.toString());
+                // parse the response
+                Parser parser = new Parser();
+                parser.parseRMCollection(response);
 
-                //parseJSONresponse(response);
+                Toast.makeText(getApplicationContext(), parser.getRMartistnames(), Toast.LENGTH_LONG).show();
 
             }
         }, new Response.ErrorListener(){

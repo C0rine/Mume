@@ -15,7 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import nl.mprog.mume.Other.HelpDialog;
+import nl.mprog.mume.Dialogs.HelpDialog;
 import nl.mprog.mume.R;
 
 

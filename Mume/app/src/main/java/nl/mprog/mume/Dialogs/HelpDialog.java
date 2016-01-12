@@ -5,7 +5,7 @@
 /* Dialog fragment to show help
    Resource: http://developer.android.com/guide/topics/ui/dialogs.html*/
 
-package nl.mprog.mume.Other;
+package nl.mprog.mume.Dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

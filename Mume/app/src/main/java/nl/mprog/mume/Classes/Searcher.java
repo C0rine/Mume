@@ -2,9 +2,9 @@
    10001326
    Corine_J@MSN.com */
 
-/* Searcher is an object used to make a query. It takes two arguments: 1) the searchwords
-   (provided by the user), 2) the type of search that needs to be made (either retrieving information
-   from the collection or retrieving a specific record. */
+/* Searcher is an object used to make a query. It takes one arguments: The type of search
+   that needs to be made (either retrieving information from the collection or retrieving
+   a specific record. */
 
 package nl.mprog.mume.Classes;
 
@@ -34,7 +34,10 @@ public class Searcher {
     // If the searchtype is "object", the searchword needs to be an objectnumber
     public void createQuery(String searchwords){
 
+        // get the searchwords and format them correctly
         this.searchwords = searchwords;
+        formatSearchwords();
+
         // something needs to happen to the searchwords first (like take out spaces)
 
         if (searchtype == "collection"){
@@ -62,7 +65,13 @@ public class Searcher {
         return requesturl;
     }
 
-    public void setRequesturl(String requesturl) {
-        this.requesturl = requesturl;
+    private void formatSearchwords(){
+
+        // remove any trailing whitespace
+        this.searchwords = this.searchwords.trim();
+        // replace any spaces in between the searchwords to "+"
+        this.searchwords = this.searchwords.replaceAll(" ", "+");
+
     }
+
 }
