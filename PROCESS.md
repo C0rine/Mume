@@ -45,4 +45,20 @@ I have refactored the code I had so far. I have added plenty comments and remove
 Today we had presentations. I got a nice tip to use [Volley](http://developer.android.com/training/volley/index.html) for the API requests. I will look further into this this weekend or next week.
   
 #Weekend
-- Added layouts for landscape orientation (gridview has 3 colums instead of 2 for better overview in landscape orientation)
+**Sat 9 and sun 10 Jan 2016**  
+- Added layouts for landscape orientation (gridview has 3 colums instead of 2 for better overview in landscape orientation).
+- Followed some Android Volley [tutorials](https://www.youtube.com/watch?v=ohkPZw-gY3g&index=29&list=PLonJJ3BVjZW6CtAMbJz1XD8ELUs1KXaTD) and read the [documentation](http://developer.android.com/training/volley/index.html).
+- Made a start on implementing Volley.
+
+#Day 6
+**Mon 11 Jan 2016**  
+- Followed more [tutorials](https://www.youtube.com/watch?v=T4SF7S6pYfE&list=PLonJJ3BVjZW6CtAMbJz1XD8ELUs1KXaTD&index=31) on Volley.
+- Made more progress on implementing Volley. I can now make requests to the Rijksmuseum website to get JSON data (JSONobject request and String request).
+- Started on coding a way to retrieve images using Volley.
+- Created a Artrecord-class that will be used to populate the grid view in results-activity. The instances of the artrecord-class will be created with the data retrieved from the Rijksmuseum API. 
+  
+Tomorrow I will start on writing code to parse the JSON response from the Rijksmuseum API.
+
+#Day 7
+**Tue 12 Jan 2016**  
+
