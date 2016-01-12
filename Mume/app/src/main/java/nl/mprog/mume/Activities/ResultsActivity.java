@@ -74,9 +74,21 @@ public class ResultsActivity extends AppCompatActivity {
 
                 // initialize the Adapter for the custom layout of the gridview
                 gridview = (GridView) findViewById(R.id.results_gridview);
-                // set the adapter for the gridview and send the artistsnames as an array to the adapter
-                String theString = parser.getRMartistnames().replace(",", "");
+
+                // format the artistname correctly --> remove trailing commas
+                String theString = parser.getRMartistnames();
                 String[] artistnames = theString.split(Pattern.quote("\n"));
+                int artistnameslenght = artistnames.length;
+                for(int i = 0; i < artistnameslenght; i++){
+                    if (artistnames[i].endsWith(",")){
+                        // remove the comma
+
+                        // THIS DOES NOT WORK YET!!
+                        artistnames[i] = artistnames[i].substring(0, artistnames[i].length() - 1);
+                    }
+                }
+
+                // set the adapter for the gridview and send the artistsnames as an array to the adapter
                 gridview.setAdapter(new ResultsAdapter(getApplicationContext(), artistnames));
 
                 // What to do when an item in the gridview gets clicked?:
