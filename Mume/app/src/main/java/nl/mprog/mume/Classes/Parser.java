@@ -50,7 +50,7 @@ public class Parser {
                 JSONObject currentArtwork = artarray.getJSONObject(i);
                 String maker = currentArtwork.getString("principalOrFirstMaker");
                 // save them in the stringbuilder
-                this.names.append(maker);
+                this.names.append(maker + "\n");
 
             }
 

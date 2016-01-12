@@ -26,6 +26,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONObject;
 
+import java.util.regex.Pattern;
+
 import nl.mprog.mume.Classes.Parser;
 import nl.mprog.mume.Classes.Searcher;
 import nl.mprog.mume.Dialogs.HelpDialog;
@@ -48,25 +50,6 @@ public class ResultsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         searchwords = intent.getStringExtra("searchwords");
 
-        // initialize the Adapter for the custom layout of the gridview
-        gridview = (GridView) findViewById(R.id.results_gridview);
-        gridview.setAdapter(new ResultsAdapter(this));
-
-        // What to do when an item in the gridview gets clicked?:
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-
-                // Show the position of the thumbnail the user clicked
-                Toast.makeText(ResultsActivity.this, "" + position,
-                        Toast.LENGTH_SHORT).show();
-
-                // Open the next activity when the 9th (in this case last) item is clicked
-                if (position == 9){
-                    Intent showResult = new Intent(ResultsActivity.this, SelectedActivity.class);
-                    startActivityForResult(showResult, 1);
-                }
-            }
-        });
 
         // Building the query
         String searchtype = "collection";
@@ -84,10 +67,33 @@ public class ResultsActivity extends AppCompatActivity {
             public void onResponse(JSONObject response){
 
                 // handle the response of the request
-                mTextview.setText(response.toString());
+                // mTextview.setText(response.toString());
                 // parse the response
                 Parser parser = new Parser();
                 parser.parseRMCollection(response);
+
+                // initialize the Adapter for the custom layout of the gridview
+                gridview = (GridView) findViewById(R.id.results_gridview);
+                // set the adapter for the gridview and send the artistsnames as an array to the adapter
+                String theString = parser.getRMartistnames().replace(",", "");
+                String[] artistnames = theString.split(Pattern.quote("\n"));
+                gridview.setAdapter(new ResultsAdapter(getApplicationContext(), artistnames));
+
+                // What to do when an item in the gridview gets clicked?:
+                gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+
+                        // Show the position of the thumbnail the user clicked
+                        Toast.makeText(ResultsActivity.this, "" + position,
+                                Toast.LENGTH_SHORT).show();
+
+                        // Open the next activity when the 9th (in this case last) item is clicked
+                        if (position == (searchwords.length() - 1)) {
+                            Intent showResult = new Intent(ResultsActivity.this, SelectedActivity.class);
+                            startActivityForResult(showResult, 1);
+                        }
+                    }
+                });
 
                 Toast.makeText(getApplicationContext(), parser.getRMartistnames(), Toast.LENGTH_LONG).show();
 

@@ -19,16 +19,18 @@ import nl.mprog.mume.R;
 
 public class ResultsAdapter extends BaseAdapter {
 
-    private Context mContext;
+    private Context context;
     private LayoutInflater inflater;
+    private String[] artistnames;
 
-    public ResultsAdapter(Context c) {
-        mContext = c;
+    public ResultsAdapter(Context c, String[] artistnames) {
+        this.context = c;
+        this.artistnames = artistnames;
     }
 
     public int getCount() {
         // how many items do we want in the gridview?
-        return 10;
+        return artistnames.length;
     }
 
     public Object getItem(int position) {
@@ -46,17 +48,14 @@ public class ResultsAdapter extends BaseAdapter {
 
         if (convertView == null){
             //There is nog view so we must create a View. We will inflate it from a custom layout
-            inflater = LayoutInflater.from(mContext);
+            this.inflater = LayoutInflater.from(context);
             convertView = inflater.inflate(R.layout.gridview_layout, parent, false);
         }
-
-        // Placeholder text
-        String artist = "Rembrandt";
 
         // For each item create:
         // 1) a textview to hold the artistname
         TextView theTextview = (TextView) convertView.findViewById(R.id.thumbnailtitle_textview);
-        theTextview.setText(artist);
+        theTextview.setText(artistnames[position]);
 
         // 2) an imageview to hold the thumbnail
         ImageView theImageView = (ImageView) convertView.findViewById(R.id.thumbnail_imageview);
