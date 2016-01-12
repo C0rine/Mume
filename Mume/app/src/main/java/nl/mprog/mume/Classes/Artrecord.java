@@ -16,16 +16,16 @@ public class Artrecord {
     private String objectnumber;
 
     // Constructor
-    public Artrecord(String mtitle, String mprincipalmaker, String mdating, String mmaterials, String mobjectnumber){
+    public Artrecord(String title, String principalmaker, String dating, String materials, String objectnumber){
 
-        title = mtitle;
-        principalmaker = mprincipalmaker;
-        dating = mdating;
-        materials = mmaterials;
-        objectnumber = mobjectnumber;
+        this.title = title;
+        this.principalmaker = principalmaker;
+        this.dating = dating;
+        this.materials = materials;
+        this.objectnumber = objectnumber;
 
     }
-    
+
     public String getTitle() {
         return title;
     }

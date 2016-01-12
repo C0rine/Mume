@@ -26,6 +26,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONObject;
 
+import nl.mprog.mume.Classes.Searcher;
 import nl.mprog.mume.Other.HelpDialog;
 import nl.mprog.mume.R;
 import nl.mprog.mume.Adapters.ResultsAdapter;
@@ -61,23 +62,25 @@ public class ResultsActivity extends AppCompatActivity {
             }
         });
 
+        String searchtype = "collection";
 
         // Building the query
-        String apikey = "e0SrHwkM";
-        String urlbase = "https://www.rijksmuseum.nl/api/en/collection?";
-        String searchwords = "q=" + "rembrandt";
-        String query = urlbase + searchwords + "&imgonly=True&key=" + apikey + "&format=json";
+        Searcher searcher = new Searcher(searchtype);
+        searcher.createQuery("Rembrandt");
+
 
         // Test code for Volley
         final TextView mTextview = (TextView) findViewById(R.id.volleytest_textview);
 
         RequestQueue requestQueue = VolleySingleton.getInstance().getmRequestQueue();
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, query, new Response.Listener<JSONObject>() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, searcher.getRequesturl(), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response){
 
                 // handle the response of the request
                 mTextview.setText(response.toString());
+
+                //parseJSONresponse(response);
 
             }
         }, new Response.ErrorListener(){
