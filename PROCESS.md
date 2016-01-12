@@ -61,4 +61,14 @@ Tomorrow I will start on writing code to parse the JSON response from the Rijksm
 
 #Day 7
 **Tue 12 Jan 2016**  
+- Started on parsing of the JSON with a [tutorial](https://www.youtube.com/watch?v=5GzVtP0IODU&list=PLonJJ3BVjZW6CtAMbJz1XD8ELUs1KXaTD&index=37).
+- Added a Searcher-class to make queries
+- I have also added a Parser-class to parse the JSON response
+- The searchbar has been connected to the Searcher class and Volley. Requests can be made. The artistnames in the first page of the results are sent to the Grid View adapter and are now shown there.
+  
+There is still a lot of work to do, but I am very happy that I have managed to get the API partially implemented and can at least show some results. The UI does not look ideal at this moment, and the artistnames that are now displayed in the Gridview have to be formatted better, but I will tackle these problems later on. Tomorrow I will first focus on also retrieving the images from the Rijksmuseum API and showing them in the gridview (right now a standard Nightwatch image from the resources folder is displayed):
+  
+![Results Activity 12 jan](/doc/searchactivity12jan2016.jpg) 
 
+#Day 8
+**Wed 13 Jan 2016**
