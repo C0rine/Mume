@@ -25,9 +25,11 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONObject;
 
+import java.util.Arrays;
 import java.util.regex.Pattern;
 
 import nl.mprog.mume.Classes.Parser;
@@ -41,8 +43,9 @@ import nl.mprog.mume.Classes.VolleySingleton;
 public class ResultsActivity extends AppCompatActivity {
 
     private GridView gridview;
-    private String searchwords;
     private String[] artistnames;
+    private String[] objectids;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,18 +56,18 @@ public class ResultsActivity extends AppCompatActivity {
 
         // get the intent and the data from the previous (search) activity
         Intent intent = getIntent();
-        searchwords = intent.getStringExtra("searchwords");
-
+        String searchwords = intent.getStringExtra("searchwords");
 
         // Building the query: we want to search the collection
-        String searchtype = "collection";
-        Searcher searcher = new Searcher(searchtype);
-        // use the searchwords sent along from the previous activity
-        searcher.createQuery(searchwords);
+        Searcher searcher = new Searcher();
+        searcher.setSearchtype("collection");
 
-        // use Android Volley to create the http GET request to retrieve JSON Objects
+        // create the request queue using Volley
         RequestQueue requestQueue = VolleySingleton.getInstance().getmRequestQueue();
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, searcher.getRequesturl(), new Response.Listener<JSONObject>() {
+
+        // Request the resuls of the search
+        JsonObjectRequest collectionrequest = new JsonObjectRequest(Request.Method.GET, searcher.getRequestURL(searchwords),
+                new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response){
 
@@ -73,11 +76,13 @@ public class ResultsActivity extends AppCompatActivity {
                 Parser parser = new Parser();
                 parser.parseRMCollection(response);
 
-                // retrieve the parsed artistnames as a stringarray
+                // retrieve the parsed artistnames and object ids as a stringarray
                 artistnames = parser.getRMartistnames();
+                objectids = parser.getRMobjectids();
 
-                // set the adapter for the gridview and send the artistsnames-array to the adapter
-                gridview.setAdapter(new ResultsAdapter(getApplicationContext(), artistnames));
+                gridview.setAdapter(new ResultsAdapter(getApplicationContext(), artistnames, objectids));
+
+                Toast.makeText(getApplicationContext(), Arrays.toString(objectids), Toast.LENGTH_LONG).show();
 
             }
         }, new Response.ErrorListener(){
@@ -91,7 +96,8 @@ public class ResultsActivity extends AppCompatActivity {
         });
 
         // add the request to the queue
-        requestQueue.add(request);
+        requestQueue.add(collectionrequest);
+
 
         // What to do when an item in the gridview gets clicked?:
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -15,6 +15,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import nl.mprog.mume.Classes.Image;
 import nl.mprog.mume.R;
 
 public class ResultsAdapter extends BaseAdapter {
@@ -22,10 +23,16 @@ public class ResultsAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
     private String[] artistnames;
+    private String[] imageids;
+    private String[] imageurls;
 
-    public ResultsAdapter(Context c, String[] artistnames) {
+    public ResultsAdapter(Context c, String[] artistnames, String[] imageids) {
         this.context = c;
         this.artistnames = artistnames;
+        this.imageids = imageids;
+
+        Image image = new Image();
+        imageurls = image.getImageURLS(this.imageids);
     }
 
     public int getCount() {
@@ -56,7 +63,8 @@ public class ResultsAdapter extends BaseAdapter {
         // For each item create:
         // 1) a textview to hold the artistname
         TextView theTextview = (TextView) convertView.findViewById(R.id.thumbnailtitle_textview);
-        theTextview.setText(artistnames[position]);
+        String textviewtext = artistnames[position] + " "; //+ imageurls[position];
+        theTextview.setText(textviewtext);
 
         // 2) an imageview to hold the thumbnail
         ImageView theImageView = (ImageView) convertView.findViewById(R.id.thumbnail_imageview);

@@ -22,16 +22,15 @@ public class Searcher {
     private String imageonly = "imgonly=True";
 
 
-    // searchtype has to be either "collection" or "object"
-    public Searcher(String searchtype){
+    // searchtype has to be either "collection", "object" or "image"
+    public Searcher(){
 
         //constructor
-        this.searchtype = searchtype;
 
     }
 
-    // If the searchtype is "object", the searchword needs to be an objectnumber
-    public void createQuery(String searchwords){
+    // If the searchtype is "object" or "image", the searchword needs to be an objectnumber
+    public String getRequestURL(String searchwords){
 
         // get the searchwords and format them correctly
         this.searchwords = searchwords;
@@ -42,24 +41,36 @@ public class Searcher {
             // Build up the request url to retrieve json from the collection endpoint
             urlbase = "https://www.rijksmuseum.nl/api/en/collection?q=";
             this.requesturl = urlbase + this.searchwords + "&" + this.imageonly + "&" + this.apikey + "&" + this.dataformat;
+            return this.requesturl;
+        }
+        else if (searchtype == "image"){
+            urlbase = "https://www.rijksmuseum.nl/api/en/collection/";
 
+            // for the request to work we need to remove the "en-" prefix from the objectnumber
+            // we will remove the first three characters
+            this.searchwords = searchwords.substring(3);
+
+            this.requesturl = urlbase + this.searchwords + "/tiles?" + this.apikey + "&" + this.dataformat;
+
+            Log.e("URL", "The request url is:  " + this.requesturl);
+
+            return this.requesturl;
         }
         else if (searchtype == "object"){
             // Build up the request url to retrieve json from collection details endpoint
             urlbase = "https://www.rijksmuseum.nl/api/en/collection/";
             this.requesturl = urlbase + this.searchwords + "?" + this.apikey + "&" + this.dataformat;
+            return this.requesturl;
         }
         else {
             // this should never happen!
             Log.e("INVALID SEARCHTYPE", "The searchtype provided to the Searcher Class was invalid. " +
-                    "Please either use \"collection\" or \"object\"");
+                    "Please either use \"collection\", \"object\" or \"image\"");
+            return "failure";
         }
 
     }
 
-    public String getRequesturl() {
-        return requesturl;
-    }
 
     private void formatSearchwords(){
 
@@ -70,4 +81,8 @@ public class Searcher {
 
     }
 
+
+    public void setSearchtype(String searchtype) {
+        this.searchtype = searchtype;
+    }
 }

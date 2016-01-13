@@ -12,11 +12,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class Parser {
 
     private StringBuilder names;
+    private StringBuilder ids = new StringBuilder();
+    private StringBuilder imageurls;
+    private String result;
 
     public Parser(){
 
@@ -27,7 +31,7 @@ public class Parser {
 
     public void parseRMCollection(JSONObject response){
 
-        // parses a Rijkmusuem collection-endpoint request
+        // parses a Rijksmuseum collection-endpoint request
         // check if there actually is a response
         if(response == null || response.length() == 0){
             // there was no response
@@ -48,16 +52,79 @@ public class Parser {
             for (int i = 0; i < arraylength; i++){
                 // get the separate objects from the array
                 JSONObject currentArtwork = artarray.getJSONObject(i);
+
                 // find the artistname in the object
                 String maker = currentArtwork.getString("principalOrFirstMaker");
                 // save the names in the stringbuilder
-                this.names.append(maker + "\n");
+                names.append(maker + "\n");
+
+                // find the objectnumber in the object
+                String objectnumber = currentArtwork.getString("id");
+                // save the objectnumber in the stringbuilder
+                ids.append(objectnumber + "\n");
+
+
             }
 
         } catch (JSONException e){
             // Log the type of error that got generated
             Log.e("JSON", e.getMessage());
         }
+    }
+
+    public void parseRMImage(JSONObject response){
+
+        // parses a Rijkmuseum imagetiles-endpoint request
+        // check if there actually is a response
+        if(response == null || response.length() == 0){
+            // there was no response
+            Log.e("JSON", "There was no response from the JSONrequest or the request was " +
+                    "empty.");
+            return;
+        }
+
+        try {
+            // find the array that contains the levels
+            JSONArray levelsarray = response.getJSONArray("levels");
+
+            // loop through the array of levels
+            int arraylength = levelsarray.length();
+            Log.e("arraylength", "this is the length of the levels array: " + Integer.toString(levelsarray.length()));
+            for (int i = 0; i < arraylength; i++){
+                Log.e("**FORLOOP**", "we are in the forloop");
+
+                // get the separate levels from the array
+                JSONObject currentLevel = levelsarray.getJSONObject(i);
+                Log.e("**FORLOOP2**", "currentlevel= " + currentLevel.toString());
+
+                // we only want the imageurl from the smallest level (z6) since we only need to fill a small thumbnail
+                if (Objects.equals(currentLevel.getString("name"), "z0")) {
+
+                    Log.e("CURRENTLEVEL NAME", currentLevel.getString("name"));
+                    // we have the smallest level
+
+                    // find the tiles in the object
+                    JSONArray tiles = currentLevel.getJSONArray("tiles");
+                    Log.e("JSONobject", "this is the format of JSONObject tiles: " + tiles.toString());
+
+                    // loop through the tiles
+                    int tilesarraylength = tiles.length();
+                    String url = tiles.getJSONObject(0).getString("url");
+                    Log.e("TILEURL", url);
+                    result = url;
+                    // we dont need to continu the for-loop, we have found what we wants
+                    return;
+                }
+            }
+        } catch (JSONException e){
+            // Log the type of error that got generated
+            Log.e("JSON", e.getMessage());
+        }
+    }
+
+    public String getRMimageURL(){
+
+        return result;
     }
 
 
@@ -91,4 +158,22 @@ public class Parser {
     }
 
 
+    public String[] getRMobjectids() {
+
+        if (this.ids == null){
+            // the Stringbuilder was empty
+            Log.e("PARSER", "Please first parse the response from the Rijksmuseum API using " +
+                    "parseRMcollection() method");
+            String[] failure = {"error"};
+            return failure;
+        }
+        else{
+            // convert the stringbuilder to stringarray
+            String stringofids = this.ids.toString();
+            String[] result = stringofids.split(Pattern.quote("\n"));
+
+            // return the result
+            return result;
+        }
+    }
 }
