@@ -4,7 +4,7 @@
 
 /* Searcher is an object used to make a query. It takes one arguments: The type of search
    that needs to be made (either retrieving information from the collection or retrieving
-   a specific record. */
+   a specific record) */
 
 package nl.mprog.mume.Classes;
 
@@ -12,7 +12,6 @@ import android.util.Log;
 
 public class Searcher {
 
-    private String urlbase;
     private String searchtype;
     private String searchwords;
     private String requesturl;
@@ -38,20 +37,17 @@ public class Searcher {
         this.searchwords = searchwords;
         formatSearchwords();
 
-        // something needs to happen to the searchwords first (like take out spaces)
-
+        String urlbase;
         if (searchtype == "collection"){
             // Build up the request url to retrieve json from the collection endpoint
-            // Example = https://www.rijksmuseum.nl/api/en/collection?q=Q&imgonly=True&key=fakekey&format=json
-            this.urlbase = "https://www.rijksmuseum.nl/api/en/collection?q=";
-            this.requesturl = this.urlbase + this.searchwords + "&" + this.imageonly + "&" + this.apikey + "&" + this.dataformat;
+            urlbase = "https://www.rijksmuseum.nl/api/en/collection?q=";
+            this.requesturl = urlbase + this.searchwords + "&" + this.imageonly + "&" + this.apikey + "&" + this.dataformat;
 
         }
         else if (searchtype == "object"){
             // Build up the request url to retrieve json from collection details endpoint
-            // Example = https://www.rijksmuseum.nl/api/en/collection/objnum?key=fakekey&format=json
-            this.urlbase = "https://www.rijksmuseum.nl/api/en/collection/";
-            this.requesturl = this.urlbase + this.searchwords + "?" + this.apikey + "&" + this.dataformat;
+            urlbase = "https://www.rijksmuseum.nl/api/en/collection/";
+            this.requesturl = urlbase + this.searchwords + "?" + this.apikey + "&" + this.dataformat;
         }
         else {
             // this should never happen!
@@ -69,7 +65,7 @@ public class Searcher {
 
         // remove any trailing whitespace
         this.searchwords = this.searchwords.trim();
-        // replace any spaces in between the searchwords to "+"
+        // replace any spaces in between the searchwords with "+"
         this.searchwords = this.searchwords.replaceAll(" ", "+");
 
     }

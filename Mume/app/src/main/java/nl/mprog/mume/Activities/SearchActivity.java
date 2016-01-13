@@ -14,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import nl.mprog.mume.Dialogs.HelpDialog;
 import nl.mprog.mume.R;
@@ -63,13 +62,11 @@ public class SearchActivity extends AppCompatActivity {
     // gets executed when the 'Go!' button gets pressed to perform the search
     public void startSearch(View view){
 
-        //Toast.makeText(this, searchbar.getText(), Toast.LENGTH_LONG).show();
         // open new activity to show the results of the search
         Intent startSearch = new Intent(this, ResultsActivity.class);
-
         // send the searchwords along to the next activity
         startSearch.putExtra("searchwords", searchbar.getText().toString());
-
         startActivityForResult(startSearch, 1);
+
     }
 }

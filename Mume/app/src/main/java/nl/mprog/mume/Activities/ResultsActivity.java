@@ -2,7 +2,8 @@
    10001326
    Corine_J@MSN.com */
 
-/* The activity that shows all search results*/
+/* The activity that shows all search results and performs the http GET request to
+   get the results */
 
 package nl.mprog.mume.Activities;
 
@@ -10,6 +11,7 @@ import android.app.DialogFragment;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,74 +42,42 @@ public class ResultsActivity extends AppCompatActivity {
 
     private GridView gridview;
     private String searchwords;
+    private String[] artistnames;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
 
+        gridview = (GridView) findViewById(R.id.results_gridview);
+
         // get the intent and the data from the previous (search) activity
         Intent intent = getIntent();
         searchwords = intent.getStringExtra("searchwords");
 
 
-        // Building the query
+        // Building the query: we want to search the collection
         String searchtype = "collection";
         Searcher searcher = new Searcher(searchtype);
         // use the searchwords sent along from the previous activity
         searcher.createQuery(searchwords);
 
-
-        // Test code for Volley
-        final TextView mTextview = (TextView) findViewById(R.id.volleytest_textview);
-
+        // use Android Volley to create the http GET request to retrieve JSON Objects
         RequestQueue requestQueue = VolleySingleton.getInstance().getmRequestQueue();
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, searcher.getRequesturl(), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response){
 
-                // handle the response of the request
-                // mTextview.setText(response.toString());
+                // handle the response of the request:
                 // parse the response
                 Parser parser = new Parser();
                 parser.parseRMCollection(response);
 
-                // initialize the Adapter for the custom layout of the gridview
-                gridview = (GridView) findViewById(R.id.results_gridview);
+                // retrieve the parsed artistnames as a stringarray
+                artistnames = parser.getRMartistnames();
 
-                // format the artistname correctly --> remove trailing commas
-                String theString = parser.getRMartistnames();
-                String[] artistnames = theString.split(Pattern.quote("\n"));
-                int artistnameslenght = artistnames.length;
-                for(int i = 0; i < artistnameslenght; i++){
-                    if (artistnames[i].endsWith(",")){
-                        // remove the comma
-
-                        // THIS DOES NOT WORK YET!!
-                        artistnames[i] = artistnames[i].substring(0, artistnames[i].length() - 1);
-                    }
-                }
-
-                // set the adapter for the gridview and send the artistsnames as an array to the adapter
+                // set the adapter for the gridview and send the artistsnames-array to the adapter
                 gridview.setAdapter(new ResultsAdapter(getApplicationContext(), artistnames));
-
-                // What to do when an item in the gridview gets clicked?:
-                gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-
-                        // Show the position of the thumbnail the user clicked
-                        Toast.makeText(ResultsActivity.this, "" + position,
-                                Toast.LENGTH_SHORT).show();
-
-                        // Open the next activity when the 9th (in this case last) item is clicked
-                        if (position == (searchwords.length() - 1)) {
-                            Intent showResult = new Intent(ResultsActivity.this, SelectedActivity.class);
-                            startActivityForResult(showResult, 1);
-                        }
-                    }
-                });
-
-                Toast.makeText(getApplicationContext(), parser.getRMartistnames(), Toast.LENGTH_LONG).show();
 
             }
         }, new Response.ErrorListener(){
@@ -115,7 +85,7 @@ public class ResultsActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error){
 
                 // handle any errors that might occur when trying to get the request
-                mTextview.setText(error.getMessage());
+                Log.e("VOLLEY", "There was an error in the response:" + error.getMessage());
 
             }
         });
@@ -123,6 +93,17 @@ public class ResultsActivity extends AppCompatActivity {
         // add the request to the queue
         requestQueue.add(request);
 
+        // What to do when an item in the gridview gets clicked?:
+        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+
+                // Open the next activity when one item is clicked
+                Intent showResult = new Intent(ResultsActivity.this, SelectedActivity.class);
+                showResult.putExtra("position", position);
+                startActivityForResult(showResult, 1);
+
+            }
+        });
     }
 
 

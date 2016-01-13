@@ -12,6 +12,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.regex.Pattern;
+
 public class Parser {
 
     private StringBuilder names;
@@ -31,7 +33,6 @@ public class Parser {
             // there was no response
             Log.e("JSON", "There was no response from the JSONrequest or the request was " +
                     "empty.");
-
             return;
         }
 
@@ -45,33 +46,46 @@ public class Parser {
             // loop through the array
             int arraylength = artarray.length();
             for (int i = 0; i < arraylength; i++){
-
                 // get the separate objects from the array
                 JSONObject currentArtwork = artarray.getJSONObject(i);
+                // find the artistname in the object
                 String maker = currentArtwork.getString("principalOrFirstMaker");
-                // save them in the stringbuilder
+                // save the names in the stringbuilder
                 this.names.append(maker + "\n");
-
             }
 
         } catch (JSONException e){
-            Log.e("JSON", "The array you are trying to find does not exist in the JSONresponse.");
+            // Log the type of error that got generated
+            Log.e("JSON", e.getMessage());
         }
     }
 
 
-    public String getRMartistnames(){
+    public String[] getRMartistnames(){
         // retrieve the artistnames from the Rijksmuseum
 
         if (this.names == null){
             // the Stringbuilder was empty
             Log.e("PARSER", "Please first parse the response from the Rijksmuseum API using " +
                     "parseRMcollection() method");
-            return "failure";
+            String[] failure = {"error"};
+            return failure;
         }
         else{
-            // convert the stringbuilder to string and return the string
-            String result = this.names.toString();
+            // convert the stringbuilder to stringarray
+            String stringofnames = this.names.toString();
+            String[] result = stringofnames.split(Pattern.quote("\n"));
+
+            // remove any commas at the end of the names (the Rijksmuseum puts these there, but they
+            // do not look nice in the UI)
+            int resultlenght = result.length;
+            for(int i = 0; i < resultlenght; i++){
+                result[i] = result[i].trim();
+                if (result[i].endsWith(",")){
+                    result[i] = result[i].substring(0, result[i].length() - 1);
+                }
+            }
+            // return the result
             return result;
         }
     }

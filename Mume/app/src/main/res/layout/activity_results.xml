@@ -35,11 +35,6 @@
         android:background="#ffffff"
         android:elevation="15dp" />
 
-    <TextView
-        android:id="@+id/volleytest_textview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
     <GridView
         android:id="@+id/results_gridview"
         android:layout_width="match_parent"

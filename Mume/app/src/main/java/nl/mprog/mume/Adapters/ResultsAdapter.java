@@ -29,7 +29,7 @@ public class ResultsAdapter extends BaseAdapter {
     }
 
     public int getCount() {
-        // how many items do we want in the gridview?
+        // how many items do we want in the gridview?:
         return artistnames.length;
     }
 
@@ -43,11 +43,12 @@ public class ResultsAdapter extends BaseAdapter {
         return 0;
     }
 
-    // creates views for each item referenced by the Adapter
     public View getView(int position, View convertView, ViewGroup parent) {
 
+        // creates views for each item referenced by the Adapter
+
         if (convertView == null){
-            //There is nog view so we must create a View. We will inflate it from a custom layout
+            //There is no view so we must create a new View. We will inflate it from a custom layout
             this.inflater = LayoutInflater.from(context);
             convertView = inflater.inflate(R.layout.gridview_layout, parent, false);
         }
