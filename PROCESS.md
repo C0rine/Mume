@@ -68,7 +68,7 @@ Tomorrow I will start on writing code to parse the JSON response from the Rijksm
   
 There is still a lot of work to do, but I am very happy that I have managed to get the API partially implemented and can at least show some results. The UI does not look ideal at this moment, and the artistnames that are now displayed in the Gridview have to be formatted better, but I will tackle these problems later on. Tomorrow I will first focus on also retrieving the images from the Rijksmuseum API and showing them in the gridview (right now a standard Nightwatch image from the resources folder is displayed):
   
-![Results Activity 12 jan](/doc/searchactivity12jan2016.jpg) 
+![Results Activity 12 jan](/doc/resultsactivity12jan2016.jpg) 
 
 #Day 8
 **Wed 13 Jan 2016**
