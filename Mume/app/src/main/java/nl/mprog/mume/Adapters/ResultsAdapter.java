@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import nl.mprog.mume.Classes.ImageRetriever;
 import nl.mprog.mume.Classes.QueryMaker;
 import nl.mprog.mume.Classes.VolleySingleton;
+import nl.mprog.mume.CustomView.SquareImageView;
 import nl.mprog.mume.R;
 
 public class ResultsAdapter extends BaseAdapter {
@@ -72,7 +73,7 @@ public class ResultsAdapter extends BaseAdapter {
         // creates views for each item referenced by the Adapter
 
         if (convertView == null){
-            //There is no view so we must create a new View. We will inflate it from a custom layout
+            // This is a new view, not a recycled one. We need to set some attributes.
             this.inflater = LayoutInflater.from(context);
             convertView = inflater.inflate(R.layout.gridview_layout, parent, false);
         }
@@ -84,23 +85,15 @@ public class ResultsAdapter extends BaseAdapter {
         theTextview.setText(textviewtext);
 
         // 2) an imageview to hold the thumbnail
-        final ImageView theImageView = (ImageView) convertView.findViewById(R.id.thumbnail_imageview);
-        theImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        final SquareImageView theImageView = (SquareImageView) convertView.findViewById(R.id.thumbnail_imageview);
+        theImageView.setScaleType(SquareImageView.ScaleType.CENTER_CROP);
         theImageView.setImageResource(R.mipmap.image_icon);
 
         // 3) retrieve the thumbnail imageRetriever url for the imageview
-        // create the request queue using Volley
-        RequestQueue requestQueue = VolleySingleton.getInstance().getmRequestQueue();
-
-        // Create query
-        QueryMaker queryMaker = new QueryMaker();
-        queryMaker.setSearchtype("image");
-
         // resource: http://stackoverflow.com/questions/28120029
-        imageRetriever.retrieveURL(requestQueue, queryMaker, objectids[position], new ImageRetriever.VolleyCallback() {
+        imageRetriever.retrieveURL(objectids[position], new ImageRetriever.VolleyCallback() {
             @Override
             public void onSuccess(String result) {
-                //theTextview.setText(result);
                 String URL = result;
                 if (URL != null) {
 
@@ -129,4 +122,5 @@ public class ResultsAdapter extends BaseAdapter {
 
         return convertView;
     }
+
 }

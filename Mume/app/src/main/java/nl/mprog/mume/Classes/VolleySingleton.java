@@ -10,12 +10,11 @@
 
 package nl.mprog.mume.Classes;
 
-import android.graphics.Bitmap;
-import android.util.LruCache;
-
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
+
+import nl.mprog.mume.Cache.LruBitmapCache;
 
 public class VolleySingleton {
 
@@ -24,27 +23,12 @@ public class VolleySingleton {
     private ImageLoader mImageLoader;
     private RequestQueue mRequestQueue;
 
-
     private VolleySingleton(){
 
         //constructor
         mRequestQueue = Volley.newRequestQueue(MyApplication.getAppContext());
-        mImageLoader = new ImageLoader(mRequestQueue, new ImageLoader.ImageCache() {
-
-            // Allocate cache space for the image(s) we want to retrieve
-            private LruCache<String, Bitmap> cache = new LruCache<>((int) (Runtime.getRuntime().maxMemory()/1024)/8);
-
-            @Override
-            public Bitmap getBitmap(String url) {
-                return cache.get(url);
-            }
-
-            @Override
-            public void putBitmap(String url, Bitmap bitmap) {
-                cache.put(url, bitmap);
-            }
-        });
-
+        mImageLoader = new ImageLoader(mRequestQueue, new LruBitmapCache(
+                LruBitmapCache.getCacheSize(MyApplication.getAppContext())));
     }
 
 

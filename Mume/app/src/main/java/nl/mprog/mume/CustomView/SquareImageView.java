@@ -11,7 +11,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-public class SquareImageView  extends ImageView {
+public class SquareImageView extends ImageView {
 
 
     public SquareImageView(Context context) {

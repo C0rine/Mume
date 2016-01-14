@@ -24,7 +24,12 @@ public class ImageRetriever {
        // constructor
     }
 
-    public String retrieveURL(RequestQueue requestQueue, QueryMaker queryMaker, String imageid, final VolleyCallback callback){
+    public String retrieveURL(String imageid, final VolleyCallback callback){
+
+        QueryMaker queryMaker = new QueryMaker();
+        queryMaker.setSearchtype("image");
+
+        RequestQueue requestQueue = VolleySingleton.getInstance().getmRequestQueue();
 
         // make http GET request to get the reponse of the collection-image endpoint
         JsonObjectRequest imageurlrequest = new JsonObjectRequest(Request.Method.GET, queryMaker.getRequestURL(imageid),

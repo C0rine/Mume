@@ -11,6 +11,8 @@ import android.app.DialogFragment;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,6 +33,7 @@ import nl.mprog.mume.Classes.QueryMaker;
 import nl.mprog.mume.Dialogs.HelpDialog;
 import nl.mprog.mume.R;
 import nl.mprog.mume.Adapters.ResultsAdapter;
+import nl.mprog.mume.Adapters.ResultsAdapterCache;
 import nl.mprog.mume.Classes.VolleySingleton;
 
 
@@ -40,7 +43,11 @@ public class ResultsActivity extends AppCompatActivity {
     private String[] artistnames;
     private String[] objectids;
     private ResultsAdapter resultsAdapter;
+    private ResultsAdapterCache resultsAdapterCache;
 
+//    private RecyclerView mRecyclerView;
+//    private RecyclerView.Adapter mAdapter;
+//    private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +55,9 @@ public class ResultsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_results);
 
         gridview = (GridView) findViewById(R.id.results_gridview);
+//        mRecyclerView = (RecyclerView) findViewById(R.id.results_gridview);
+//        mLayoutManager = new GridLayoutManager(this, 2);
+//        mRecyclerView.setLayoutManager(mLayoutManager);
 
         // get the intent and the data from the previous (search) activity
         Intent intent = getIntent();
@@ -58,7 +68,7 @@ public class ResultsActivity extends AppCompatActivity {
         queryMaker.setSearchtype("collection");
 
         // create the request queue using Volley
-        RequestQueue requestQueue = VolleySingleton.getInstance().getmRequestQueue();
+        final RequestQueue requestQueue = VolleySingleton.getInstance().getmRequestQueue();
 
         // Request the results of the search with http GET request
         JsonObjectRequest collectionrequest = new JsonObjectRequest(Request.Method.GET, queryMaker.getRequestURL(searchwords),
@@ -78,6 +88,13 @@ public class ResultsActivity extends AppCompatActivity {
                 // set the parsed names and ids to the ResultsAdapter and set the adapter to the gridview
                 // to display the results
                 resultsAdapter = new ResultsAdapter(getApplicationContext(), artistnames, objectids);
+
+                resultsAdapterCache = new ResultsAdapterCache(getApplicationContext());
+                resultsAdapterCache.setArtistNames(artistnames);
+                resultsAdapterCache.setObjectIds(objectids);
+
+                //mRecyclerView.setAdapter(resultsAdapterCache);
+
                 gridview.setAdapter(resultsAdapter);
 
             }
