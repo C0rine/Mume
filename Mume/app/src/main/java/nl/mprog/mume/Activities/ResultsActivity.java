@@ -28,6 +28,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONObject;
 
+import nl.mprog.mume.Cache.LruBitmapCache;
 import nl.mprog.mume.Classes.Parser;
 import nl.mprog.mume.Classes.QueryMaker;
 import nl.mprog.mume.Dialogs.HelpDialog;
@@ -94,6 +95,8 @@ public class ResultsActivity extends AppCompatActivity {
                 resultsAdapterCache.setObjectIds(objectids);
 
                 //mRecyclerView.setAdapter(resultsAdapterCache);
+
+
 
                 gridview.setAdapter(resultsAdapter);
 
