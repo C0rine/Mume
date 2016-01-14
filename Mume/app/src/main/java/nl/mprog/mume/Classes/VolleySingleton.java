@@ -11,6 +11,7 @@
 package nl.mprog.mume.Classes;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.util.LruCache;
 
 import com.android.volley.RequestQueue;
@@ -34,6 +35,7 @@ public class VolleySingleton {
             // Allocate cache space for the image(s) we want to retrieve
             private LruCache<String, Bitmap> cache = new LruCache<>((int) (Runtime.getRuntime().maxMemory()/1024)/8);
 
+
             @Override
             public Bitmap getBitmap(String url) {
                 return cache.get(url);
@@ -44,7 +46,6 @@ public class VolleySingleton {
                 cache.put(url, bitmap);
             }
         });
-
     }
 
 

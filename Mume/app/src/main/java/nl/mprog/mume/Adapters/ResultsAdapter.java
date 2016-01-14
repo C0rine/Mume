@@ -86,7 +86,7 @@ public class ResultsAdapter extends BaseAdapter {
         // 2) an imageview to hold the thumbnail
         final ImageView theImageView = (ImageView) convertView.findViewById(R.id.thumbnail_imageview);
         theImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        theImageView.setImageResource(R.mipmap.image_icon);
+        theImageView.setImageResource(R.mipmap.image_viewfiller);
 
         // 3) retrieve the thumbnail imageRetriever url for the imageview
         // create the request queue using Volley
@@ -117,7 +117,9 @@ public class ResultsAdapter extends BaseAdapter {
                         @Override
                         public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
                             // Success! there was an image url retrieved. Set the image in the imageview
+                            theImageView.setAlpha(0f);
                             theImageView.setImageBitmap(response.getBitmap());
+                            theImageView.animate().alpha(1f).setDuration(1000);
                         }
                     });
                 } else {
