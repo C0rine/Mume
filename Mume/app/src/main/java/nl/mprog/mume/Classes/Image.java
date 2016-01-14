@@ -7,7 +7,6 @@
 package nl.mprog.mume.Classes;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -17,69 +16,82 @@ import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONObject;
 
-import java.util.regex.Pattern;
-
 public class Image {
 
-   private StringBuilder urls;
    private StringBuilder resultsbuilder;
-   private String[] results; //= {"hello", "this", "is", "a", "test"};
+   private String[] results;
+   private Parser parser = new Parser();
+
 
    public Image(){
       // constructor
+       resultsbuilder = new StringBuilder();
    }
 
-   public String[] getImageURLS(String[] imageids) {
-       RequestQueue requestQueue = null;
+   public StringBuilder getresultsbuilder(){
+       return this.resultsbuilder;
+   }
+
+
+   /* public String[] getImageURLS(String[] imageids) {
+
+       // create the request queue using Volley
+       RequestQueue requestQueue = VolleySingleton.getInstance().getmRequestQueue();
+
+       // Create query
+       Searcher searcher = new Searcher();
+       searcher.setSearchtype("image");
+
+
+       // Loop trough the imageids
        for (String imageid : imageids) {
 
-           // create the request queue using Volley
-           requestQueue = VolleySingleton.getInstance().getmRequestQueue();
-
-           // Create query
-           Searcher searcher = new Searcher();
-           searcher.setSearchtype("image");
-
-           // make request to get the images
-           JsonObjectRequest imageurlrequest = new JsonObjectRequest(Request.Method.GET, searcher.getRequestURL(imageid),
-                 new Response.Listener<JSONObject>() {
-                     @Override
-                     public void onResponse(JSONObject response) {
-                         // handle the response of the request:
-                         // parse the response
-                         Parser parser = new Parser();
-                         parser.parseRMImage(response);
-
-                         Log.e("PARSING TEST", "this is the response: " + response);
-                         Log.e("PARSING TEST", "this is the parser.getRMimageURL(): " + parser.getRMimageURL());
-                         //Toast.makeText(getApplicationContext(), "Hello world \n" + response, Toast.LENGTH_LONG).show();
-                         //resultsbuilder.append(parser.getRMimageURL() + "\n");
-
-                         //urls.append(theURL + "\n");
-                         //String myString = urls.toString();
-                         //results = myString.split(Pattern.quote("\n"));
-                    }
-                 }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-
-                     // process any errors
-                     Log.e("VOLLEY", "There was an error in the response:" + error.getMessage());
-
-                }
+           String URL = retrieveURL(requestQueue, searcher, imageid, new VolleyCallback() {
+               @Override
+               public void onSuccess(String result) {
+                   getresultsbuilder().append(result);
+                   Log.e("RESULT", getresultsbuilder().toString());
+               }
            });
-
-           requestQueue.add(imageurlrequest);
-
        }
 
-       //String resultstring = resultsbuilder.toString();
-       //results = resultstring.split(Pattern.quote("\n"));
-
-
-
+       // return String[]
        return results;
-   }
+
+   } */
+
+    public String retrieveURL(RequestQueue requestQueue, Searcher searcher, String imageid, final VolleyCallback callback){
+
+        // make request to get the images
+        JsonObjectRequest imageurlrequest = new JsonObjectRequest(Request.Method.GET, searcher.getRequestURL(imageid),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(final JSONObject response) {
+
+                        // parse the response
+                        parser.parseRMImage(response);
+
+                        callback.onSuccess(parser.getRMimageURL());
+
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                // process any errors
+                Log.e("VOLLEY", "There was an error in the response:" + error.getMessage());
+
+            }
+        });
+
+        requestQueue.add(imageurlrequest);
+
+        return "failure";
+    }
+
+    public interface VolleyCallback{
+        void onSuccess(String result);
+    }
 
 }

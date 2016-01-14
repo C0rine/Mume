@@ -17,9 +17,8 @@ import java.util.regex.Pattern;
 
 public class Parser {
 
-    private StringBuilder names;
+    private StringBuilder names = new StringBuilder();
     private StringBuilder ids = new StringBuilder();
-    private StringBuilder imageurls;
     private String result;
 
     public Parser(){
@@ -44,9 +43,6 @@ public class Parser {
             // find the array that contains the artobjects
             JSONArray artarray = response.getJSONArray("artObjects");
 
-            // create a stringbuilder to hold the artistnames
-            this.names = new StringBuilder();
-
             // loop through the array
             int arraylength = artarray.length();
             for (int i = 0; i < arraylength; i++){
@@ -62,7 +58,6 @@ public class Parser {
                 String objectnumber = currentArtwork.getString("id");
                 // save the objectnumber in the stringbuilder
                 ids.append(objectnumber + "\n");
-
 
             }
 
@@ -89,26 +84,19 @@ public class Parser {
 
             // loop through the array of levels
             int arraylength = levelsarray.length();
-            Log.e("arraylength", "this is the length of the levels array: " + Integer.toString(levelsarray.length()));
             for (int i = 0; i < arraylength; i++){
-                Log.e("**FORLOOP**", "we are in the forloop");
 
                 // get the separate levels from the array
                 JSONObject currentLevel = levelsarray.getJSONObject(i);
-                Log.e("**FORLOOP2**", "currentlevel= " + currentLevel.toString());
 
-                // we only want the imageurl from the smallest level (z6) since we only need to fill a small thumbnail
+                // we only want the imageurl from one tile
                 if (Objects.equals(currentLevel.getString("name"), "z0")) {
 
-                    Log.e("CURRENTLEVEL NAME", currentLevel.getString("name"));
                     // we have the smallest level
-
                     // find the tiles in the object
                     JSONArray tiles = currentLevel.getJSONArray("tiles");
                     Log.e("JSONobject", "this is the format of JSONObject tiles: " + tiles.toString());
 
-                    // loop through the tiles
-                    int tilesarraylength = tiles.length();
                     String url = tiles.getJSONObject(0).getString("url");
                     Log.e("TILEURL", url);
                     result = url;

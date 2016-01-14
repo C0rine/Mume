@@ -17,20 +17,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONObject;
-
-import java.util.Arrays;
-import java.util.regex.Pattern;
 
 import nl.mprog.mume.Classes.Parser;
 import nl.mprog.mume.Classes.Searcher;
@@ -45,6 +39,7 @@ public class ResultsActivity extends AppCompatActivity {
     private GridView gridview;
     private String[] artistnames;
     private String[] objectids;
+    private ResultsAdapter resultsAdapter;
 
 
     @Override
@@ -65,7 +60,7 @@ public class ResultsActivity extends AppCompatActivity {
         // create the request queue using Volley
         RequestQueue requestQueue = VolleySingleton.getInstance().getmRequestQueue();
 
-        // Request the resuls of the search
+        // Request the results of the search with http GET request
         JsonObjectRequest collectionrequest = new JsonObjectRequest(Request.Method.GET, searcher.getRequestURL(searchwords),
                 new Response.Listener<JSONObject>() {
             @Override
@@ -80,9 +75,10 @@ public class ResultsActivity extends AppCompatActivity {
                 artistnames = parser.getRMartistnames();
                 objectids = parser.getRMobjectids();
 
-                gridview.setAdapter(new ResultsAdapter(getApplicationContext(), artistnames, objectids));
-
-                Toast.makeText(getApplicationContext(), Arrays.toString(objectids), Toast.LENGTH_LONG).show();
+                // set the parsed names and ids to the ResultsAdapter and set the adapter to the gridview
+                // to display the results
+                resultsAdapter = new ResultsAdapter(getApplicationContext(), artistnames, objectids);
+                gridview.setAdapter(resultsAdapter);
 
             }
         }, new Response.ErrorListener(){
@@ -90,7 +86,7 @@ public class ResultsActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error){
 
                 // handle any errors that might occur when trying to get the request
-                Log.e("VOLLEY", "There was an error in the response:" + error.getMessage());
+                Log.e("VOLLEY", "There was an error in the response to the collection-endpoint:" + error.getMessage());
 
             }
         });
@@ -105,7 +101,8 @@ public class ResultsActivity extends AppCompatActivity {
 
                 // Open the next activity when one item is clicked
                 Intent showResult = new Intent(ResultsActivity.this, SelectedActivity.class);
-                showResult.putExtra("position", position);
+                // send the objectnumber of the selected item along
+                showResult.putExtra("objectid", resultsAdapter.getItem(position));
                 startActivityForResult(showResult, 1);
 
             }
