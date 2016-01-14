@@ -2,7 +2,7 @@
    10001326
    Corine_J@MSN.com */
 
-/* Parses the data retrieved by Volley and Searcher
+/* Parses the data retrieved by Volley and QueryMaker
    Resources: https://www.youtube.com/watch?v=5GzVtP0IODU&list=PLonJJ3BVjZW6CtAMbJz1XD8ELUs1KXaTD&index=37 */
 
 package nl.mprog.mume.Classes;
@@ -21,6 +21,7 @@ public class Parser {
     private StringBuilder ids = new StringBuilder();
     private String result;
 
+
     public Parser(){
 
         //constructor
@@ -34,7 +35,7 @@ public class Parser {
         // check if there actually is a response
         if(response == null || response.length() == 0){
             // there was no response
-            Log.e("JSON", "There was no response from the JSONrequest or the request was " +
+            Log.e("PARSER", "There was no response from the JSONrequest or the request was " +
                     "empty.");
             return;
         }
@@ -62,10 +63,12 @@ public class Parser {
             }
 
         } catch (JSONException e){
-            // Log the type of error that got generated
-            Log.e("JSON", e.getMessage());
+            // Handle any possible errors
+            Log.e("PARSER", "There was an error in parsing for RM Collection endpoint: "
+                    + e.getMessage());
         }
     }
+
 
     public void parseRMImage(JSONObject response){
 
@@ -73,7 +76,7 @@ public class Parser {
         // check if there actually is a response
         if(response == null || response.length() == 0){
             // there was no response
-            Log.e("JSON", "There was no response from the JSONrequest or the request was " +
+            Log.e("PARSER", "There was no response from the JSONrequest or the request was " +
                     "empty.");
             return;
         }
@@ -92,32 +95,32 @@ public class Parser {
                 // we only want the imageurl from one tile
                 if (Objects.equals(currentLevel.getString("name"), "z0")) {
 
-                    // we have the smallest level
-                    // find the tiles in the object
+                    // we have the level with the largest image
+                    // find the tiles in this level
                     JSONArray tiles = currentLevel.getJSONArray("tiles");
-                    Log.e("JSONobject", "this is the format of JSONObject tiles: " + tiles.toString());
-
+                    // get the url from the first tile
                     String url = tiles.getJSONObject(0).getString("url");
-                    Log.e("TILEURL", url);
                     result = url;
-                    // we dont need to continu the for-loop, we have found what we wants
+
+                    // we dont need to continu the for-loop, we have found what we wants so:
                     return;
                 }
             }
         } catch (JSONException e){
-            // Log the type of error that got generated
-            Log.e("JSON", e.getMessage());
+            // Handle any possible errors
+            Log.e("PARSER", "There was an error in parsing for RM collection-image endpoint: "
+                    + e.getMessage());
         }
     }
 
     public String getRMimageURL(){
-
+        // retrieve an image url
         return result;
     }
 
 
     public String[] getRMartistnames(){
-        // retrieve the artistnames from the Rijksmuseum
+        // retrieve the artistnames from the parsed Rijksmuseum collection-endpoint request.
 
         if (this.names == null){
             // the Stringbuilder was empty
@@ -147,6 +150,7 @@ public class Parser {
 
 
     public String[] getRMobjectids() {
+        // retrieve the objectids from the parsed Rijksmuseum collection-endpoint request.
 
         if (this.ids == null){
             // the Stringbuilder was empty

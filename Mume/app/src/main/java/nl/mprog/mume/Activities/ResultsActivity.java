@@ -27,7 +27,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONObject;
 
 import nl.mprog.mume.Classes.Parser;
-import nl.mprog.mume.Classes.Searcher;
+import nl.mprog.mume.Classes.QueryMaker;
 import nl.mprog.mume.Dialogs.HelpDialog;
 import nl.mprog.mume.R;
 import nl.mprog.mume.Adapters.ResultsAdapter;
@@ -54,14 +54,14 @@ public class ResultsActivity extends AppCompatActivity {
         String searchwords = intent.getStringExtra("searchwords");
 
         // Building the query: we want to search the collection
-        Searcher searcher = new Searcher();
-        searcher.setSearchtype("collection");
+        QueryMaker queryMaker = new QueryMaker();
+        queryMaker.setSearchtype("collection");
 
         // create the request queue using Volley
         RequestQueue requestQueue = VolleySingleton.getInstance().getmRequestQueue();
 
         // Request the results of the search with http GET request
-        JsonObjectRequest collectionrequest = new JsonObjectRequest(Request.Method.GET, searcher.getRequestURL(searchwords),
+        JsonObjectRequest collectionrequest = new JsonObjectRequest(Request.Method.GET, queryMaker.getRequestURL(searchwords),
                 new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response){

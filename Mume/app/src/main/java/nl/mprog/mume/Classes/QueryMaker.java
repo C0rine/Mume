@@ -2,7 +2,7 @@
    10001326
    Corine_J@MSN.com */
 
-/* Searcher is an object used to make a query. It takes one arguments: The type of search
+/* QueryMaker is an object used to make a query. It takes one arguments: The type of search
    that needs to be made (either retrieving information from the collection or retrieving
    a specific record) */
 
@@ -10,7 +10,7 @@ package nl.mprog.mume.Classes;
 
 import android.util.Log;
 
-public class Searcher {
+public class QueryMaker {
 
     private String searchtype;
     private String searchwords;
@@ -24,7 +24,7 @@ public class Searcher {
 
 
     // searchtype has to be either "collection", "object" or "image"
-    public Searcher(){
+    public QueryMaker(){
 
         //constructor
 
@@ -60,7 +60,7 @@ public class Searcher {
         }
         else {
             // this should never happen!
-            Log.e("INVALID SEARCHTYPE", "The searchtype provided to the Searcher Class was invalid. " +
+            Log.e("INVALID SEARCHTYPE", "The searchtype provided to the QueryMaker Class was invalid. " +
                     "Please either use \"collection\", \"object\" or \"image\"");
             return "failure";
         }

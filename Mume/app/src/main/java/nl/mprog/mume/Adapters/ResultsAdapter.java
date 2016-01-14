@@ -18,10 +18,8 @@ import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 
-import java.util.Arrays;
-
-import nl.mprog.mume.Classes.Image;
-import nl.mprog.mume.Classes.Searcher;
+import nl.mprog.mume.Classes.ImageRetriever;
+import nl.mprog.mume.Classes.QueryMaker;
 import nl.mprog.mume.Classes.VolleySingleton;
 import nl.mprog.mume.R;
 
@@ -30,28 +28,24 @@ public class ResultsAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
     private String[] artistnames;
-    private String[] imageids;
-    private String[] imageurls;
-    private Image image;
+    private String[] objectids;
+    private ImageRetriever imageRetriever;
 
-    public ResultsAdapter(Context c, String[] artistnames, String[] imageids) {
+    public ResultsAdapter(Context c, String[] artistnames, String[] objectids) {
         this.context = c;
         this.artistnames = artistnames;
-        this.imageids = imageids;
+        this.objectids = objectids;
 
-        image = new Image();
-
-        //imageurls = image.getImageURLS(this.imageids);
-        //Log.e("URLS", Arrays.toString(image.getImageURLS(this.imageids)));
+        imageRetriever = new ImageRetriever();
     }
 
     public int getCount() {
         // how many items do we want in the gridview?:
-        return imageids.length;
+        return objectids.length;
     }
 
     public String getItem(int position) {
-        return imageids[position];
+        return objectids[position];
     }
 
     public long getItemId(int position) {
@@ -72,23 +66,24 @@ public class ResultsAdapter extends BaseAdapter {
         // 1) a textview to hold the artistname
         final TextView theTextview = (TextView) convertView.findViewById(R.id.thumbnailtitle_textview);
         String textviewtext = artistnames[position];
+        //theTextview.setText(textviewtext);
 
         // 2) an imageview to hold the thumbnail
         final ImageView theImageView = (ImageView) convertView.findViewById(R.id.thumbnail_imageview);
         theImageView.setImageResource(R.mipmap.art_nightwatch_square);
         theImageView.setAdjustViewBounds(true);
 
-        // 3) retrieve the image for the image
+        // 3) retrieve the thumbnail imageRetriever url for the imageview
         // create the request queue using Volley
         RequestQueue requestQueue = VolleySingleton.getInstance().getmRequestQueue();
 
         // Create query
-        Searcher searcher = new Searcher();
-        searcher.setSearchtype("image");
+        QueryMaker queryMaker = new QueryMaker();
+        queryMaker.setSearchtype("image");
 
-        // Loop trough the imageids
-        Log.e("COCO", imageids[position]);
-        image.retrieveURL(requestQueue, searcher, imageids[position], new Image.VolleyCallback() {
+        // For each objectid retrieve an image url for the thumbnail
+        // resource: http://stackoverflow.com/questions/28120029
+        imageRetriever.retrieveURL(requestQueue, queryMaker, objectids[position], new ImageRetriever.VolleyCallback() {
             @Override
             public void onSuccess(String result) {
                 theTextview.setText(result);
