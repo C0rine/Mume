@@ -72,3 +72,16 @@ There is still a lot of work to do, but I am very happy that I have managed to g
 
 #Day 8
 **Wed 13 Jan 2016**
+- Started with refactoring of my code, to keep the overview.
+- Along with the artistnames I can now also retrieve the objectnumbers of each searchresult (we need this to retrieve thumbnails).
+- With the objectnumber also retrieved I started on the very long process of getting the image url for the thumbnail. A new request has to be made for each thumbnail. I was very buggy at the start, I ran into multiple problems. After hours of coding and mostly bugfixing I managed to get the image url for each thumbnail into the separate gridview items. (The artistname is still there, but just not visible in the UI). 
+  
+![Results Activity 13 jan](/doc/resultsactivity13jan2016.jpg)  
+  
+Design decisions:  
+- In the results of the request to get the artistnames is also an image. Why not use that? --> That image is (on average) 2000 x 3000 px. To load an image of this size for each searchresults would take a lot of time, but moreover will cost the user a lot of MB's if he/she is not connected to WiFi.
+- So I use the collection-image endpoint of the Rijksmuseum API. A request to this endpoint is made using the objectnumber. The reponse is a list of levels: ` These levels have a number of tiles. The tiles form the full image. You can choose the right level by using the width and height. They describe the total resolution of the chosen level. You can also select a level by name. Level z0 contains the largest available image and z6 the smallest.` ([API documentation](http://rijksmuseum.github.io/)) For now I use the first tile of the highest level, since this was easy to retrieve. Ideally I'd want to use the full image of the smallest level, but not each image has z6 as smallest level. Some only go to z4. So I will create a new method to get a full small-sized thumbnail later. 
+
+#Day 9
+**Thu 14 Jan 2016**  
+
