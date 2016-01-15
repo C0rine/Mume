@@ -55,6 +55,7 @@ public class QueryMaker {
         else if (searchtype == "object"){
             // Build up the request url to retrieve json from collection details endpoint
             urlbase = "https://www.rijksmuseum.nl/api/en/collection/";
+            this.searchwords = searchwords.substring(3);
             this.requesturl = urlbase + this.searchwords + "?" + this.apikey + "&" + this.dataformat;
             return this.requesturl;
         }

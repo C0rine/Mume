@@ -22,7 +22,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import nl.mprog.mume.Classes.Artrecord;
 import nl.mprog.mume.Classes.ImageRetriever;
@@ -61,9 +60,16 @@ public class ResultsAdapter extends BaseAdapter {
         return objectids.length;
     }
 
-    public Artrecord getItem(int position) {
-        Artrecord artItem = new Artrecord("title", artistnames[position], "dating", "materials", objectids[position]);
-        return artItem;
+    public String getItem(int position) {
+
+        // create a query url
+        String searchword = objectids[position];
+        QueryMaker queryMaker = new QueryMaker();
+        String searchtype = "object";
+        queryMaker.setSearchtype(searchtype);
+        String url = queryMaker.getRequestURL(searchword);
+
+        return url;
     }
 
     public long getItemId(int position) {

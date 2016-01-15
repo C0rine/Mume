@@ -16,9 +16,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
 
+import org.json.JSONObject;
+
+import nl.mprog.mume.Adapters.ResultsAdapter;
 import nl.mprog.mume.Classes.Artrecord;
+import nl.mprog.mume.Classes.Parser;
+import nl.mprog.mume.Classes.VolleySingleton;
 import nl.mprog.mume.Dialogs.HelpDialog;
 import nl.mprog.mume.R;
 
@@ -39,15 +49,53 @@ public class SelectedActivity extends AppCompatActivity {
         dating_holder = (TextView) findViewById(R.id.datingholder_textview);
         materials_holder = (TextView) findViewById(R.id.materialsholder_textview);
 
-        Gson gson = new Gson();
-        String strObj = getIntent().getStringExtra("objectid");
-        Artrecord obj = gson.fromJson(strObj, Artrecord.class);
-        Log.e("SELECTED ACT", obj.getPrincipalmaker());
+//        Gson gson = new Gson();
+//        String strObj = getIntent().getStringExtra("objectid");
+//        Artrecord obj = gson.fromJson(strObj, Artrecord.class);
+//        Log.e("SELECTED ACT", obj.getPrincipalmaker());
+//
 
-        artisname_holder.setText(obj.getPrincipalmaker());
-        title_holder.setText(obj.getTitle());
-        dating_holder.setText(obj.getDating());
-        materials_holder.setText(obj.getMaterials());
+        String url = getIntent().getStringExtra("url");
+
+        // create the request queue using Volley
+        RequestQueue requestQueue = VolleySingleton.getInstance().getmRequestQueue();
+
+        // Request the results of the search with http GET request
+        JsonObjectRequest collectionrequest = new JsonObjectRequest(Request.Method.GET, url,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response){
+
+                        // handle the response of the request:
+                        // parse the response
+                        Parser parser = new Parser();
+                        Log.e("Selected Response", response.toString());
+                        parser.parseRMcollectiondetail(response);
+
+                        // retrieve the parsed artistnames and object ids as a stringarray
+                        String artistname = parser.getRMprincipalmakers();
+                        String title = parser.getRMtitle();
+                        String dating = parser.getRMdating();
+                        String materials = parser.getRMmaterials();
+
+                        artisname_holder.setText(artistname);
+                        title_holder.setText(title);
+                        dating_holder.setText(dating);
+                        materials_holder.setText(materials);
+
+                    }
+                }, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error){
+
+                // handle any errors that might occur when trying to get the request
+                Log.e("VOLLEY", "There was an error in the response to the collection-endpoint:" + error.getMessage());
+
+            }
+        });
+
+        // add the request to the queue
+        requestQueue.add(collectionrequest);
 
     }
 

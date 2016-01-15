@@ -117,17 +117,14 @@ public class ResultsActivity extends AppCompatActivity {
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 
-                // use Gson to send an artrecord object to next activity
-                Gson gson = new Gson();
-
                 // Open the next activity when one item is clicked
                 Intent showResult = new Intent(ResultsActivity.this, SelectedActivity.class);
-                // send the artwork as ArtRecord along
 
-                Artrecord record = resultsAdapter.getItem(position);
+                // send the request url along
+                String url = resultsAdapter.getItem(position);
 
-                showResult.putExtra("objectid", gson.toJson(record));
-                Log.e("NEAR INTENT", record.getPrincipalmaker());
+                showResult.putExtra("url", url);
+                Log.e("NEAR INTENT", url);
                 startActivityForResult(showResult, 1);
 
             }

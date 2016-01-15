@@ -17,9 +17,17 @@ import java.util.regex.Pattern;
 
 public class Parser {
 
+    // Stringbuilders for parsing collection
     private StringBuilder names = new StringBuilder();
     private StringBuilder ids = new StringBuilder();
-    private String result;
+
+    // Stringbuilders for parsing collection detail
+    private StringBuilder principalMakers = new StringBuilder();
+    private StringBuilder titles = new StringBuilder();
+    private StringBuilder datings = new StringBuilder();
+    private StringBuilder materials = new StringBuilder();
+
+    private String imageurl;
 
 
     public Parser(){
@@ -100,7 +108,7 @@ public class Parser {
                     JSONArray tiles = currentLevel.getJSONArray("tiles");
                     // get the url from the first tile
                     String url = tiles.getJSONObject(0).getString("url");
-                    result = url;
+                    imageurl = url;
 
                     // we dont need to continu the for-loop, we have found what we wants so:
                     return;
@@ -113,9 +121,61 @@ public class Parser {
         }
     }
 
+
+    public void parseRMcollectiondetail(JSONObject response){
+
+        // parses a Rijkmuseum collection-detail endpoint request
+        // check if there actually is a response
+        if(response == null || response.length() == 0){
+            // there was no response
+            Log.e("PARSER", "There was no response from the JSONrequest or the request was " +
+                    "empty.");
+            return;
+        }
+
+        try {
+            // find the array that contains the levels
+            JSONObject theobject = response.getJSONObject("artObject");
+
+            // get and safe the data we want
+            // names
+            JSONArray namesarray = theobject.getJSONArray("makers");
+            int length = namesarray.length();
+            for (int i = 0; i < length; i ++){
+                principalMakers.append(namesarray.getJSONObject(i).getString("name") + "\n");
+            }
+
+            // title
+            titles.append(theobject.getString("title")  + "\n");
+
+            // dating
+            if (theobject.getJSONObject("dating").getString("year") == null){
+                datings.append("unknown"  + "\n");
+            }
+            else{
+                datings.append(Integer.toString(theobject.getJSONObject("dating").getInt("year")));
+            }
+
+            // materials
+            JSONArray materialsarray = theobject.getJSONArray("materials");
+            int length2 = materialsarray.length();
+            for (int i = 0; i < length2; i ++){
+                materials.append(materialsarray.getString(i)  + "\n");
+            }
+
+
+        } catch (JSONException e){
+            // Handle any possible errors
+            Log.e("PARSER", "There was an error in parsing for RM collection-detail endpoint: "
+                    + e.getMessage());
+        }
+    }
+
+
+
     public String getRMimageURL(){
         // retrieve an image url
-        return result;
+        return imageurl;
     }
 
 
@@ -166,6 +226,75 @@ public class Parser {
 
             // return the result
             return result;
+        }
+    }
+
+    public String getRMprincipalmakers() {
+        // retrieve the objectids from the parsed Rijksmuseum collection-endpoint request.
+
+        if (this.ids == null){
+            // the Stringbuilder was empty
+            Log.e("PARSER", "Please first parse the response from the Rijksmuseum API using " +
+                    "parseRMcollection() method");
+            return "N/A";
+        }
+        else{
+            // convert the stringbuilder to stringarray
+            String stringofnames = this.principalMakers.toString();
+            // return the result
+            return stringofnames;
+        }
+    }
+
+    public String getRMtitle() {
+        // retrieve the objectids from the parsed Rijksmuseum collection-endpoint request.
+
+        if (this.ids == null){
+            // the Stringbuilder was empty
+            Log.e("PARSER", "Please first parse the response from the Rijksmuseum API using " +
+                    "parseRMcollection() method");
+            return "N/A";
+        }
+        else{
+            // convert the stringbuilder to stringarray
+            String stringoftitles = this.titles.toString();
+            // return the result
+            return stringoftitles;
+        }
+    }
+
+    public String getRMdating() {
+        // retrieve the objectids from the parsed Rijksmuseum collection-endpoint request.
+
+        if (this.ids == null){
+            // the Stringbuilder was empty
+            Log.e("PARSER", "Please first parse the response from the Rijksmuseum API using " +
+                    "parseRMcollection() method");
+            return "N/A";
+        }
+        else{
+            // convert the stringbuilder to stringarray
+            String stringofdatings = this.datings.toString();
+            // return the result
+            return stringofdatings;
+        }
+    }
+
+    public String getRMmaterials() {
+        // retrieve the objectids from the parsed Rijksmuseum collection-endpoint request.
+
+        if (this.ids == null){
+            // the Stringbuilder was empty
+            Log.e("PARSER", "Please first parse the response from the Rijksmuseum API using " +
+                    "parseRMcollection() method");
+            return "N/A";
+        }
+        else{
+            // convert the stringbuilder to stringarray
+            String stringofmaterials = this.materials.toString();
+
+            // return the result
+            return stringofmaterials;
         }
     }
 }
