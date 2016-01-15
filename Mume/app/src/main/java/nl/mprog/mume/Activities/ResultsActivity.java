@@ -9,6 +9,7 @@ package nl.mprog.mume.Activities;
 
 import android.app.DialogFragment;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +18,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -40,6 +43,7 @@ public class ResultsActivity extends AppCompatActivity {
     private String[] artistnames;
     private String[] objectids;
     private ResultsAdapter resultsAdapter;
+    private RelativeLayout relativeLayout;
 
 
     @Override
@@ -94,6 +98,16 @@ public class ResultsActivity extends AppCompatActivity {
         // add the request to the queue
         requestQueue.add(collectionrequest);
 
+        // wait some time to allow the gridview to load correctly (for smoother UI experience)
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //Do something after 1500ms
+                // slowly animate the loadingPanel away
+                findViewById(R.id.loadingPanel).animate().alpha(0f).setDuration(1000);
+            }
+        }, 1500);
 
         // What to do when an item in the gridview gets clicked?:
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
