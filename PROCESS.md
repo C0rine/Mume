@@ -84,4 +84,14 @@ Design decisions:
 
 #Day 9
 **Thu 14 Jan 2016**  
+- Refactored code. I have changed some class names to better suit their actual functions.
+- Set the images in the imageview of the gridview (this is still only the first tile of the highest level (see previous day log), I will write a method for a full image later).  
+![Results Activity 14 jan](/doc/resultsactivity14jan2016.jpg)  
 
+- Made a custom ImageView called SquareImageView which will make sure the images in the tiles of the gridview are always square. If the image is not square itself it will be cropped to center.
+  
+The scrolling of the gridview does not go really smooth. I have used a placeholder image to fill the image with while in the background the actual artwork image is being retrieved. It still was not really smooth since images would just randomly pop up in the imageview. To make this look less hectic and unsettling for the user I have used a fade-in animation to load the images in the imageview.  
+  
+I have spend a lot of hours on the recycling of views in the gridview ([link](https://www.udacity.com/course/viewer#!/c-ud853/l-1395568821/m-1601259313)). For now I have saved the images in cache, but when the user scrolls, there are still network requests being made. This is a bit inconvient when the user scrolls up and down. But since Android implemented it this way I assume for now this is how it is supposed to work. There are still some glitches in the UI when loading the tiles for the first time, but I will try to fix these tomorrow.  
+  
+I have branched my repo since I tried another LruCache approach to fix the glitches in de gridview. It gave me more glitches. I thought however I might need the code later so I saved it in a commit on a different branch.
