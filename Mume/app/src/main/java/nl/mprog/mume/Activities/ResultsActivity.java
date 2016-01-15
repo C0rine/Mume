@@ -26,9 +26,15 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
+import java.lang.annotation.Target;
+
+import javax.xml.transform.Source;
+
+import nl.mprog.mume.Classes.Artrecord;
 import nl.mprog.mume.Classes.Parser;
 import nl.mprog.mume.Classes.QueryMaker;
 import nl.mprog.mume.Dialogs.HelpDialog;
@@ -43,8 +49,6 @@ public class ResultsActivity extends AppCompatActivity {
     private String[] artistnames;
     private String[] objectids;
     private ResultsAdapter resultsAdapter;
-    private RelativeLayout relativeLayout;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,10 +117,17 @@ public class ResultsActivity extends AppCompatActivity {
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 
+                // use Gson to send an artrecord object to next activity
+                Gson gson = new Gson();
+
                 // Open the next activity when one item is clicked
                 Intent showResult = new Intent(ResultsActivity.this, SelectedActivity.class);
-                // send the objectnumber of the selected item along
-                showResult.putExtra("objectid", resultsAdapter.getItem(position));
+                // send the artwork as ArtRecord along
+
+                Artrecord record = resultsAdapter.getItem(position);
+
+                showResult.putExtra("objectid", gson.toJson(record));
+                Log.e("NEAR INTENT", record.getPrincipalmaker());
                 startActivityForResult(showResult, 1);
 
             }
