@@ -95,3 +95,12 @@ The scrolling of the gridview does not go really smooth. I have used a placehold
 I have spend a lot of hours on the recycling of views in the gridview ([link](https://www.udacity.com/course/viewer#!/c-ud853/l-1395568821/m-1601259313)). For now I have saved the images in cache, but when the user scrolls, there are still network requests being made. This is a bit inconvient when the user scrolls up and down. But since Android implemented it this way I assume for now this is how it is supposed to work. There are still some glitches in the UI when loading the tiles for the first time, but I will try to fix these tomorrow.  
   
 I have branched my repo since I tried another LruCache approach to fix the glitches in de gridview. It gave me more glitches. I thought however I might need the code later so I saved it in a commit on a different branch.
+
+#Day 10
+**Fri 15 Jan 2016**  
+- Added ProgressBar (loading circle) to the Results-Activity to further smoothen the UI. This loading circle now is showing for a fixed 1500ms to give the gridview behind it some time to load. Ideally I would like this to be the actual time to load, but I will implement this probably in the last week.
+- I have implemented a way to get the data from the collection-detail endpoint of the Rijksmuseum API. The request is made when the user presses one of the tiles and goes to the Selected-Activity. So the artist name, materials, dating, etc.. can be viewed now in the Selected-Activity. What is left to do is to also show the appropriate image. I will try to implement this upcoming weekend.
+
+#Weekend
+**Sat 16 Jan and Sun 17 Jan 2016**  
+
