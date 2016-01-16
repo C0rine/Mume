@@ -43,7 +43,7 @@ public class QueryMaker {
             this.requesturl = urlbase + this.searchwords + "&" + this.imageonly + "&" + this.apikey + "&" + this.dataformat;
             return this.requesturl;
         }
-        else if (searchtype == "image"){
+        else if ((searchtype == "image") && (this.searchwords.length() > 3)){
             // Build up the request url to retrieve json from the collection-image endpoint
             urlbase = "https://www.rijksmuseum.nl/api/en/collection/";
             // for the request to work we need to remove the "en-" prefix from the objectnumber:
@@ -52,7 +52,7 @@ public class QueryMaker {
             this.requesturl = urlbase + this.searchwords + "/tiles?" + this.apikey + "&" + this.dataformat;
             return this.requesturl;
         }
-        else if (searchtype == "object"){
+        else if ((searchtype == "object") && (this.searchwords.length() > 3)){
             // Build up the request url to retrieve json from collection details endpoint
             urlbase = "https://www.rijksmuseum.nl/api/en/collection/";
             this.searchwords = searchwords.substring(3);
