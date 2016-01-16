@@ -21,12 +21,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
-import nl.mprog.mume.Adapters.ResultsAdapter;
-import nl.mprog.mume.Classes.Artrecord;
 import nl.mprog.mume.Classes.Parser;
 import nl.mprog.mume.Classes.VolleySingleton;
 import nl.mprog.mume.Dialogs.HelpDialog;

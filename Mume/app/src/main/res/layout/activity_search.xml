@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:elevation="15dp"
-            android:onClick="startSearch" />
+            android:onClick="startSearch"/>
 
     </LinearLayout>
 
