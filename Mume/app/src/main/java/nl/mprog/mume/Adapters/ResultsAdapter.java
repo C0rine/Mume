@@ -23,7 +23,6 @@ import com.android.volley.toolbox.ImageLoader;
 
 import java.util.ArrayList;
 
-import nl.mprog.mume.Classes.Artrecord;
 import nl.mprog.mume.Classes.ImageRetriever;
 import nl.mprog.mume.Classes.QueryMaker;
 import nl.mprog.mume.Classes.VolleySingleton;
@@ -109,7 +108,6 @@ public class ResultsAdapter extends BaseAdapter {
         imageRetriever.retrieveURL(requestQueue, queryMaker, objectids[position], new ImageRetriever.VolleyCallback() {
             @Override
             public void onSuccess(String result) {
-                //theTextview.setText(result);
                 String URL = result;
                 if (URL != null) {
 

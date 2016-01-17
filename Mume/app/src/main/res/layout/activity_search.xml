@@ -54,7 +54,9 @@
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginBottom="20dp"
-            android:elevation="15dp" />
+            android:elevation="15dp"
+            android:imeOptions="actionGo"
+            android:inputType="text"/>
 
         <Button
             android:id="@+id/startsearch_button"
