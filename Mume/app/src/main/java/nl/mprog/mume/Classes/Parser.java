@@ -27,8 +27,8 @@ public class Parser {
     private StringBuilder datings = new StringBuilder();
     private StringBuilder materials = new StringBuilder();
 
+    private JSONArray levelsarray;
     private String imageurl;
-
 
     public Parser(){
 
@@ -91,29 +91,29 @@ public class Parser {
 
         try {
             // find the array that contains the levels
-            JSONArray levelsarray = response.getJSONArray("levels");
+            levelsarray = response.getJSONArray("levels");
 
-            // loop through the array of levels
-            int arraylength = levelsarray.length();
-            for (int i = 0; i < arraylength; i++){
-
-                // get the separate levels from the array
-                JSONObject currentLevel = levelsarray.getJSONObject(i);
-
-                // we only want the imageurl from one tile
-                if (Objects.equals(currentLevel.getString("name"), "z0")) {
-
-                    // we have the level with the largest image
-                    // find the tiles in this level
-                    JSONArray tiles = currentLevel.getJSONArray("tiles");
-                    // get the url from the first tile
-                    String url = tiles.getJSONObject(0).getString("url");
-                    imageurl = url;
-
-                    // we dont need to continu the for-loop, we have found what we wants so:
-                    return;
-                }
-            }
+//            // loop through the array of levels
+//            int arraylength = levelsarray.length();
+//            for (int i = 0; i < arraylength; i++){
+//
+//                // get the separate levels from the array
+//                JSONObject currentLevel = levelsarray.getJSONObject(i);
+//
+//                // we only want the imageurl from one tile
+//                if (Objects.equals(currentLevel.getString("name"), "z0")) {
+//
+//                    // we have the level with the largest image
+//                    // find the tiles in this level
+//                    JSONArray tiles = currentLevel.getJSONArray("tiles");
+//                    // get the url from the first tile
+//                    String url = tiles.getJSONObject(0).getString("url");
+//                    imageurl = url;
+//
+//                    // we dont need to continu the for-loop, we have found what we wants so:
+//                    return;
+//                }
+//            }
         } catch (JSONException e){
             // Handle any possible errors
             Log.e("PARSER", "There was an error in parsing for RM collection-image endpoint: "
@@ -176,6 +176,10 @@ public class Parser {
     public String getRMimageURL(){
         // retrieve an image url
         return imageurl;
+    }
+
+    public JSONArray getRMImageLevelsarray() {
+        return levelsarray;
     }
 
 

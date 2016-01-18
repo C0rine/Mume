@@ -116,7 +116,6 @@ public class ResultsActivity extends AppCompatActivity {
         searchbar.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     if (event.getRawX() >= (searchbar.getRight() - searchbar.getCompoundDrawables()
                             [2].getBounds().width())) {

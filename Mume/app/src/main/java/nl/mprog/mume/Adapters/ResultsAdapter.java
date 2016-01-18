@@ -21,6 +21,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 
 import nl.mprog.mume.Classes.ImageRetriever;
@@ -105,10 +107,14 @@ public class ResultsAdapter extends BaseAdapter {
         queryMaker.setSearchtype("image");
 
         // resource: http://stackoverflow.com/questions/28120029
-        imageRetriever.retrieveURL(requestQueue, queryMaker, objectids[position], new ImageRetriever.VolleyCallback() {
+        imageRetriever.retrieveRMThumbnailArray(requestQueue, queryMaker, objectids[position], new ImageRetriever.VolleyCallback() {
             @Override
-            public void onSuccess(String result) {
-                String URL = result;
+            public void onSuccess(JSONArray result) {
+                JSONArray levels = result;
+
+                // get the url from the right level
+                String URL = imageRetriever.getThumbnailURL(levels);
+
                 if (URL != null) {
 
                     // use the image loader to get the image
