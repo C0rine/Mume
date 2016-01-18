@@ -103,4 +103,8 @@ I have branched my repo since I tried another LruCache approach to fix the glitc
 
 #Weekend
 **Sat 16 Jan and Sun 17 Jan 2016**  
+I have started using GitHub Issues to remind myself of what I still need to do, but also to document any bugs I find now that want to fix in the last week. Also on friday I said I wanted to write a method to get a whole image (instead of one tile). I did not have the time/energy to do this. I only wrote some pseudocode for it. What I did do:  
+- Added onTouchListener to the search-icon in the editText used for searching. The user can now also click the icon to start the search.
+- I have also implemented the searchbar in the results-activity. The user can now immediatly start a new search from within this activity. This bar now also shows which words were searched when the result is shown.
+- Both the on-screen keyboard for the search-activity and the results-activity have been changed to show a 'Go' button instead of a return button. This 'Go' button can also be used to start a new search.
 
