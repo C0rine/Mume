@@ -7,8 +7,6 @@
 
 package nl.mprog.mume.Classes;
 
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -72,6 +70,7 @@ public class ImageRetriever {
     // Resource: http://stackoverflow.com/questions/6695710
     public String getThumbnailURL(JSONArray levelsarray){
 
+
         String[] levels = {"z6", "z5", "z4", "z3", "z2", "z1", "z0"};
         int levelslength = levels.length;
         int arraylength = levelsarray.length();
@@ -93,13 +92,14 @@ public class ImageRetriever {
                     Log.e("THUMBNAIL", "currentlevel width: " + currentLevel.getInt("width"));
 
                     // we want the total size of the level to be at least 350x350 px to fill a thumbnail
-                    if (Objects.equals(currentLevel.getString("name"), levels[j]) && currentLevel.getInt("width") > 350
-                            && currentLevel.getInt("height") > 350){
+                    if (Objects.equals(currentLevel.getString("name"), levels[j]) && currentLevel.getInt("width") > 250
+                            && currentLevel.getInt("height") > 250){
                         Log.e("THUMBNAIL", "we find level: " + levels[j]);
                         // loop throught the tiles and find the one at position 0,0
                         JSONArray tiles = currentLevel.getJSONArray("tiles");
                         int tilesLength = tiles.length();
                         for (int k = 0; k < tilesLength; k++){
+
                             if (tiles.getJSONObject(k).getInt("x") == 0 && tiles.getJSONObject(k).getInt("y") == 0){
                                 return tiles.getJSONObject(k).getString("url");
                             }
@@ -107,6 +107,7 @@ public class ImageRetriever {
                     }
                 }
             }
+
 
             return null;
 
@@ -119,5 +120,4 @@ public class ImageRetriever {
         }
 
     }
-
 }
