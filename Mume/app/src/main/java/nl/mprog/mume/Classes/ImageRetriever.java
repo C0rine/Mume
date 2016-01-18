@@ -87,14 +87,10 @@ public class ImageRetriever {
 
                 for (int i = 0; i < arraylength; i++){
                     JSONObject currentLevel = levelsarray.getJSONObject(i);
-                    Log.e("THUMBNAIL", "currentlevel name: " + currentLevel.get("name"));
-                    Log.e("THUMBNAIL", "levels[j]: " + levels[j]);
-                    Log.e("THUMBNAIL", "currentlevel width: " + currentLevel.getInt("width"));
 
                     // we want the total size of the level to be at least 350x350 px to fill a thumbnail
                     if (Objects.equals(currentLevel.getString("name"), levels[j]) && currentLevel.getInt("width") > 250
                             && currentLevel.getInt("height") > 250){
-                        Log.e("THUMBNAIL", "we find level: " + levels[j]);
                         // loop throught the tiles and find the one at position 0,0
                         JSONArray tiles = currentLevel.getJSONArray("tiles");
                         int tilesLength = tiles.length();

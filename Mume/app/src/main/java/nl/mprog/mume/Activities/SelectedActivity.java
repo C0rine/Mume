@@ -13,19 +13,25 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.NetworkImageView;
 
 import org.json.JSONObject;
 
 import nl.mprog.mume.Classes.Parser;
 import nl.mprog.mume.Classes.VolleySingleton;
+import nl.mprog.mume.CustomView.TouchImageView;
 import nl.mprog.mume.Dialogs.HelpDialog;
 import nl.mprog.mume.R;
 
@@ -35,30 +41,64 @@ public class SelectedActivity extends AppCompatActivity {
     private TextView title_holder;
     private TextView dating_holder;
     private TextView materials_holder;
+    private TouchImageView image_holder;
+    private ScrollView scrollView;
+
+    private VolleySingleton volleySingleton;
+    private ImageLoader imageLoader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selected);
 
+        volleySingleton = VolleySingleton.getInstance();
+        imageLoader = volleySingleton.getmImageLoader();
+
         artisname_holder = (TextView) findViewById(R.id.artistnameholder_textview);
         title_holder = (TextView) findViewById(R.id.titleholder_textview);
         dating_holder = (TextView) findViewById(R.id.datingholder_textview);
         materials_holder = (TextView) findViewById(R.id.materialsholder_textview);
+        image_holder = (TouchImageView) findViewById(R.id.artimage_imageview);
+        scrollView = (ScrollView) findViewById(R.id.selected_scrollview);
 
-//        Gson gson = new Gson();
-//        String strObj = getIntent().getStringExtra("objectid");
-//        Artrecord obj = gson.fromJson(strObj, Artrecord.class);
-//        Log.e("SELECTED ACT", obj.getPrincipalmaker());
-//
+        String dataUrl = getIntent().getStringExtra("dataUrl");
 
-        String url = getIntent().getStringExtra("url");
+        String imageUrl = getIntent().getStringExtra("imageUrl");
+        image_holder.setImageUrl(imageUrl, imageLoader);
+
+        // prevent scrolling of scrollview when the user uses the image to zoom
+        image_holder.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Disallow ScrollView to intercept touch events.
+                        scrollView.requestDisallowInterceptTouchEvent(true);
+                        // Disable touch on transparent view
+                        return false;
+
+                    case MotionEvent.ACTION_UP:
+                        // Allow ScrollView to intercept touch events.
+                        scrollView.requestDisallowInterceptTouchEvent(false);
+                        return true;
+
+                    case MotionEvent.ACTION_MOVE:
+                        scrollView.requestDisallowInterceptTouchEvent(true);
+                        return false;
+
+                    default:
+                        return true;
+                }
+            }
+        });
 
         // create the request queue using Volley
         RequestQueue requestQueue = VolleySingleton.getInstance().getmRequestQueue();
 
         // Request the results of the search with http GET request
-        JsonObjectRequest collectionrequest = new JsonObjectRequest(Request.Method.GET, url,
+        JsonObjectRequest collectionrequest = new JsonObjectRequest(Request.Method.GET, dataUrl,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response){

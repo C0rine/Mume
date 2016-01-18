@@ -24,12 +24,12 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <ImageView
+            <nl.mprog.mume.CustomView.TouchImageView
                 android:id="@+id/artimage_imageview"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/art_nightwatch"
-                android:scaleType="fitStart"
+                android:scaleType="centerCrop"
                 android:adjustViewBounds="true" />
 
             <Button
@@ -57,12 +57,12 @@
             <TableLayout
                 android:id="@+id/metadata_tablelayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <TableRow
                     android:id="@+id/metadata_tablerow_1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:id="@+id/artisttitle_textview"
@@ -78,14 +78,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Rembrandt Harmensz. van Rijn"/>
+                        android:layout_weight="1"/>
 
                 </TableRow>
 
                 <TableRow
                     android:id="@+id/metadata_tablerow_2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:id="@+id/titletitle_textview"
@@ -101,14 +101,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="The Night Watch"/>
+                        android:layout_weight="1"/>
 
                 </TableRow>
 
                 <TableRow
                     android:id="@+id/metadata_tablerow_3"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:id="@+id/datingtitle_textiew"
@@ -124,14 +124,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="1642"/>
+                        android:layout_weight="1"/>
 
                 </TableRow>
 
                 <TableRow
                     android:id="@+id/metadata_tablerow_4"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:id="@+id/materialstitle_textview"
@@ -146,8 +146,8 @@
                         android:id="@+id/materialsholder_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Oil on canvas"
-                        android:textAppearance="?android:attr/textAppearanceMedium"/>
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:layout_weight="1"/>
 
                 </TableRow>
 

@@ -20,6 +20,7 @@ public class Parser {
     // Stringbuilders for parsing collection
     private StringBuilder names = new StringBuilder();
     private StringBuilder ids = new StringBuilder();
+    private StringBuilder urlBigImages = new StringBuilder();
 
     // Stringbuilders for parsing collection detail
     private StringBuilder principalMakers = new StringBuilder();
@@ -68,6 +69,10 @@ public class Parser {
                 // save the objectnumber in the stringbuilder
                 ids.append(objectnumber + "\n");
 
+                // find the url to the bigger image of the artwork
+                String url = currentArtwork.getJSONObject("webImage").getString("url");
+                urlBigImages.append(url + "\n");
+
             }
 
         } catch (JSONException e){
@@ -93,27 +98,27 @@ public class Parser {
             // find the array that contains the levels
             levelsarray = response.getJSONArray("levels");
 
-//            // loop through the array of levels
-//            int arraylength = levelsarray.length();
-//            for (int i = 0; i < arraylength; i++){
-//
-//                // get the separate levels from the array
-//                JSONObject currentLevel = levelsarray.getJSONObject(i);
-//
-//                // we only want the imageurl from one tile
-//                if (Objects.equals(currentLevel.getString("name"), "z0")) {
-//
-//                    // we have the level with the largest image
-//                    // find the tiles in this level
-//                    JSONArray tiles = currentLevel.getJSONArray("tiles");
-//                    // get the url from the first tile
-//                    String url = tiles.getJSONObject(0).getString("url");
-//                    imageurl = url;
-//
-//                    // we dont need to continu the for-loop, we have found what we wants so:
-//                    return;
-//                }
-//            }
+            // loop through the array of levels
+            int arraylength = levelsarray.length();
+            for (int i = 0; i < arraylength; i++){
+
+                // get the separate levels from the array
+                JSONObject currentLevel = levelsarray.getJSONObject(i);
+
+                // we only want the imageurl from one tile
+                if (Objects.equals(currentLevel.getString("name"), "z0")) {
+
+                    // we have the level with the largest image
+                    // find the tiles in this level
+                    JSONArray tiles = currentLevel.getJSONArray("tiles");
+                    // get the url from the first tile
+                    String url = tiles.getJSONObject(0).getString("url");
+                    imageurl = url;
+
+                    // we dont need to continu the for-loop, we have found what we wants so:
+                    return;
+                }
+            }
         } catch (JSONException e){
             // Handle any possible errors
             Log.e("PARSER", "There was an error in parsing for RM collection-image endpoint: "
@@ -178,8 +183,19 @@ public class Parser {
         return imageurl;
     }
 
+
     public JSONArray getRMImageLevelsarray() {
         return levelsarray;
+    }
+
+
+    public String[] getRMbigImageUrl(){
+
+        String stringofurls = this.urlBigImages.toString();
+        String[] result = stringofurls.split(Pattern.quote("\n"));
+
+        return result;
+
     }
 
 

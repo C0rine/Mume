@@ -20,7 +20,6 @@ import android.widget.TextView;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
 
 import org.json.JSONArray;
 
@@ -37,18 +36,20 @@ public class ResultsAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private String[] artistnames;
     private String[] objectids;
+    private String[] bigImageUrls;
     private ImageRetriever imageRetriever;
 
     private VolleySingleton volleySingleton;
     private ImageLoader imageLoader;
     final ArrayList<Bitmap> bitmapArrayList;
 
-    public ResultsAdapter(Context c, String[] artistnames, String[] objectids) {
+    public ResultsAdapter(Context c, String[] artistnames, String[] objectids, String[] bigImageUrls) {
 
         // constructor
         this.context = c;
         this.artistnames = artistnames;
         this.objectids = objectids;
+        this.bigImageUrls = bigImageUrls;
 
         volleySingleton = VolleySingleton.getInstance();
         imageLoader = volleySingleton.getmImageLoader();
@@ -60,6 +61,10 @@ public class ResultsAdapter extends BaseAdapter {
     public int getCount() {
         // how many items do we want in the gridview?:
         return objectids.length;
+    }
+
+    public String getImage(int position){
+        return bigImageUrls[position];
     }
 
     public String getItem(int position) {

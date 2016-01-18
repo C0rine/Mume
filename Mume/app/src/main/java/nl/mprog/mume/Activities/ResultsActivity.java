@@ -37,6 +37,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONObject;
 
+import java.util.Arrays;
+
 import nl.mprog.mume.Classes.Parser;
 import nl.mprog.mume.Classes.QueryMaker;
 import nl.mprog.mume.Dialogs.HelpDialog;
@@ -54,6 +56,7 @@ public class ResultsActivity extends AppCompatActivity {
 
     private String[] artistnames;
     private String[] objectids;
+    private String[] bigImageUrls;
 
     private ResultsAdapter resultsAdapter;
 
@@ -107,7 +110,9 @@ public class ResultsActivity extends AppCompatActivity {
 
                 // send the request url along
                 String url = resultsAdapter.getItem(position);
-                showResult.putExtra("url", url);
+                String imageurl = resultsAdapter.getImage(position);
+                showResult.putExtra("dataUrl", url);
+                showResult.putExtra("imageUrl", imageurl);
                 startActivityForResult(showResult, 1);
             }
         });
@@ -191,10 +196,12 @@ public class ResultsActivity extends AppCompatActivity {
                         // retrieve the parsed artistnames and object ids as a stringarray
                         artistnames = parser.getRMartistnames();
                         objectids = parser.getRMobjectids();
+                        bigImageUrls = parser.getRMbigImageUrl();
+                        Log.e("ImageURL", Arrays.toString(bigImageUrls));
 
                         // set the parsed names and ids to the ResultsAdapter and set the adapter to the gridview
                         // to display the results
-                        resultsAdapter = new ResultsAdapter(getApplicationContext(), artistnames, objectids);
+                        resultsAdapter = new ResultsAdapter(getApplicationContext(), artistnames, objectids, bigImageUrls);
                         gridview.setAdapter(resultsAdapter);
 
 

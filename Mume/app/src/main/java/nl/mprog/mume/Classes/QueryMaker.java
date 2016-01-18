@@ -40,7 +40,8 @@ public class QueryMaker {
         if (searchtype == "collection"){
             // Build up the request url to retrieve json from the collection endpoint
             urlbase = "https://www.rijksmuseum.nl/api/en/collection?q=";
-            this.requesturl = urlbase + this.searchwords + "&" + this.imageonly + "&" + this.apikey + "&" + this.dataformat;
+            this.requesturl = urlbase + this.searchwords + "&" + this.imageonly + "&s=relevance" + "&" + this.apikey + "&"
+                    + this.dataformat;
             return this.requesturl;
         }
         else if ((searchtype == "image") && (this.searchwords.length() > 3)){
