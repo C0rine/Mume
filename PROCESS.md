@@ -108,3 +108,15 @@ I have started using GitHub Issues to remind myself of what I still need to do, 
 - I have also implemented the searchbar in the results-activity. The user can now immediatly start a new search from within this activity. This bar now also shows which words were searched when the result is shown.
 - Both the on-screen keyboard for the search-activity and the results-activity have been changed to show a 'Go' button instead of a return button. This 'Go' button can also be used to start a new search.
 
+#Day 11
+**Mon 18 Jan 2016**  
+- I have written a method that retrieves a better tile to be shown in the results-activity:  
+![Results Activity 18 jan](/doc/resultsactivity18jan2016.jpg)  
+- I had decided not to get several tiles and try to merge them, but instead find the lowest level of the image in which the image would still be at least 250 x 250 px (enough to fill a thumbnail). From that level I would then take the first tile. This saves me a lot of network requests to retrieve multiple tiles for each thumbnail and also a lot time that would be needed to both retrieve the bitmaps and merge them.
+- I tried to use NetworkImageView for the thumbnails (for better efficiency) but this gave multiple glitches (i.e. some images would not load anymore), so I decided to just keep the original code.
+- Clicking on a result now also sends an image to the selected-activity. In this activity it gets placed in a TouchImageView (a custom [ImageView class](https://github.com/MikeOrtiz/TouchImageView) by Michael Ortiz). TouchImageView allows the user to also zoom the image and pan it.  
+![Selected Activity 18 jan](/doc/selectedactivity18jan2016.jpg)  
+- Added 'sort by relevance' to the request being made to the Rijksmuseum API.
+- Fixed some minor lay-out issues.
+
+Tomorrow I will stop trying to fix the bugs that are still left in the results-activity and selected-activity. They both mainly function and most of the bugs are just UI issues. In the last week I will have time to fix them. Right now I want to start focussing on the image-editting. I will try to implement the [Aviary SDK](https://developers.aviary.com/) (and not try to program this myself).
