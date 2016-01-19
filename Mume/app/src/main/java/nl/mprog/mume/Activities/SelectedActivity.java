@@ -8,6 +8,7 @@ package nl.mprog.mume.Activities;
 
 import android.app.DialogFragment;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +18,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -24,6 +26,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.aviary.android.feather.sdk.AviaryIntent;
 
 import org.json.JSONObject;
 
@@ -45,6 +48,8 @@ public class SelectedActivity extends AppCompatActivity {
     private VolleySingleton volleySingleton;
     private ImageLoader imageLoader;
 
+    private String imageUrl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +67,7 @@ public class SelectedActivity extends AppCompatActivity {
 
         String dataUrl = getIntent().getStringExtra("dataUrl");
 
-        String imageUrl = getIntent().getStringExtra("imageUrl");
+        imageUrl = getIntent().getStringExtra("imageUrl");
         image_holder.setImageUrl(imageUrl, imageLoader);
 
         // prevent scrolling of scrollview when the user uses the image to zoom
@@ -165,8 +170,46 @@ public class SelectedActivity extends AppCompatActivity {
     // gets executed when the 'Meme it' button gets pressed
     public void startEdit(View view){
         // open the EditActivity to start editing the image
-        Intent startEdit = new Intent(this, EditActivity.class);
-        startActivityForResult(startEdit, 1);
+//        Intent startEdit = new Intent(this, EditActivity.class);
+//        startActivityForResult(startEdit, 1);
+
+        /* 2) Create a new Intent */
+        Intent imageEditorIntent = new AviaryIntent.Builder(this)
+                .setData(Uri.parse(imageUrl))
+                .build();
+
+        /* 3) Start the Image Editor with request code 1 */
+        startActivityForResult(imageEditorIntent, 1);
+    }
+
+    // what to do when we are done with the image-editing in the aviary activity:
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+
+                /* 4) Make a case for the request code we passed to startActivityForResult() */
+                case 1:
+
+                    Uri mImageUri = data.getData();
+                    shareImage(mImageUri);
+
+                    break;
+            }
+        }
+    }
+
+    // method to open a share intent
+    public void shareImage(Uri imageUri){
+        // get the uri of the image we want to send
+//        Uri imageUri = Uri.parse("android.resource://nl.mprog.mume/mipmap/art_nightwatch");
+
+        // Opens a pop-up with all apps available to share an image
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
+        shareIntent.setType("image/jpg");
+        startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.sendto_shareintent_title)));
     }
 
 }

@@ -14,10 +14,10 @@ import android.app.Application;
 import android.content.Context;
 
 import com.adobe.creativesdk.foundation.AdobeCSDKFoundation;
-import com.adobe.creativesdk.foundation.auth.IAdobeAuthClientCredentials;
 import com.adobe.creativesdk.foundation.internal.auth.AdobeAuthIMSEnvironment;
+import com.aviary.android.feather.sdk.IAviaryClientCredentials;
 
-public class MyApplication extends Application implements IAdobeAuthClientCredentials {
+public class MyApplication extends Application implements IAviaryClientCredentials {
 
     private static MyApplication sInstance;
     private static final String CREATIVE_SDK_CLIENT_ID = "675de7a926be4ce1903fe04a5544e788";
@@ -42,6 +42,11 @@ public class MyApplication extends Application implements IAdobeAuthClientCreden
 
     public static Context getAppContext(){
         return sInstance.getApplicationContext();
+    }
+
+    @Override
+    public String getBillingKey() {
+        return ""; // Leave this blank
     }
 
     @Override

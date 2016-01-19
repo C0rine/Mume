@@ -21,6 +21,11 @@
         <activity android:name=".Activities.ResultsActivity" />
         <activity android:name=".Activities.SelectedActivity" />
         <activity android:name=".Activities.EditActivity"></activity>
+
+        <provider
+            android:name="com.aviary.android.feather.sdk.internal.cds.AviaryCdsProvider"
+            android:authorities="${applicationId}.AviaryCdsProvider"
+            android:exported="false" />
     </application>
 
 </manifest>
