@@ -28,6 +28,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.aviary.android.feather.sdk.AviaryIntent;
+import com.aviary.android.feather.sdk.internal.filters.ToolLoaderFactory;
 
 import org.json.JSONObject;
 
@@ -177,9 +178,13 @@ public class SelectedActivity extends AppCompatActivity {
 //        Intent startEdit = new Intent(this, EditActivity.class);
 //        startActivityForResult(startEdit, 1);
 
+        ToolLoaderFactory.Tools[] mTools = {ToolLoaderFactory.Tools.TEXT, ToolLoaderFactory.Tools.DRAW,
+                ToolLoaderFactory.Tools.CROP, ToolLoaderFactory.Tools.MEME};
+
         /* 2) Create a new Intent */
         Intent imageEditorIntent = new AviaryIntent.Builder(this)
                 .setData(Uri.parse(imageUrl))
+                .withToolList(mTools)
                 .build();
 
         /* 3) Start the Image Editor with request code 1 */
@@ -209,8 +214,6 @@ public class SelectedActivity extends AppCompatActivity {
 
     // method to open a share intent
     public void shareImage(Uri imageUri) throws FileNotFoundException {
-        // get the uri of the image we want to send
-//        Uri imageUri = Uri.parse("android.resource://nl.mprog.mume/mipmap/art_nightwatch");
 
         String imageName = UUID.randomUUID().toString() + ".jpg";
 
