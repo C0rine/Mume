@@ -120,3 +120,19 @@ I have started using GitHub Issues to remind myself of what I still need to do, 
 - Fixed some minor lay-out issues.
 
 Tomorrow I will stop trying to fix the bugs that are still left in the results-activity and selected-activity. They both mainly function and most of the bugs are just UI issues. In the last week I will have time to fix them. Right now I want to start focussing on the image-editting. I will try to implement the [Aviary SDK](https://developers.aviary.com/) (and not try to program this myself).
+
+#Day 12
+**Tue 19 Jan 2016**  
+Started on [Aviary](https://developers.aviary.com/) / [Adobe Creative SDK](https://creativesdk.adobe.com/) for Android:  
+- Added the SDK to the project and authenticated it.
+- Added the image-editing Activity from the SDK.
+- Implemented it.  
+The whole implemention of the SDK was so much more easy than I expected! I thought it would take me all week. There all still some bugs, but I think I could fix those tomorrow.  
+Since this went so easy and fast I might also implement a Facebook API to view the art memes from the [official Facebook page](https://www.facebook.com/classicalartmemes).
+
+#Day 13
+**Wed 20 jan 2016**  
+- Fixed one major bug with Aviary SDK by using the MediaStore. Now the image that has been edited with the SDK can be shared trough a share-intent. The main functionality of the app is hereby done. The UI can use a lot of improvement and there are several bugs, but all the MVP functionalities are done.
+- Customized the tools provided by the SDK.
+- Started on implementing the Facebooks API: it's initialized and authenticated.
+- Implemented Facebook user login.  
