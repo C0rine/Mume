@@ -8,15 +8,24 @@ package nl.mprog.mume.Activities;
 
 import android.app.DialogFragment;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.aviary.android.feather.sdk.AviaryIntent;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Random;
 
 import nl.mprog.mume.Dialogs.HelpDialog;
 import nl.mprog.mume.R;
@@ -85,6 +94,8 @@ public class EditActivity extends AppCompatActivity {
         startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.sendto_shareintent_title)));
     }
 
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
@@ -97,6 +108,9 @@ public class EditActivity extends AppCompatActivity {
 //                    Uri mImageUri = data.getData();
 //                    mResultImageView.setImageURI(mImageUri);
                     Toast.makeText(this, "Done!", Toast.LENGTH_LONG).show();
+
+                    // save the image:
+                    // share intent:
                     shareImage();
 
                     break;

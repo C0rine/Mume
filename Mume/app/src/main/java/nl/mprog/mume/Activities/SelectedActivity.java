@@ -7,8 +7,10 @@
 package nl.mprog.mume.Activities;
 
 import android.app.DialogFragment;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,7 +20,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -29,6 +30,9 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.aviary.android.feather.sdk.AviaryIntent;
 
 import org.json.JSONObject;
+
+import java.io.FileNotFoundException;
+import java.util.UUID;
 
 import nl.mprog.mume.Classes.Parser;
 import nl.mprog.mume.Classes.VolleySingleton;
@@ -192,7 +196,11 @@ public class SelectedActivity extends AppCompatActivity {
                 case 1:
 
                     Uri mImageUri = data.getData();
-                    shareImage(mImageUri);
+                    try {
+                        shareImage(mImageUri);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
 
                     break;
             }
@@ -200,17 +208,22 @@ public class SelectedActivity extends AppCompatActivity {
     }
 
     // method to open a share intent
-    public void shareImage(Uri imageUri){
+    public void shareImage(Uri imageUri) throws FileNotFoundException {
         // get the uri of the image we want to send
 //        Uri imageUri = Uri.parse("android.resource://nl.mprog.mume/mipmap/art_nightwatch");
+
+        String imageName = UUID.randomUUID().toString() + ".jpg";
+
+        // The receiving application needs permission to access the data the Uri points to
+        // Use MediaStore for this
+        String url = MediaStore.Images.Media.insertImage(getContentResolver(), imageUri.getPath(), imageName, "made with mume");
 
         // Opens a pop-up with all apps available to share an image
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
-        shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
+        shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(url));
         shareIntent.setType("image/jpg");
         startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.sendto_shareintent_title)));
     }
-
 }
 
