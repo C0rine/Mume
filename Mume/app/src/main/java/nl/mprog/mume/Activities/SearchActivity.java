@@ -8,8 +8,13 @@ package nl.mprog.mume.Activities;
 
 import android.app.DialogFragment;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +25,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import nl.mprog.mume.Dialogs.HelpDialog;
 import nl.mprog.mume.R;
 
@@ -27,11 +46,56 @@ public class SearchActivity extends AppCompatActivity {
 
     private EditText searchbar;
     private Button startButton;
+    private CallbackManager callbackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Initializing the Facebook SDK
+        FacebookSdk.sdkInitialize(getApplicationContext());
+
         setContentView(R.layout.activity_search);
+
+
+        // initialize the Facebook login button
+        callbackManager = CallbackManager.Factory.create();
+        LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                // App code
+                Log.e("FACEBOOK", "Login succesful");
+            }
+
+            @Override
+            public void onCancel() {
+                // App code
+                Log.e("FACEBOOK", "Login cancelled");
+
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+                // App code
+                Log.e("FACEBOOK", "Login error");
+            }
+        });
+
+        // make API call to Facebook to get the Classical Art Memes photo album
+//        new GraphRequest(
+//                AccessToken.getCurrentAccessToken(),
+//                "/595162167262642",
+//                null,
+//                HttpMethod.GET,
+//                new GraphRequest.Callback() {
+//                    public void onCompleted(GraphResponse response) {
+//                        Log.e("FACEBOOK", "album response: " + response.toString());
+//                    }
+//                }
+//        ).executeAsync();
+
+
+
 
         searchbar = (EditText) findViewById(R.id.searchbar_edittext);
         startButton = (Button) findViewById(R.id.startsearch_button);
@@ -67,6 +131,12 @@ public class SearchActivity extends AppCompatActivity {
                 return handled;
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
 

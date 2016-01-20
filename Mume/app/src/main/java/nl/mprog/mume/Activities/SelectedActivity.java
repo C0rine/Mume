@@ -60,6 +60,11 @@ public class SelectedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selected);
 
+        // check if Aviary needs an update. Adobe recommonds to put this here
+        // resource: https://creativesdk.adobe.com/docs/android/#/articles/imageediting/index.html
+        Intent intent = AviaryIntent.createCdsInitIntent(getBaseContext());
+        startService(intent);
+
         volleySingleton = VolleySingleton.getInstance();
         imageLoader = volleySingleton.getmImageLoader();
 
