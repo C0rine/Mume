@@ -176,13 +176,11 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public static class VHHeader extends RecyclerView.ViewHolder {
 
         public EditText searchbar;
-        public Button startButton;
 
         public VHHeader(View itemView){
             super(itemView);
 
             searchbar = (EditText) itemView.findViewById(R.id.searchbar_edittext);
-            startButton = (Button) itemView.findViewById(R.id.startsearch_button);
         }
     }
 

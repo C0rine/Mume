@@ -7,25 +7,17 @@
 package nl.mprog.mume.Activities;
 
 import android.app.DialogFragment;
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -42,7 +34,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
@@ -52,8 +43,6 @@ import nl.mprog.mume.R;
 
 public class SearchActivity extends AppCompatActivity {
 
-    private EditText searchbar;
-    private Button startButton;
     private RecyclerView recyclerView;
 
     private CallbackManager callbackManager;
@@ -186,26 +175,5 @@ public class SearchActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-
-    // gets executed when the 'Go!' button gets pressed to perform the search or when
-    // the search-icon the edittext gets pressed, or when the 'go' button on the
-    // on-screen keyboard gets pressed.
-    public void startSearch(){
-
-        // open new activity to show the results of the search
-        Intent startSearch = new Intent(this, ResultsActivity.class);
-        // send the searchwords along to the next activity
-        startSearch.putExtra("searchwords", searchbar.getText().toString());
-        startActivityForResult(startSearch, 1);
-
-        // empty the edittext (just show a hint)
-        searchbar.setText("");
-    }
-
-    // handle a press on the 'Go!' button in the layout of the activity
-    public void startSearch(View view) {
-        startSearch();
     }
 }

@@ -19,7 +19,7 @@
         android:textColor="#ffffff"
         android:textStyle="bold"
         android:textSize="50sp"
-        android:paddingBottom="40dp" />
+        android:paddingBottom="15dp" />
 
     <EditText
         android:id="@+id/searchbar_edittext"
@@ -38,15 +38,5 @@
         android:elevation="15dp"
         android:imeOptions="actionGo"
         android:inputType="text"/>
-
-    <Button
-        android:id="@+id/startsearch_button"
-        android:text="@string/startsearch_button_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:elevation="15dp"
-        android:onClick="startSearch"/>
-
 
 </LinearLayout>
