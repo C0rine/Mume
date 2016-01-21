@@ -7,6 +7,7 @@
 package nl.mprog.mume.Activities;
 
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,13 +15,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.AccessToken;
@@ -123,7 +127,7 @@ public class SearchActivity extends AppCompatActivity {
                                     String[] urlarray = allurls.split(Pattern.quote("\n"));
                                     Log.e("FACEBOOK", "url array: " + Arrays.toString(urlarray));
 
-                                    FacebookImagesAdapter fia = new FacebookImagesAdapter(urlarray);
+                                    FacebookImagesAdapter fia = new FacebookImagesAdapter(getApplicationContext(), urlarray);
                                     recyclerView.setAdapter(fia);
 
 
@@ -147,43 +151,6 @@ public class SearchActivity extends AppCompatActivity {
             public void onError(FacebookException exception) {
                 // App code
                 Log.e("FACEBOOK", "Login error");
-            }
-        });
-
-
-
-        searchbar = (EditText) findViewById(R.id.searchbar_edittext);
-        startButton = (Button) findViewById(R.id.startsearch_button);
-
-        // handle a press on the search-icon in the searchbar edittext
-        // resource: http://stackoverflow.com/questions/3554377
-        searchbar.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                if(event.getAction() == MotionEvent.ACTION_UP) {
-                    if(event.getRawX() >= (searchbar.getRight() - searchbar.getCompoundDrawables()
-                            [2].getBounds().width())) {
-                        // start the search in the results-activity (see method below)
-                        startSearch();
-                        return true;
-                    }
-                }
-                return false;
-            }
-        });
-
-        // handle a press on the 'Go' button in the on screen keyboard
-        // resource: http://developer.android.com/training/keyboard-input/style.html
-        searchbar.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                boolean handled = false;
-                if (actionId == EditorInfo.IME_ACTION_GO) {
-                    startSearch();
-                    handled = true;
-                }
-                return handled;
             }
         });
     }
