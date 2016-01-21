@@ -39,4 +39,6 @@ dependencies {
     compile 'com.adobe.creativesdk.foundation:auth:0.7.329'
     compile 'com.adobe.creativesdk:image:4.0.0'
     compile 'com.facebook.android:facebook-android-sdk:4.+'
+    compile 'com.android.support:cardview-v7:22.0.+'
+    compile 'com.android.support:recyclerview-v7:22.0.+'
 }

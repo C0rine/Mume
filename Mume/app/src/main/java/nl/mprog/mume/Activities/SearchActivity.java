@@ -10,6 +10,8 @@ import android.app.DialogFragment;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -40,6 +42,7 @@ import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
+import nl.mprog.mume.Adapters.FacebookImagesAdapter;
 import nl.mprog.mume.Dialogs.HelpDialog;
 import nl.mprog.mume.R;
 
@@ -47,6 +50,8 @@ public class SearchActivity extends AppCompatActivity {
 
     private EditText searchbar;
     private Button startButton;
+    private RecyclerView recyclerView;
+
     private CallbackManager callbackManager;
 
     private StringBuilder urlStringBuilder;
@@ -61,8 +66,17 @@ public class SearchActivity extends AppCompatActivity {
 
         urlStringBuilder = new StringBuilder();
 
+        // set up the Recyclerview for the Facebook cardviews
+        // resource: https://www.binpress.com/tutorial/android-l-recyclerview-and-cardview-tutorial/156
+        recyclerView = (RecyclerView) findViewById(R.id.cardList);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(llm);
+
 
         // initialize the Facebook login button
+        // resource: https://developers.facebook.com/docs/graph-api/reference/v2.5/album
         callbackManager = CallbackManager.Factory.create();
         LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
@@ -109,6 +123,10 @@ public class SearchActivity extends AppCompatActivity {
                                     String[] urlarray = allurls.split(Pattern.quote("\n"));
                                     Log.e("FACEBOOK", "url array: " + Arrays.toString(urlarray));
 
+                                    FacebookImagesAdapter fia = new FacebookImagesAdapter(urlarray);
+                                    recyclerView.setAdapter(fia);
+
+
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                     Log.e("FACBOOOK", "failed to get the photos");
@@ -131,6 +149,7 @@ public class SearchActivity extends AppCompatActivity {
                 Log.e("FACEBOOK", "Login error");
             }
         });
+
 
 
         searchbar = (EditText) findViewById(R.id.searchbar_edittext);
