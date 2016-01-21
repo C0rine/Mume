@@ -8,12 +8,8 @@ package nl.mprog.mume.Activities;
 
 import android.app.DialogFragment;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -36,8 +32,13 @@ import com.facebook.HttpMethod;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.regex.Pattern;
 
 import nl.mprog.mume.Dialogs.HelpDialog;
 import nl.mprog.mume.R;
@@ -48,6 +49,8 @@ public class SearchActivity extends AppCompatActivity {
     private Button startButton;
     private CallbackManager callbackManager;
 
+    private StringBuilder urlStringBuilder;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +58,8 @@ public class SearchActivity extends AppCompatActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
 
         setContentView(R.layout.activity_search);
+
+        urlStringBuilder = new StringBuilder();
 
 
         // initialize the Facebook login button
@@ -65,6 +70,52 @@ public class SearchActivity extends AppCompatActivity {
             public void onSuccess(LoginResult loginResult) {
                 // App code
                 Log.e("FACEBOOK", "Login succesful");
+
+                // make API call to Facebook to get the Classical Art Memes photo album
+                new GraphRequest(
+                        AccessToken.getCurrentAccessToken(),
+                        "/595162167262642/photos",
+                        null,
+                        HttpMethod.GET,
+                        new GraphRequest.Callback() {
+                            public void onCompleted(GraphResponse response) {
+                                Log.e("FACEBOOK", "album response: " + response.toString());
+
+                                // get the object that contains the photos
+                                JSONObject responseObject = response.getJSONObject();
+                                try {
+                                    // find the photo array in the response
+                                    JSONArray photosArray = responseObject.getJSONArray("data");
+                                    Log.e("FACEBOOK", "photosArray: " + photosArray.toString());
+
+                                    // loop through the photo array
+                                    int arraylength = photosArray.length();
+                                    for (int i = 0; i < arraylength; i++){
+                                        // get the photo ids
+                                        String currentId = photosArray.getJSONObject(i).getString("id");
+                                        Log.e("FACEBOOK", "photo id " + Integer.toString(i) + " : " + currentId);
+
+                                        // create the image url based on the id:
+                                        String currentUrl = "http://graph.facebook.com/" + currentId + "/picture";
+                                        Log.e("FACEBOOK", "photo url: " + currentUrl);
+
+                                        // append the url to the stringbuilder
+                                        urlStringBuilder.append(currentUrl + "\n");
+                                    }
+
+                                    // all urls have been found
+                                    // convert the stringbuilder to a stringarry so it can be used in the layout
+                                    String allurls = urlStringBuilder.toString();
+                                    String[] urlarray = allurls.split(Pattern.quote("\n"));
+                                    Log.e("FACEBOOK", "url array: " + Arrays.toString(urlarray));
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                    Log.e("FACBOOOK", "failed to get the photos");
+                                }
+                            }
+                        }
+                ).executeAsync();
             }
 
             @Override
@@ -80,21 +131,6 @@ public class SearchActivity extends AppCompatActivity {
                 Log.e("FACEBOOK", "Login error");
             }
         });
-
-        // make API call to Facebook to get the Classical Art Memes photo album
-//        new GraphRequest(
-//                AccessToken.getCurrentAccessToken(),
-//                "/595162167262642",
-//                null,
-//                HttpMethod.GET,
-//                new GraphRequest.Callback() {
-//                    public void onCompleted(GraphResponse response) {
-//                        Log.e("FACEBOOK", "album response: " + response.toString());
-//                    }
-//                }
-//        ).executeAsync();
-
-
 
 
         searchbar = (EditText) findViewById(R.id.searchbar_edittext);
