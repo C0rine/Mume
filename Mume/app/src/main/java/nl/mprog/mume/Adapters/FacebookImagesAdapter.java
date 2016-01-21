@@ -135,6 +135,8 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         }
 
+
+
     }
 
     @Override

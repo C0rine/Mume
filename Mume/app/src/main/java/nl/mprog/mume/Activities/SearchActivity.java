@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -48,6 +49,7 @@ public class SearchActivity extends AppCompatActivity {
     private CallbackManager callbackManager;
 
     private StringBuilder urlStringBuilder;
+    private String[] emptyArray = {};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,90 +61,72 @@ public class SearchActivity extends AppCompatActivity {
 
         urlStringBuilder = new StringBuilder();
 
+        recyclerView = (RecyclerView) findViewById(R.id.cardList);
+        FacebookImagesAdapter fia = new FacebookImagesAdapter(getApplicationContext(), emptyArray);
+        recyclerView.setAdapter(fia);
+
+
         // set up the Recyclerview for the Facebook cardviews
         // resource: https://www.binpress.com/tutorial/android-l-recyclerview-and-cardview-tutorial/156
-        recyclerView = (RecyclerView) findViewById(R.id.cardList);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(llm);
 
-
-        // initialize the Facebook login button
-        // resource: https://developers.facebook.com/docs/graph-api/reference/v2.5/album
-        callbackManager = CallbackManager.Factory.create();
         LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+
+
+        if (isFBLoggedIn()){
+            // the user is logged in to Facebook
+            getFBimages();
+            // hide the login button
+            // loginButton.setVisibility(View.GONE);
+        }
+        else {
+            // the user is not logged in to Facebook
+            // initialize the Facebook login button
+            // resource: https://developers.facebook.com/docs/graph-api/reference/v2.5/album
+            callbackManager = CallbackManager.Factory.create();
+            loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+                @Override
+                public void onSuccess(LoginResult loginResult) {
+                    // App code
+                    Log.e("FACEBOOK", "Login succesful");
+                    getFBimages();
+                }
+
+                @Override
+                public void onCancel() {
+                    // App code
+                    Log.e("FACEBOOK", "Login cancelled");
+
+                }
+
+                @Override
+                public void onError(FacebookException exception) {
+                    // App code
+                    Log.e("FACEBOOK", "Login error");
+                }
+            });
+        }
+
+        // set listener to detect user logout
+        AccessTokenTracker accessTokenTracker = new AccessTokenTracker() {
             @Override
-            public void onSuccess(LoginResult loginResult) {
-                // App code
-                Log.e("FACEBOOK", "Login succesful");
+            protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
 
-                // make API call to Facebook to get the Classical Art Memes photo album
-                new GraphRequest(
-                        AccessToken.getCurrentAccessToken(),
-                        "/595162167262642/photos",
-                        null,
-                        HttpMethod.GET,
-                        new GraphRequest.Callback() {
-                            public void onCompleted(GraphResponse response) {
-                                Log.e("FACEBOOK", "album response: " + response.toString());
-
-                                // get the object that contains the photos
-                                JSONObject responseObject = response.getJSONObject();
-                                try {
-                                    // find the photo array in the response
-                                    JSONArray photosArray = responseObject.getJSONArray("data");
-                                    Log.e("FACEBOOK", "photosArray: " + photosArray.toString());
-
-                                    // loop through the photo array
-                                    int arraylength = photosArray.length();
-                                    for (int i = 0; i < arraylength; i++){
-                                        // get the photo ids
-                                        String currentId = photosArray.getJSONObject(i).getString("id");
-                                        Log.e("FACEBOOK", "photo id " + Integer.toString(i) + " : " + currentId);
-
-                                        // create the image url based on the id:
-                                        String currentUrl = "http://graph.facebook.com/" + currentId + "/picture";
-                                        Log.e("FACEBOOK", "photo url: " + currentUrl);
-
-                                        // append the url to the stringbuilder
-                                        urlStringBuilder.append(currentUrl + "\n");
-                                    }
-
-                                    // all urls have been found
-                                    // convert the stringbuilder to a stringarry so it can be used in the layout
-                                    String allurls = urlStringBuilder.toString();
-                                    String[] urlarray = allurls.split(Pattern.quote("\n"));
-                                    Log.e("FACEBOOK", "url array: " + Arrays.toString(urlarray));
-
-                                    FacebookImagesAdapter fia = new FacebookImagesAdapter(getApplicationContext(), urlarray);
-                                    recyclerView.setAdapter(fia);
-
-
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                    Log.e("FACBOOOK", "failed to get the photos");
-                                }
-                            }
-                        }
-                ).executeAsync();
-            }
-
-            @Override
-            public void onCancel() {
-                // App code
-                Log.e("FACEBOOK", "Login cancelled");
+                if (currentAccessToken == null){
+                    // user logged out, reset the UI
+                    FacebookImagesAdapter fia = new FacebookImagesAdapter(getApplicationContext(), emptyArray);
+                    recyclerView.setAdapter(fia);
+                }
 
             }
+        };
 
-            @Override
-            public void onError(FacebookException exception) {
-                // App code
-                Log.e("FACEBOOK", "Login error");
-            }
-        });
     }
+
+
 
     @Override
     protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
@@ -176,4 +160,63 @@ public class SearchActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    // return true or false on whether the user is logged in on Facebook
+    public boolean isFBLoggedIn(){
+        AccessToken token = AccessToken.getCurrentAccessToken();
+        return token != null;
+    }
+
+    public void getFBimages(){
+        // make API call to Facebook to get the Classical Art Memes photo album
+        new GraphRequest(
+                AccessToken.getCurrentAccessToken(),
+                "/595162167262642/photos",
+                null,
+                HttpMethod.GET,
+                new GraphRequest.Callback() {
+                    public void onCompleted(GraphResponse response) {
+                        Log.e("FACEBOOK", "album response: " + response.toString());
+
+                        // get the object that contains the photos
+                        JSONObject responseObject = response.getJSONObject();
+                        try {
+                            // find the photo array in the response
+                            JSONArray photosArray = responseObject.getJSONArray("data");
+                            Log.e("FACEBOOK", "photosArray: " + photosArray.toString());
+
+                            // loop through the photo array
+                            int arraylength = photosArray.length();
+                            for (int i = 0; i < arraylength; i++){
+                                // get the photo ids
+                                String currentId = photosArray.getJSONObject(i).getString("id");
+                                Log.e("FACEBOOK", "photo id " + Integer.toString(i) + " : " + currentId);
+
+                                // create the image url based on the id:
+                                String currentUrl = "http://graph.facebook.com/" + currentId + "/picture";
+                                Log.e("FACEBOOK", "photo url: " + currentUrl);
+
+                                // append the url to the stringbuilder
+                                urlStringBuilder.append(currentUrl + "\n");
+                            }
+
+                            // all urls have been found
+                            // convert the stringbuilder to a stringarry so it can be used in the layout
+                            String allurls = urlStringBuilder.toString();
+                            String[] urlarray = allurls.split(Pattern.quote("\n"));
+                            Log.e("FACEBOOK", "url array: " + Arrays.toString(urlarray));
+
+                            FacebookImagesAdapter fia = new FacebookImagesAdapter(getApplicationContext(), urlarray);
+                            recyclerView.setAdapter(fia);
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.e("FACBOOOK", "failed to get the photos");
+                        }
+                    }
+                }
+        ).executeAsync();
+    }
+
 }
