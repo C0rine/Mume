@@ -17,7 +17,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -32,6 +31,7 @@ import nl.mprog.mume.R;
 public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private String[] urls;
+    private String[] dates;
     private VolleySingleton volleySingleton;
     private ImageLoader imageLoader;
     private Context context;
@@ -39,10 +39,11 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
 
-    public FacebookImagesAdapter(Context context, String[] urls){
+    public FacebookImagesAdapter(Context context, String[] urls, String[] dates){
         // constructor
-        this.urls = urls;
         this.context = context;
+        this.urls = urls;
+        this.dates = dates;
 
         volleySingleton = VolleySingleton.getInstance();
         imageLoader = volleySingleton.getmImageLoader();
@@ -75,9 +76,10 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (holder instanceof PhotoViewHolder){
             // fill the cards with the data from Facebook
             PhotoViewHolder PVholder = (PhotoViewHolder) holder;
-            String urlItem = getItem(position);
+            String urlItem = getUrl(position);
+            String dateItem = getDate(position);
             PVholder.imageView.setImageUrl(urlItem, imageLoader);
-            PVholder.textView.setText(urlItem);
+            PVholder.textView.setText(dateItem);
         }
         else if (holder instanceof VHHeader){
             final VHHeader VHholder = (VHHeader) holder;
@@ -156,9 +158,14 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         return position == 0;
     }
 
-    private String getItem(int position){
+    private String getUrl(int position){
 
         return urls[position-1];
+    }
+
+    private String getDate(int position){
+
+        return dates[position-1];
     }
 
     public static class PhotoViewHolder extends RecyclerView.ViewHolder {

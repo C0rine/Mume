@@ -15,9 +15,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -35,7 +32,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.TimeZone;
 import java.util.regex.Pattern;
 
 import nl.mprog.mume.Adapters.FacebookImagesAdapter;
@@ -49,6 +50,7 @@ public class SearchActivity extends AppCompatActivity {
     private CallbackManager callbackManager;
 
     private StringBuilder urlStringBuilder;
+    private StringBuilder timestampStringBuilder;
     private String[] emptyArray = {};
 
     @Override
@@ -60,9 +62,10 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
 
         urlStringBuilder = new StringBuilder();
+        timestampStringBuilder = new StringBuilder();
 
         recyclerView = (RecyclerView) findViewById(R.id.cardList);
-        FacebookImagesAdapter fia = new FacebookImagesAdapter(getApplicationContext(), emptyArray);
+        FacebookImagesAdapter fia = new FacebookImagesAdapter(getApplicationContext(), emptyArray, emptyArray);
         recyclerView.setAdapter(fia);
 
 
@@ -117,7 +120,7 @@ public class SearchActivity extends AppCompatActivity {
 
                 if (currentAccessToken == null){
                     // user logged out, reset the UI
-                    FacebookImagesAdapter fia = new FacebookImagesAdapter(getApplicationContext(), emptyArray);
+                    FacebookImagesAdapter fia = new FacebookImagesAdapter(getApplicationContext(), emptyArray, emptyArray);
                     recyclerView.setAdapter(fia);
                 }
 
@@ -190,23 +193,29 @@ public class SearchActivity extends AppCompatActivity {
                             for (int i = 0; i < arraylength; i++){
                                 // get the photo ids
                                 String currentId = photosArray.getJSONObject(i).getString("id");
-                                Log.e("FACEBOOK", "photo id " + Integer.toString(i) + " : " + currentId);
-
                                 // create the image url based on the id:
                                 String currentUrl = "http://graph.facebook.com/" + currentId + "/picture";
-                                Log.e("FACEBOOK", "photo url: " + currentUrl);
-
                                 // append the url to the stringbuilder
                                 urlStringBuilder.append(currentUrl + "\n");
+
+                                // get the photo timestamp
+                                String currentTimestamp = photosArray.getJSONObject(i).getString("created_time");
+                                // convert it to a human readable string (res: http://stackoverflow.com/questions/6882896/)
+                                String date =  GetLocalDateStringFromUTCString(currentTimestamp);
+                                // append the date to the stringbuilder
+                                timestampStringBuilder.append(date + "\n");
+
                             }
 
                             // all urls have been found
-                            // convert the stringbuilder to a stringarry so it can be used in the layout
+                            // convert the stringbuilders to a stringarrays so it can be used in the layout
                             String allurls = urlStringBuilder.toString();
                             String[] urlarray = allurls.split(Pattern.quote("\n"));
-                            Log.e("FACEBOOK", "url array: " + Arrays.toString(urlarray));
 
-                            FacebookImagesAdapter fia = new FacebookImagesAdapter(getApplicationContext(), urlarray);
+                            String alldates = timestampStringBuilder.toString();
+                            String[] datesarray = alldates.split(Pattern.quote("\n"));
+
+                            FacebookImagesAdapter fia = new FacebookImagesAdapter(getApplicationContext(), urlarray, datesarray);
                             recyclerView.setAdapter(fia);
 
 
@@ -217,6 +226,25 @@ public class SearchActivity extends AppCompatActivity {
                     }
                 }
         ).executeAsync();
+    }
+
+    // resource: http://stackoverflow.com/questions/8734932/
+    public String GetLocalDateStringFromUTCString(String utcLongDateTime) {
+        SimpleDateFormat fb_dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ssZZZZZ");
+        SimpleDateFormat my_dateFormat = new SimpleDateFormat("dd-MM-yyyy  HH:mm");
+
+        String localDateString = null;
+
+        long when = 0;
+        try {
+            when = fb_dateFormat.parse(utcLongDateTime).getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        localDateString = my_dateFormat.format(new Date(when + TimeZone.getDefault().getRawOffset() + (TimeZone.getDefault().inDaylightTime(new Date()) ? TimeZone.getDefault().getDSTSavings() : 0)));
+
+        return localDateString;
     }
 
 }
