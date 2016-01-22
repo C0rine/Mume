@@ -51,6 +51,7 @@ public class SearchActivity extends AppCompatActivity {
 
     private StringBuilder urlStringBuilder;
     private StringBuilder timestampStringBuilder;
+    private StringBuilder nameBuilder;
     private String[] emptyArray = {};
 
     @Override
@@ -63,9 +64,10 @@ public class SearchActivity extends AppCompatActivity {
 
         urlStringBuilder = new StringBuilder();
         timestampStringBuilder = new StringBuilder();
+        nameBuilder = new StringBuilder();
 
         recyclerView = (RecyclerView) findViewById(R.id.cardList);
-        FacebookImagesAdapter fia = new FacebookImagesAdapter(getApplicationContext(), emptyArray, emptyArray);
+        FacebookImagesAdapter fia = new FacebookImagesAdapter(getApplicationContext(), emptyArray, emptyArray, emptyArray);
         recyclerView.setAdapter(fia);
 
 
@@ -120,7 +122,7 @@ public class SearchActivity extends AppCompatActivity {
 
                 if (currentAccessToken == null){
                     // user logged out, reset the UI
-                    FacebookImagesAdapter fia = new FacebookImagesAdapter(getApplicationContext(), emptyArray, emptyArray);
+                    FacebookImagesAdapter fia = new FacebookImagesAdapter(getApplicationContext(), emptyArray, emptyArray, emptyArray);
                     recyclerView.setAdapter(fia);
                 }
 
@@ -205,6 +207,15 @@ public class SearchActivity extends AppCompatActivity {
                                 // append the date to the stringbuilder
                                 timestampStringBuilder.append(date + "\n");
 
+                                try {
+                                    // get the name (if there is one)
+                                    JSONObject currentNameObject = photosArray.getJSONObject(i);
+                                    String theName = currentNameObject.getString("name");
+                                    // append if found, else append empty string
+                                    nameBuilder.append(theName + "\n");
+                                } catch (JSONException e){
+                                    nameBuilder.append(" \n");
+                                }
                             }
 
                             // all urls have been found
@@ -215,13 +226,16 @@ public class SearchActivity extends AppCompatActivity {
                             String alldates = timestampStringBuilder.toString();
                             String[] datesarray = alldates.split(Pattern.quote("\n"));
 
-                            FacebookImagesAdapter fia = new FacebookImagesAdapter(getApplicationContext(), urlarray, datesarray);
+                            String allnames = nameBuilder.toString();
+                            String[] namesarray = allnames.split(Pattern.quote("\n"));
+
+                            FacebookImagesAdapter fia = new FacebookImagesAdapter(getApplicationContext(), urlarray, datesarray, namesarray);
                             recyclerView.setAdapter(fia);
 
 
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Log.e("FACBOOOK", "failed to get the photos");
+                            Log.e("FACEBOOOK", "failed to get the photos");
                         }
                     }
                 }

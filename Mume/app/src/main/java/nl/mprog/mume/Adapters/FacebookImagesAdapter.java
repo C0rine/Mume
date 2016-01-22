@@ -32,6 +32,7 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     private String[] urls;
     private String[] dates;
+    private String[] names;
     private VolleySingleton volleySingleton;
     private ImageLoader imageLoader;
     private Context context;
@@ -39,11 +40,12 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
 
-    public FacebookImagesAdapter(Context context, String[] urls, String[] dates){
+    public FacebookImagesAdapter(Context context, String[] urls, String[] dates, String[] names){
         // constructor
         this.context = context;
         this.urls = urls;
         this.dates = dates;
+        this.names = names;
 
         volleySingleton = VolleySingleton.getInstance();
         imageLoader = volleySingleton.getmImageLoader();
@@ -78,8 +80,10 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             PhotoViewHolder PVholder = (PhotoViewHolder) holder;
             String urlItem = getUrl(position);
             String dateItem = getDate(position);
+            String nameItem = getName(position);
             PVholder.imageView.setImageUrl(urlItem, imageLoader);
             PVholder.textView.setText(dateItem);
+            PVholder.textView2.setText(nameItem);
         }
         else if (holder instanceof VHHeader){
             final VHHeader VHholder = (VHHeader) holder;
@@ -137,8 +141,6 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         }
 
-
-
     }
 
     @Override
@@ -168,16 +170,23 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         return dates[position-1];
     }
 
+    private String getName(int position){
+
+        return names[position-1];
+    }
+
     public static class PhotoViewHolder extends RecyclerView.ViewHolder {
 
         public NetworkImageView imageView;
         public TextView textView;
+        public TextView textView2;
 
         public PhotoViewHolder(View itemView) {
             super(itemView);
 
             imageView = (NetworkImageView) itemView.findViewById(R.id.album_imageview);
             textView = (TextView) itemView.findViewById(R.id.album_textview);
+            textView2 = (TextView) itemView.findViewById(R.id.album_textview2);
 
         }
     }
