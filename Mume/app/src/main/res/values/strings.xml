@@ -20,7 +20,8 @@
     <string name="helptext_dialog_message">here is some unuseful help...</string>
     <string name="helptitle_dialog_title">Help</string>
     <string name="sendto_shareintent_title">Share with...</string>
+    <string name="undertitlesearch_textview_text">and make your own memes</string>
+    <string name="fbimageheader_textview_text">Official Classical Art Memes:</string>
 
     <string name="app_id">746901972078034</string>
-
 </resources>
