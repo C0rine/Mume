@@ -131,8 +131,21 @@ The whole implemention of the SDK was so much more easy than I expected! I thoug
 Since this went so easy and fast I might also implement a Facebook API to view the art memes from the [official Facebook page](https://www.facebook.com/classicalartmemes).
 
 #Day 13
-**Wed 20 jan 2016**  
+**Wed 20 Jan 2016**  
 - Fixed one major bug with Aviary SDK by using the MediaStore. Now the image that has been edited with the SDK can be shared trough a share-intent. The main functionality of the app is hereby done. The UI can use a lot of improvement and there are several bugs, but all the MVP functionalities are done.
 - Customized the tools provided by the SDK.
 - Started on implementing the Facebooks API: it's initialized and authenticated.
 - Implemented Facebook user login.  
+
+#Day 14
+**Thu 21 Jan 2016**  
+Mostly worked on implementing the Facebook API to display the images from the Classical Art Memes FB page.  
+- Implemented a method to get the image urls for the photos in the album.
+- Use CardView to display the images.
+- Fixed the layout on the search-activity with a header in the scrollable RecyclerView.
+
+#Day 15
+**Fri 22 Jan 2016**  
+Got some useful tips from the group during presentation:  
+- If the image gets saved two times, why don't just delete the wrong one.
+- Check the app on another device with a different resolution (for lay-out purposes).
