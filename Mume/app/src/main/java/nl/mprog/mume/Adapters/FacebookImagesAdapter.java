@@ -22,6 +22,8 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
+import com.facebook.share.widget.LikeView;
+import com.facebook.share.widget.ShareButton;
 
 import nl.mprog.mume.Activities.ResultsActivity;
 import nl.mprog.mume.Classes.VolleySingleton;
@@ -84,6 +86,8 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             PVholder.imageView.setImageUrl(urlItem, imageLoader);
             PVholder.textView.setText(dateItem);
             PVholder.textView2.setText(nameItem);
+
+            PVholder.likeButton.setObjectIdAndType(urlItem, LikeView.ObjectType.OPEN_GRAPH);
         }
         else if (holder instanceof VHHeader){
             final VHHeader VHholder = (VHHeader) holder;
@@ -180,6 +184,8 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         public NetworkImageView imageView;
         public TextView textView;
         public TextView textView2;
+        public LikeView likeButton;
+        public ShareButton shareButton;
 
         public PhotoViewHolder(View itemView) {
             super(itemView);
@@ -187,6 +193,8 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             imageView = (NetworkImageView) itemView.findViewById(R.id.album_imageview);
             textView = (TextView) itemView.findViewById(R.id.album_textview);
             textView2 = (TextView) itemView.findViewById(R.id.album_textview2);
+            likeButton = (LikeView) itemView.findViewById(R.id.like_view);
+            shareButton = (ShareButton) itemView.findViewById(R.id.fb_share_button);
 
         }
     }

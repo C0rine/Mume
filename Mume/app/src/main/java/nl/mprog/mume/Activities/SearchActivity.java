@@ -87,45 +87,39 @@ public class SearchActivity extends AppCompatActivity {
             // hide the login button
             // loginButton.setVisibility(View.GONE);
         }
-        else {
-            // the user is not logged in to Facebook
-            // initialize the Facebook login button
-            // resource: https://developers.facebook.com/docs/graph-api/reference/v2.5/album
-            callbackManager = CallbackManager.Factory.create();
-            loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-                @Override
-                public void onSuccess(LoginResult loginResult) {
-                    // App code
-                    Log.e("FACEBOOK", "Login succesful");
-                    getFBimages();
-                }
+        // initialize the Facebook login button
+        // resource: https://developers.facebook.com/docs/graph-api/reference/v2.5/album
+        callbackManager = CallbackManager.Factory.create();
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                // App code
+                Log.e("FACEBOOK", "Login successful");
+                getFBimages();
+            }
 
-                @Override
-                public void onCancel() {
-                    // App code
-                    Log.e("FACEBOOK", "Login cancelled");
+            @Override
+            public void onCancel() {
+                // App code
+                Log.e("FACEBOOK", "Login cancelled");
+            }
 
-                }
-
-                @Override
-                public void onError(FacebookException exception) {
-                    // App code
-                    Log.e("FACEBOOK", "Login error");
-                }
-            });
-        }
+            @Override
+            public void onError(FacebookException exception) {
+                // App code
+                Log.e("FACEBOOK", "Login error");
+            }
+        });
 
         // set listener to detect user logout
         AccessTokenTracker accessTokenTracker = new AccessTokenTracker() {
             @Override
             protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
-
                 if (currentAccessToken == null){
                     // user logged out, reset the UI
                     FacebookImagesAdapter fia = new FacebookImagesAdapter(getApplicationContext(), emptyArray, emptyArray, emptyArray);
                     recyclerView.setAdapter(fia);
                 }
-
             }
         };
 
@@ -214,8 +208,23 @@ public class SearchActivity extends AppCompatActivity {
                                     // append if found, else append empty string
                                     nameBuilder.append(theName + "\n");
                                 } catch (JSONException e){
-                                    nameBuilder.append(" \n");
+                                    nameBuilder.append("\n");
                                 }
+
+//                                // for each photo we also want to know how many likes it has
+//                                new GraphRequest(
+//                                        AccessToken.getCurrentAccessToken(),
+//                                        "/" + currentId + "/likes?summary=true",
+//                                        null,
+//                                        HttpMethod.GET,
+//                                        new GraphRequest.Callback() {
+//                                            public void onCompleted(GraphResponse response) {
+//                                                JSONObject responseobject = response.getJSONObject();
+//                                                Log.e("LIKES", responseobject.toString());
+//                                            }
+//                                        }
+//                                ).executeAsync();
+
                             }
 
                             // all urls have been found
