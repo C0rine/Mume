@@ -9,23 +9,34 @@
     android:id="@+id/top_relativelayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    tools:context=".Activities.SearchActivity"
-    android:background="#000000">
+    tools:context=".Activities.SearchActivity">
 
-    <!--<ImageView-->
-        <!--android:id="@+id/background_imageview"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:scaleType="centerCrop"-->
-        <!--android:src="@mipmap/art_nightwatch" />-->
+    <ImageView
+        android:id="@+id/background_imageview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/seamless_paper_texture" />
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp" />
+        android:layout_gravity="left"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:text="Login with Facebook to see the latest official memes"
+        android:textSize="10sp"
+        android:textColor="#ffffff"
+        android:layout_alignBottom="@+id/login_button"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/login_button"
+        android:layout_toEndOf="@+id/login_button" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/cardList"

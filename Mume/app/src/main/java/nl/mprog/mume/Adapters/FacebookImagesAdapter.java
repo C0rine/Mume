@@ -43,6 +43,7 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
+    private static final int TYPE_FOOTER = 2;
 
     public FacebookImagesAdapter(Context context, String[] urls, String[] posturls, String[] dates, String[] names){
         // constructor
@@ -72,6 +73,12 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     inflate(R.layout.search_header, parent, false);
             return new VHHeader(itemView);
         }
+        else if (viewType == TYPE_FOOTER){
+            View itemView = LayoutInflater.
+                    from(parent.getContext()).
+                    inflate(R.layout.search_footer, parent, false);
+            return new VHFooter(itemView);
+        }
 
         throw new RuntimeException("there is not type that matches the type " + viewType
                 + " make sure your using types correctly");
@@ -94,7 +101,7 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             // set the behaviour for the button
             PVholder.button.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    // open the post in the Facebook if it is present. If not, open in browser.
+                    // open the post in the Facebook app if it is present. If not, open in browser.
                     try {
                         context.getPackageManager().getPackageInfo("com.facebook.katana", 0);
                         String id = pageurl.substring(20);
@@ -113,7 +120,6 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
         else if (holder instanceof VHHeader){
             final VHHeader VHholder = (VHHeader) holder;
-            Log.e("HOLDER", "there is an instance of VHHeader");
             // set the stuff in the header
 
             // handle a press on the search-icon in the searchbar edittext
@@ -143,6 +149,7 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 }
             });
 
+
             // handle a press on the 'Go' button in the on screen keyboard
             // resource: http://developer.android.com/training/keyboard-input/style.html
             VHholder.searchbar.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -166,12 +173,31 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             });
 
         }
+        else if (holder instanceof VHFooter){
+            final VHFooter VHfooter = (VHFooter) holder;
 
+            VHfooter.toFacebookPage.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    // open the page in the Facebook app if it is present. If not, open in browser.
+                    try {
+                        context.getPackageManager().getPackageInfo("com.facebook.katana", 0);
+                        // resource: http://stackoverflow.com/questions/4810803/open-facebook-page-from-android-app
+                        Intent openFacebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("fb://facewebmodal/f?href=" + "https://www.facebook.com/classicalartmemes"));
+                                openFacebookIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        MyApplication.getAppContext().startActivity(openFacebookIntent);
+                    } catch (Exception e) {
+                        Intent openBrowserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/classicalartmemes"));
+                        openBrowserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        MyApplication.getAppContext().startActivity(openBrowserIntent);
+                    }
+                }
+            });
+        }
     }
 
     @Override
     public int getItemCount() {
-        return urls.length + 1;
+        return urls.length + 2;
     }
 
     @Override
@@ -179,11 +205,19 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (isPositionHeader(position)){
             return TYPE_HEADER;
         }
+        else if (isPositionFooter(position)){
+            Log.e("FOOTER", "we have found the footer");
+            return TYPE_FOOTER;
+        }
         return TYPE_ITEM;
     }
 
     private boolean isPositionHeader(int position){
         return position == 0;
+    }
+
+    private boolean isPositionFooter(int position){
+        return position == getItemCount() - 1;
     }
 
     private String getUrl(int position){
@@ -233,6 +267,17 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             super(itemView);
 
             searchbar = (EditText) itemView.findViewById(R.id.searchbar_edittext);
+        }
+    }
+
+    public static class VHFooter extends RecyclerView.ViewHolder {
+
+        public Button toFacebookPage;
+
+        public VHFooter(View itemView){
+            super(itemView);
+
+            toFacebookPage = (Button) itemView.findViewById(R.id.FBPage_button);
         }
     }
 

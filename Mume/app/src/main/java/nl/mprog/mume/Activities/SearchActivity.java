@@ -60,6 +60,7 @@ public class SearchActivity extends AppCompatActivity {
         // Initializing the Facebook SDK
         FacebookSdk.sdkInitialize(getApplicationContext());
 
+
         setContentView(R.layout.activity_search);
 
         urlStringBuilder = new StringBuilder();
@@ -213,7 +214,7 @@ public class SearchActivity extends AppCompatActivity {
                                     // append if found, else append empty string
                                     nameBuilder.append(theName + "\n");
                                 } catch (JSONException e){
-                                    nameBuilder.append("\n");
+                                    nameBuilder.append(" \n");
                                 }
 
                             }

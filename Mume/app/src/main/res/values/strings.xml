@@ -23,4 +23,5 @@
     <string name="fbimageheader_textview_text">Official Classical Art Memes:</string>
     <string name="app_id">746901972078034</string>
     <string name="viewonfb_button_text">Click to view on Facebook</string>
+    <string name="openfbpage_button_text">I want more!</string>
 </resources>

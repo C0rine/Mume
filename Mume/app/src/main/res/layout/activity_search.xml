@@ -4,22 +4,24 @@
      10001326
      Corine_J@MSN.com -->
 
-
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/top_relativelayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    tools:context=".Activities.SearchActivity"
-    android:background="#5555ee">
+    tools:context=".Activities.SearchActivity">
 
-    <!--<ImageView-->
-        <!--android:id="@+id/background_imageview"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:scaleType="centerCrop"-->
-        <!--android:src="@mipmap/art_nightwatch" />-->
+    <ImageView
+        android:id="@+id/background_imageview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/seamless_paper_texture"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#50000000"/>
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/login_button"
