@@ -156,10 +156,10 @@ I have worked a little on the app:
 - Added the caption of the images to the FB images (if there is one)
 
 #Weekend
-**23 and 24 Jan 2016**  
+**Sat 23 and Sun 24 Jan 2016**  
 Fixed the error that occured during the Facebook login that caused the app to crash.
 I have also tried to add like and share buttons to the facebook cardviews, but these did not work the way I wanted them to. I want the user to like the original post, but this does not happen. I will therefor probably just replace the share and like button with a button that links to the original post on Facebook itself. I cannot afford to lose time right now on making the like and share buttons work appropriately.
 
 #Day 16
-**25 Jan 2016**  
+**Mon 25 Jan 2016**  
 
