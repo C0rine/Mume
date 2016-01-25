@@ -148,4 +148,17 @@ Mostly worked on implementing the Facebook API to display the images from the Cl
 **Fri 22 Jan 2016**  
 Got some useful tips from the group during presentation:  
 - If the image gets saved two times, why don't just delete the wrong one.
-- Check the app on another device with a different resolution (for lay-out purposes).
+- Check the app on another device with a different resolution (for lay-out purposes).  
+
+I have worked a little on the app:  
+- Added date and time-stamp to the FB images
+- Made some layout changes for Search Activity
+- Added the caption of the images to the FB images (if there is one)
+
+#Weekend
+**23 and 24 Jan 2016**  
+Fixed the error that occured during the Facebook login that caused the app to crash.
+
+#Day 16
+**25 Jan 2016**  
+
