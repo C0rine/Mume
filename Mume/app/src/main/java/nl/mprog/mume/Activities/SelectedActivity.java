@@ -7,7 +7,6 @@
 package nl.mprog.mume.Activities;
 
 import android.app.DialogFragment;
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -154,7 +153,7 @@ public class SelectedActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.search_menu, menu);
+        getMenuInflater().inflate(R.menu.general_menu, menu);
         return true;
     }
 

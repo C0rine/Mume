@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
+import com.facebook.login.widget.LoginButton;
 
 import nl.mprog.mume.Activities.ResultsActivity;
 import nl.mprog.mume.Classes.MyApplication;
@@ -172,6 +173,9 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 }
             });
 
+            if (getItemCount() < 3){
+                VHholder.cardview_header.setText("Login with Facebook to see the memes of the official Classical Art Memes Facebook page");
+            }
         }
         else if (holder instanceof VHFooter){
             final VHFooter VHfooter = (VHFooter) holder;
@@ -192,6 +196,10 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     }
                 }
             });
+
+            if (getItemCount() < 3){
+                VHfooter.toFacebookPage.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -262,11 +270,15 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public static class VHHeader extends RecyclerView.ViewHolder {
 
         public EditText searchbar;
+        public LoginButton loginButton;
+        public TextView cardview_header;
 
         public VHHeader(View itemView){
             super(itemView);
 
             searchbar = (EditText) itemView.findViewById(R.id.searchbar_edittext);
+            loginButton = (LoginButton) itemView.findViewById(R.id.login_button);
+            cardview_header = (TextView) itemView.findViewById(R.id.cardview_title);
         }
     }
 

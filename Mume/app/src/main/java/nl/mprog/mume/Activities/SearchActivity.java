@@ -6,7 +6,10 @@
 
 package nl.mprog.mume.Activities;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +18,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -45,13 +49,14 @@ import nl.mprog.mume.R;
 public class SearchActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
+    private static LoginButton loginButton;
 
     private CallbackManager callbackManager;
-
     private StringBuilder urlStringBuilder;
     private StringBuilder timestampStringBuilder;
     private StringBuilder nameBuilder;
     private StringBuilder postUrlStringBuilder;
+
     private String[] emptyArray = {};
 
     @Override
@@ -68,27 +73,8 @@ public class SearchActivity extends AppCompatActivity {
         nameBuilder = new StringBuilder();
         postUrlStringBuilder = new StringBuilder();
 
-        recyclerView = (RecyclerView) findViewById(R.id.cardList);
-        FacebookImagesAdapter fia = new FacebookImagesAdapter(getApplicationContext(), emptyArray, emptyArray, emptyArray, emptyArray);
-        recyclerView.setAdapter(fia);
+        loginButton = (LoginButton) findViewById(R.id.login_button);
 
-
-        // set up the Recyclerview for the Facebook cardviews
-        // resource: https://www.binpress.com/tutorial/android-l-recyclerview-and-cardview-tutorial/156
-        recyclerView.setHasFixedSize(true);
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(llm);
-
-
-        LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
-
-        if (isFBLoggedIn()){
-            // the user is logged in to Facebook
-            getFBimages();
-            // hide the login button
-            // loginButton.setVisibility(View.GONE);
-        }
         // initialize the Facebook login button
         // resource: https://developers.facebook.com/docs/graph-api/reference/v2.5/album
         callbackManager = CallbackManager.Factory.create();
@@ -112,6 +98,27 @@ public class SearchActivity extends AppCompatActivity {
                 Log.e("FACEBOOK", "Login error");
             }
         });
+        // hide the login button
+        loginButton.setVisibility(View.GONE);
+
+        recyclerView = (RecyclerView) findViewById(R.id.cardList);
+        FacebookImagesAdapter fia = new FacebookImagesAdapter(getApplicationContext(), emptyArray, emptyArray, emptyArray, emptyArray);
+        recyclerView.setAdapter(fia);
+
+
+        // set up the Recyclerview for the Facebook cardviews
+        // resource: https://www.binpress.com/tutorial/android-l-recyclerview-and-cardview-tutorial/156
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(llm);
+
+
+        if (isFBLoggedIn()){
+            // the user is logged in to Facebook
+            getFBimages();
+
+        }
 
         // set listener to detect user logout
         AccessTokenTracker accessTokenTracker = new AccessTokenTracker() {
@@ -157,6 +164,18 @@ public class SearchActivity extends AppCompatActivity {
             newFragment.show(getFragmentManager(), "help");
             return true;
 
+        }
+        else if (id == R.id.searchFB_menubutton && isFBLoggedIn()){
+            Log.e("FB", "user is logged in");
+            DialogFragment newFragment = new FacebookLogoutDialog();
+            newFragment.show(getFragmentManager(), "logout");
+            return true;
+        }
+        else if (id == R.id.searchFB_menubutton && !isFBLoggedIn()){
+            Log.e("FB", "user is logged out");
+            DialogFragment newFragment = new FacebookLoginDialog();
+            newFragment.show(getFragmentManager(), "login");
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -265,5 +284,63 @@ public class SearchActivity extends AppCompatActivity {
         return localDateString;
     }
 
+
+    // needs to be inner class to use the login-button
+    public static class FacebookLoginDialog extends DialogFragment {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+            // Use the Builder class for convenient dialog construction
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+            builder.setTitle("Facebook Login");
+            builder.setMessage("Login with Facebook to see the latest memes from the official \"Classical Art Memes\" Facebook page");
+            builder.setNegativeButton("No thanks", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // User cancelled the dialog
+                    // Android automatically closes the dialog
+                }
+            });
+            builder.setPositiveButton("Login", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // User wants to login
+                    loginButton.performClick();
+                }
+            });
+
+            return builder.create();
+        }
+
+    }
+
+    // needs to be inner class to use the login-button
+    public static class FacebookLogoutDialog extends DialogFragment {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+            // Use the Builder class for convenient dialog construction
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+            builder.setTitle("Facebook Logout");
+            builder.setMessage("Would you like to log out of Facebook?");
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // User cancelled the dialog
+                    // Android automatically closes the dialog
+                }
+            });
+            builder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // User wants to login
+                    loginButton.performClick();
+                }
+            });
+
+            return builder.create();
+        }
+
+    }
 
 }
