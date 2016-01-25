@@ -9,6 +9,7 @@ package nl.mprog.mume.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -17,15 +18,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
-import com.facebook.share.widget.LikeView;
-import com.facebook.share.widget.ShareButton;
 
 import nl.mprog.mume.Activities.ResultsActivity;
+import nl.mprog.mume.Classes.MyApplication;
 import nl.mprog.mume.Classes.VolleySingleton;
 import nl.mprog.mume.R;
 
@@ -33,6 +34,7 @@ import nl.mprog.mume.R;
 public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private String[] urls;
+    private String[] posturls;
     private String[] dates;
     private String[] names;
     private VolleySingleton volleySingleton;
@@ -42,10 +44,11 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
 
-    public FacebookImagesAdapter(Context context, String[] urls, String[] dates, String[] names){
+    public FacebookImagesAdapter(Context context, String[] urls, String[] posturls, String[] dates, String[] names){
         // constructor
         this.context = context;
         this.urls = urls;
+        this.posturls = posturls;
         this.dates = dates;
         this.names = names;
 
@@ -87,7 +90,26 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             PVholder.textView.setText(dateItem);
             PVholder.textView2.setText(nameItem);
 
-            PVholder.likeButton.setObjectIdAndType(urlItem, LikeView.ObjectType.OPEN_GRAPH);
+            final String pageurl = getPostUrl(position);
+            // set the behaviour for the button
+            PVholder.button.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    // open the post in the Facebook if it is present. If not, open in browser.
+                    try {
+                        context.getPackageManager().getPackageInfo("com.facebook.katana", 0);
+                        String id = pageurl.substring(20);
+                        // resource: http://stackoverflow.com/questions/4810803/open-facebook-page-from-android-app
+                        Intent openFacebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("fb://facewebmodal/f?href=" + "https://www.facebook.com/classicalartmemes/photos/a.595162167262642.1073741827.595155763929949/" + id));
+                        openFacebookIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        MyApplication.getAppContext().startActivity(openFacebookIntent);
+                    } catch (Exception e) {
+                        Intent openBrowserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(pageurl));
+                        openBrowserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        MyApplication.getAppContext().startActivity(openBrowserIntent);
+                    }
+                }
+            });
+
         }
         else if (holder instanceof VHHeader){
             final VHHeader VHholder = (VHHeader) holder;
@@ -169,6 +191,11 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         return urls[position-1];
     }
 
+    private String getPostUrl(int position){
+
+        return posturls[position-1];
+    }
+
     private String getDate(int position){
 
         return dates[position-1];
@@ -179,13 +206,12 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         return names[position-1];
     }
 
-    public static class PhotoViewHolder extends RecyclerView.ViewHolder {
+    public static class PhotoViewHolder extends RecyclerView.ViewHolder{
 
         public NetworkImageView imageView;
         public TextView textView;
         public TextView textView2;
-        public LikeView likeButton;
-        public ShareButton shareButton;
+        public Button button;
 
         public PhotoViewHolder(View itemView) {
             super(itemView);
@@ -193,10 +219,10 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             imageView = (NetworkImageView) itemView.findViewById(R.id.album_imageview);
             textView = (TextView) itemView.findViewById(R.id.album_textview);
             textView2 = (TextView) itemView.findViewById(R.id.album_textview2);
-            likeButton = (LikeView) itemView.findViewById(R.id.like_view);
-            shareButton = (ShareButton) itemView.findViewById(R.id.fb_share_button);
+            button = (Button) itemView.findViewById(R.id.buttonToFB);
 
         }
+
     }
 
     public static class VHHeader extends RecyclerView.ViewHolder {

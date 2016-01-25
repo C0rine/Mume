@@ -34,7 +34,6 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
@@ -52,6 +51,7 @@ public class SearchActivity extends AppCompatActivity {
     private StringBuilder urlStringBuilder;
     private StringBuilder timestampStringBuilder;
     private StringBuilder nameBuilder;
+    private StringBuilder postUrlStringBuilder;
     private String[] emptyArray = {};
 
     @Override
@@ -65,9 +65,10 @@ public class SearchActivity extends AppCompatActivity {
         urlStringBuilder = new StringBuilder();
         timestampStringBuilder = new StringBuilder();
         nameBuilder = new StringBuilder();
+        postUrlStringBuilder = new StringBuilder();
 
         recyclerView = (RecyclerView) findViewById(R.id.cardList);
-        FacebookImagesAdapter fia = new FacebookImagesAdapter(getApplicationContext(), emptyArray, emptyArray, emptyArray);
+        FacebookImagesAdapter fia = new FacebookImagesAdapter(getApplicationContext(), emptyArray, emptyArray, emptyArray, emptyArray);
         recyclerView.setAdapter(fia);
 
 
@@ -78,8 +79,8 @@ public class SearchActivity extends AppCompatActivity {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(llm);
 
-        LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
 
+        LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
 
         if (isFBLoggedIn()){
             // the user is logged in to Facebook
@@ -117,7 +118,7 @@ public class SearchActivity extends AppCompatActivity {
             protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
                 if (currentAccessToken == null){
                     // user logged out, reset the UI
-                    FacebookImagesAdapter fia = new FacebookImagesAdapter(getApplicationContext(), emptyArray, emptyArray, emptyArray);
+                    FacebookImagesAdapter fia = new FacebookImagesAdapter(getApplicationContext(), emptyArray, emptyArray, emptyArray, emptyArray);
                     recyclerView.setAdapter(fia);
                 }
             }
@@ -193,6 +194,10 @@ public class SearchActivity extends AppCompatActivity {
                                 String currentUrl = "http://graph.facebook.com/" + currentId + "/picture";
                                 // append the url to the stringbuilder
                                 urlStringBuilder.append(currentUrl + "\n");
+                                // also use the current id to get a posturl
+                                String currentPosturl = "http://facebook.com/" + currentId;
+                                postUrlStringBuilder.append(currentPosturl + "\n");
+
 
                                 // get the photo timestamp
                                 String currentTimestamp = photosArray.getJSONObject(i).getString("created_time");
@@ -211,20 +216,6 @@ public class SearchActivity extends AppCompatActivity {
                                     nameBuilder.append("\n");
                                 }
 
-//                                // for each photo we also want to know how many likes it has
-//                                new GraphRequest(
-//                                        AccessToken.getCurrentAccessToken(),
-//                                        "/" + currentId + "/likes?summary=true",
-//                                        null,
-//                                        HttpMethod.GET,
-//                                        new GraphRequest.Callback() {
-//                                            public void onCompleted(GraphResponse response) {
-//                                                JSONObject responseobject = response.getJSONObject();
-//                                                Log.e("LIKES", responseobject.toString());
-//                                            }
-//                                        }
-//                                ).executeAsync();
-
                             }
 
                             // all urls have been found
@@ -232,13 +223,16 @@ public class SearchActivity extends AppCompatActivity {
                             String allurls = urlStringBuilder.toString();
                             String[] urlarray = allurls.split(Pattern.quote("\n"));
 
+                            String allposturls = postUrlStringBuilder.toString();
+                            String[] posturlarray = allposturls.split(Pattern.quote("\n"));
+
                             String alldates = timestampStringBuilder.toString();
                             String[] datesarray = alldates.split(Pattern.quote("\n"));
 
                             String allnames = nameBuilder.toString();
                             String[] namesarray = allnames.split(Pattern.quote("\n"));
 
-                            FacebookImagesAdapter fia = new FacebookImagesAdapter(getApplicationContext(), urlarray, datesarray, namesarray);
+                            FacebookImagesAdapter fia = new FacebookImagesAdapter(getApplicationContext(), urlarray, posturlarray, datesarray, namesarray);
                             recyclerView.setAdapter(fia);
 
 
@@ -269,5 +263,6 @@ public class SearchActivity extends AppCompatActivity {
 
         return localDateString;
     }
+
 
 }

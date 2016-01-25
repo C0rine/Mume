@@ -3,7 +3,6 @@
      Corine_J@MSN.com -->
 
 <resources>
-
     <string name="app_name">Mume</string>
     <string name="searchtitle_textview_text">Search</string>
     <string name="startsearch_button_text">Go!</string>
@@ -22,6 +21,6 @@
     <string name="sendto_shareintent_title">Share with...</string>
     <string name="undertitlesearch_textview_text">and make your own memes</string>
     <string name="fbimageheader_textview_text">Official Classical Art Memes:</string>
-
     <string name="app_id">746901972078034</string>
+    <string name="viewonfb_button_text">Click to view on Facebook</string>
 </resources>
