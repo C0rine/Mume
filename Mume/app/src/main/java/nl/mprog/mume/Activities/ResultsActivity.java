@@ -28,7 +28,9 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -39,6 +41,7 @@ import org.json.JSONObject;
 
 import java.util.Arrays;
 
+import nl.mprog.mume.Classes.MyApplication;
 import nl.mprog.mume.Classes.Parser;
 import nl.mprog.mume.Classes.QueryMaker;
 import nl.mprog.mume.Dialogs.HelpDialog;
@@ -213,7 +216,14 @@ public class ResultsActivity extends AppCompatActivity {
                 // handle any errors that might occur when trying to get the request
                 Log.e("VOLLEY", "There was an error in the response to the collection-endpoint:" + error.getMessage());
 
+                // if the error is caused because there is no internet connection, then notify the user of this with a toast
+                // resource: http://stackoverflow.com/questions/21011279/
+                if(error instanceof NoConnectionError) {
+                    Toast.makeText(MyApplication.getAppContext(), R.string.nointernet_toast_text, Toast.LENGTH_LONG).show();
+                }
+
             }
+
         });
 
         // add the request to the queue
