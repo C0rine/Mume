@@ -26,6 +26,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,6 +58,7 @@ public class ResultsActivity extends AppCompatActivity {
     private LinearLayout dummyLinearLayout;
     private RelativeLayout loadingPanel;
     private TextView noresultstext;
+    private ProgressBar progressBar;
 
     private String[] artistnames;
     private String[] objectids;
@@ -74,6 +76,7 @@ public class ResultsActivity extends AppCompatActivity {
         dummyLinearLayout = (LinearLayout) findViewById(R.id.dummy_linearlayout);
         loadingPanel = (RelativeLayout) findViewById(R.id.loadingPanel);
         noresultstext = (TextView) findViewById(R.id.noresults_textview);
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
         // initially hide the no-results text (we only want to show this when we are sure there are no results
         noresultstext.setVisibility(View.GONE);
@@ -97,16 +100,8 @@ public class ResultsActivity extends AppCompatActivity {
                 "\'</small></i>"));
 
 
-        // wait some time to allow the gridview to load correctly (for smoother UI experience)
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                // slowly animate the loadingPanel away
-                loadingPanel.animate().alpha(0f).setDuration(1000);
-                loadingPanel.setClickable(false);
-            }
-        }, 1500);
+
+
 
 
         // What to do when an item in the gridview gets clicked?:
@@ -190,6 +185,9 @@ public class ResultsActivity extends AppCompatActivity {
     // perform a search
     private void performSearch(String searchwords, QueryMaker queryMaker, RequestQueue requestQueue){
 
+        noresultstext.setVisibility(View.GONE);
+        loadingPanel.animate().alpha(1f).setDuration(1);
+
         // Request the results of the search with http GET request
         JsonObjectRequest collectionrequest = new JsonObjectRequest(Request.Method.GET, queryMaker.getRequestURL(searchwords),
                 new Response.Listener<JSONObject>() {
@@ -206,18 +204,32 @@ public class ResultsActivity extends AppCompatActivity {
                         objectids = parser.getRMobjectids();
                         bigImageUrls = parser.getRMbigImageUrl();
                         Log.e("ImageURL", Arrays.toString(bigImageUrls));
+                        Log.e("OBJECTID", "no. of objectids: " + Integer.toString(objectids.length));
 
-                        if (objectids.length < 1){
-                            // there are no results, notify this to the user with a textview
-                            Log.e("RESULTS", "there are no results");
-                            loadingPanel.setVisibility(View.VISIBLE);
-                            noresultstext.setVisibility(View.VISIBLE);
-                        }
 
                         // set the parsed names and ids to the ResultsAdapter and set the adapter to the gridview
                         // to display the results
                         resultsAdapter = new ResultsAdapter(getApplicationContext(), artistnames, objectids, bigImageUrls);
                         gridview.setAdapter(resultsAdapter);
+
+                        if (objectids.length < 2){
+                            // there are no results, notify this to the user with a textview
+                            Log.e("RESULTS", "there are no results");
+                            progressBar.setVisibility(View.GONE);
+                            noresultstext.setVisibility(View.VISIBLE);
+                        }
+                        else{
+                            progressBar.setVisibility(View.VISIBLE);
+                            final Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    // slowly animate the loadingPanel away
+                                    loadingPanel.animate().alpha(0f).setDuration(1000);
+                                    loadingPanel.setClickable(false);
+                                }
+                            }, 1500);
+                        }
 
 
                     }
@@ -227,6 +239,7 @@ public class ResultsActivity extends AppCompatActivity {
 
                 // handle any errors that might occur when trying to get the request
                 Log.e("VOLLEY", "There was an error in the response to the collection-endpoint:" + error.getMessage());
+
 
                 // if the error is caused because there is no internet connection, then notify the user of this with a toast
                 // resource: http://stackoverflow.com/questions/21011279/
