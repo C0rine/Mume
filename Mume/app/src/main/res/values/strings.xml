@@ -35,4 +35,5 @@
     <string name="facebooklogout_dialog_message">Would you like to log out of Facebook?</string>
     <string name="facebooklogout_dialog_negativebutton">Cancel</string>
     <string name="facebooklogout_dialog_positivebutton">Logout</string>
+    <string name="pleaseloginfb_textview_text">Login with Facebook to see the memes of the official Classical Art Memes Facebook page</string>
 </resources>

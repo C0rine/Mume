@@ -83,7 +83,7 @@ public class ResultsActivity extends AppCompatActivity {
         final QueryMaker queryMaker = new QueryMaker();
         queryMaker.setSearchtype("collection");
 
-        // get the Volley request queue
+        // get the Volley request queue to append networkrequests to
         final RequestQueue requestQueue = VolleySingleton.getInstance().getmRequestQueue();
 
         // get the intent and the data from the previous (search) activity

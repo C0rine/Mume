@@ -67,6 +67,7 @@ public class SelectedActivity extends AppCompatActivity {
         Intent intent = AviaryIntent.createCdsInitIntent(getBaseContext());
         startService(intent);
 
+        // Volley and the imageloader are used to make network requests to get data and load images from url
         volleySingleton = VolleySingleton.getInstance();
         imageLoader = volleySingleton.getmImageLoader();
 
