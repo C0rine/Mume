@@ -20,8 +20,10 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.facebook.login.widget.LoginButton;
@@ -90,13 +92,32 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         if (holder instanceof PhotoViewHolder){
             // fill the cards with the data from Facebook
-            PhotoViewHolder PVholder = (PhotoViewHolder) holder;
+            final PhotoViewHolder PVholder = (PhotoViewHolder) holder;
             String urlItem = getUrl(position);
             String dateItem = getDate(position);
             String nameItem = getName(position);
-            PVholder.imageView.setImageUrl(urlItem, imageLoader);
+//            PVholder.imageView.setImageUrl(urlItem, imageLoader);
             PVholder.textView.setText(dateItem);
             PVholder.textView2.setText(nameItem);
+
+            // use the image loader to get the image
+            imageLoader.get(urlItem, new ImageLoader.ImageListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    // Failure: set a standard image if this image could not load
+                    PVholder.imageView.setImageResource(R.mipmap.image_notavailable_icon);
+                    Log.e("FACEBOOK IMAGES ADAPTER", "There was an error in loading the Facebook image: "
+                            + error.getMessage());
+                }
+
+                @Override
+                public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                    // Success! there was an image url retrieved. Set the image in the imageview
+                    PVholder.imageView.setAlpha(0f);
+                    PVholder.imageView.setImageBitmap(response.getBitmap());
+                    PVholder.imageView.animate().alpha(1f).setDuration(800);
+                }
+            });
 
             final String pageurl = getPostUrl(position);
             // set the behaviour for the button
@@ -250,7 +271,7 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     public static class PhotoViewHolder extends RecyclerView.ViewHolder{
 
-        public NetworkImageView imageView;
+        public ImageView imageView;
         public TextView textView;
         public TextView textView2;
         public Button button;
@@ -258,7 +279,7 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         public PhotoViewHolder(View itemView) {
             super(itemView);
 
-            imageView = (NetworkImageView) itemView.findViewById(R.id.album_imageview);
+            imageView = (ImageView) itemView.findViewById(R.id.album_imageview);
             textView = (TextView) itemView.findViewById(R.id.album_textview);
             textView2 = (TextView) itemView.findViewById(R.id.album_textview2);
             button = (Button) itemView.findViewById(R.id.buttonToFB);
