@@ -162,4 +162,11 @@ I have also tried to add like and share buttons to the facebook cardviews, but t
 
 #Day 16
 **Mon 25 Jan 2016**  
+I had hoped to fix a lot more bugs than I was able to do today. I hope I can accomplish a lot more tomorrow...  
+- Minor layout changes
+- Added button to the Classical Art Memes at the bottom of the list of FB cards. This way the user can see more images on the official page.
+- I eventually did replace the like and share buttons with a buttom to the post on Facebook. Both this button and the button at the end of the list open the FB link in the FB app if this is installed (otherwise it will just be opened in the browser).
+- I have moved the functionality of the FB login/logout button to a button in the actionbar. I will have to change the logo for this later.
 
+#Day 17
+**Tue 26 Jan 2016** 
