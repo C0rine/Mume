@@ -56,6 +56,7 @@ public class ResultsActivity extends AppCompatActivity {
     private EditText searchbar;
     private LinearLayout dummyLinearLayout;
     private RelativeLayout loadingPanel;
+    private TextView noresultstext;
 
     private String[] artistnames;
     private String[] objectids;
@@ -72,6 +73,10 @@ public class ResultsActivity extends AppCompatActivity {
         searchbar = (EditText) findViewById(R.id.searchbar_edittext);
         dummyLinearLayout = (LinearLayout) findViewById(R.id.dummy_linearlayout);
         loadingPanel = (RelativeLayout) findViewById(R.id.loadingPanel);
+        noresultstext = (TextView) findViewById(R.id.noresults_textview);
+
+        // initially hide the no-results text (we only want to show this when we are sure there are no results
+        noresultstext.setVisibility(View.GONE);
 
         // Building the query: we want to search the collection
         final QueryMaker queryMaker = new QueryMaker();
@@ -201,6 +206,13 @@ public class ResultsActivity extends AppCompatActivity {
                         objectids = parser.getRMobjectids();
                         bigImageUrls = parser.getRMbigImageUrl();
                         Log.e("ImageURL", Arrays.toString(bigImageUrls));
+
+                        if (objectids.length < 1){
+                            // there are no results, notify this to the user with a textview
+                            Log.e("RESULTS", "there are no results");
+                            loadingPanel.setVisibility(View.VISIBLE);
+                            noresultstext.setVisibility(View.VISIBLE);
+                        }
 
                         // set the parsed names and ids to the ResultsAdapter and set the adapter to the gridview
                         // to display the results

@@ -64,6 +64,13 @@
                 android:indeterminate="true"
                 style="@android:style/Widget.ProgressBar" />
 
+            <TextView
+                android:id="@+id/noresults_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/noresults_textview_text"
+                android:textColor="#000000"/>
+
         </RelativeLayout>
 
     </FrameLayout>

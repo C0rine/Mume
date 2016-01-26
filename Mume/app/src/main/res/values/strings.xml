@@ -25,4 +25,6 @@
     <string name="viewonfb_button_text">View on Facebook</string>
     <string name="openfbpage_button_text">Visit the Facebook page</string>
     <string name="nointernet_toast_text">No internet connection</string>
+    <string name="noresults_textview_text">No search-results</string>
+    <string name="failfacebooklogin_toast_text">Facebook login failed</string>
 </resources>
