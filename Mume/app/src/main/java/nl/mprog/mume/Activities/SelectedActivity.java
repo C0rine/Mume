@@ -187,9 +187,6 @@ public class SelectedActivity extends AppCompatActivity {
 
     // gets executed when the 'Meme it' button gets pressed
     public void startEdit(View view){
-        // open the EditActivity to start editing the image
-//        Intent startEdit = new Intent(this, EditActivity.class);
-//        startActivityForResult(startEdit, 1);
 
         ToolLoaderFactory.Tools[] mTools = {ToolLoaderFactory.Tools.TEXT, ToolLoaderFactory.Tools.DRAW,
                 ToolLoaderFactory.Tools.CROP, ToolLoaderFactory.Tools.MEME};

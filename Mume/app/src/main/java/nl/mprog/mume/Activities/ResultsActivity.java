@@ -40,8 +40,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONObject;
 
-import java.util.Arrays;
-
 import nl.mprog.mume.Classes.MyApplication;
 import nl.mprog.mume.Classes.Parser;
 import nl.mprog.mume.Classes.QueryMaker;
@@ -78,7 +76,7 @@ public class ResultsActivity extends AppCompatActivity {
         noresultstext = (TextView) findViewById(R.id.noresults_textview);
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
-        // initially hide the no-results text (we only want to show this when we are sure there are no results
+        // initially hide the no-results text (we only want to show this when we are sure there are no results)
         noresultstext.setVisibility(View.GONE);
 
         // Building the query: we want to search the collection
@@ -94,24 +92,16 @@ public class ResultsActivity extends AppCompatActivity {
         // perform a search (see method below) based on these searchwords and display them in the layout
         performSearch(searchwords, queryMaker, requestQueue);
 
-        // put the searchwords in the hint of the edit-text so the user knows what he/she is
-        // searching
-        searchbar.setHint(Html.fromHtml("<i><small>Searching for \'" + searchwords.trim() +
-                "\'</small></i>"));
-
-
-
-
+        // put the searchwords in the hint of the edit-text so the user knows what he/she is searching
+        searchbar.setHint(Html.fromHtml("<i><small>Searching for \'" + searchwords.trim() + "\'</small></i>"));
 
 
         // What to do when an item in the gridview gets clicked?:
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-
                 // Open the next activity when one item is clicked
                 Intent showResult = new Intent(ResultsActivity.this, SelectedActivity.class);
-
-                // send the request url along
+                // send the url for the detailed object info and the url for the image along with the intent
                 String url = resultsAdapter.getItem(position);
                 String imageurl = resultsAdapter.getImage(position);
                 showResult.putExtra("dataUrl", url);
@@ -120,14 +110,13 @@ public class ResultsActivity extends AppCompatActivity {
             }
         });
 
-        // handle a new search (when clicked on search-icon in the searchbar)
+        // handle a new search (when clicked on search-icon (magnifying glass) in the searchbar)
         searchbar.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     if (event.getRawX() >= (searchbar.getRight() - searchbar.getCompoundDrawables()
                             [2].getBounds().width())) {
-
                         // perform the new search
                         performSearchFromSearchbar(queryMaker, requestQueue);
                         return true;
@@ -144,7 +133,6 @@ public class ResultsActivity extends AppCompatActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_GO) {
-
                     // perform the new search
                     performSearchFromSearchbar(queryMaker, requestQueue);
                     handled = true;
@@ -171,11 +159,9 @@ public class ResultsActivity extends AppCompatActivity {
 
         // Open Help-dialog once the button gets pressed
         if (id == R.id.searchhelp_menubutton) {
-
             DialogFragment newFragment = new HelpDialog();
             newFragment.show(getFragmentManager(), "help");
             return true;
-
         }
 
         return super.onOptionsItemSelected(item);
@@ -185,7 +171,9 @@ public class ResultsActivity extends AppCompatActivity {
     // perform a search
     private void performSearch(String searchwords, QueryMaker queryMaker, RequestQueue requestQueue){
 
+        // for each search reset the following items:
         noresultstext.setVisibility(View.GONE);
+        progressBar.setVisibility(View.GONE);
         loadingPanel.animate().alpha(1f).setDuration(1);
 
         // Request the results of the search with http GET request
@@ -199,13 +187,11 @@ public class ResultsActivity extends AppCompatActivity {
                         Parser parser = new Parser();
                         parser.parseRMCollection(response);
 
-                        // retrieve the parsed artistnames and object ids as a stringarray
+                        // retrieve the parsed artistnames and object ids as a String-array
                         artistnames = parser.getRMartistnames();
                         objectids = parser.getRMobjectids();
+                        // also retrieve the image urls (high res)
                         bigImageUrls = parser.getRMbigImageUrl();
-                        Log.e("ImageURL", Arrays.toString(bigImageUrls));
-                        Log.e("OBJECTID", "no. of objectids: " + Integer.toString(objectids.length));
-
 
                         // set the parsed names and ids to the ResultsAdapter and set the adapter to the gridview
                         // to display the results
@@ -219,8 +205,10 @@ public class ResultsActivity extends AppCompatActivity {
                             noresultstext.setVisibility(View.VISIBLE);
                         }
                         else{
+                            // there are search results, shortly show a loading screen
                             progressBar.setVisibility(View.VISIBLE);
                             final Handler handler = new Handler();
+                            // wait 1500 ms
                             handler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
@@ -240,7 +228,6 @@ public class ResultsActivity extends AppCompatActivity {
                 // handle any errors that might occur when trying to get the request
                 Log.e("VOLLEY", "There was an error in the response to the collection-endpoint:" + error.getMessage());
 
-
                 // if the error is caused because there is no internet connection, then notify the user of this with a toast
                 // resource: http://stackoverflow.com/questions/21011279/
                 if(error instanceof NoConnectionError) {
@@ -256,6 +243,8 @@ public class ResultsActivity extends AppCompatActivity {
     }
 
 
+    // when a search gets performed from the edittext in this activity, we also need to handle
+    // this edittext (searchbar)
     public void performSearchFromSearchbar(QueryMaker queryMaker, RequestQueue requestQueue){
 
         // get the new searchwords from the edittext

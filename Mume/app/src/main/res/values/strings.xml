@@ -27,4 +27,12 @@
     <string name="nointernet_toast_text">No internet connection</string>
     <string name="noresults_textview_text">No search-results</string>
     <string name="failfacebooklogin_toast_text">Facebook login failed</string>
+    <string name="facebooklogin_dialog_title">Facebook Login</string>
+    <string name="facebooklogin_dialog_message">Login with Facebook to see the latest memes from the official \"Classical Art Memes\" Facebook page</string>
+    <string name="facebooklogin_dialog_negativebutton">No thanks</string>
+    <string name="facebooklogin_dialog_positivebutton">Login</string>
+    <string name="facebooklogout_dialog_title">Facebook Logout</string>
+    <string name="facebooklogout_dialog_message">Would you like to log out of Facebook?</string>
+    <string name="facebooklogout_dialog_negativebutton">Cancel</string>
+    <string name="facebooklogout_dialog_positivebutton">Logout</string>
 </resources>
