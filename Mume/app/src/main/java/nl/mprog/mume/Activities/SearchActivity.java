@@ -110,7 +110,7 @@ public class SearchActivity extends AppCompatActivity {
 
         // if the user was not logged-in or did not just login, then send empty arrays to the
         // adapter to make sure no cards are displayed
-        recyclerView = (RecyclerView) findViewById(R.id.cardList);
+        recyclerView = (RecyclerView) findViewById(R.id.facebook_recyclerview);
         FacebookImagesAdapter fia = new FacebookImagesAdapter(getApplicationContext(), emptyArray,
                 emptyArray, emptyArray, emptyArray);
         recyclerView.setAdapter(fia);

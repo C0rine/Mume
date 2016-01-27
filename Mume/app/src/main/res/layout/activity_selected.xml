@@ -6,7 +6,7 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/top_linearlayout"
+    android:id="@+id/selectedtop_linearlayout"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -19,7 +19,7 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/inner_linearlayout"
+            android:id="@+id/selectedinner_linearlayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -45,7 +45,7 @@
                 android:onClick="startEdit" />
 
             <TextView
-                android:id="@+id/rijksmuseum_acknowledgement_textview"
+                android:id="@+id/rijksmuseumacknowledgement_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -56,6 +56,7 @@
 
             <TableLayout
                 android:id="@+id/metadata_tablelayout"
+                android:layout_margin="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 

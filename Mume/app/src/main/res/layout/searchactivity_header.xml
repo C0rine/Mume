@@ -5,7 +5,7 @@
      Corine_J@MSN.com -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/top_linearlayout"
+    android:id="@+id/searchactivityheadertop_linearlayout"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -27,6 +27,7 @@
         android:textAlignment="center" />
 
     <TextView
+        android:id="@+id/searchundertitle_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -38,7 +39,6 @@
         android:textStyle="bold"
         android:textSize="20sp"
         android:textAlignment="center"/>
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -66,9 +66,8 @@
 
     </LinearLayout>
 
-
     <TextView
-        android:id="@+id/cardview_title"
+        android:id="@+id/cardviewtitle_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

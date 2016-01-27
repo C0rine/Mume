@@ -71,19 +71,19 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (viewType == TYPE_BODYITEM){
             View itemView = LayoutInflater.
                     from(parent.getContext()).
-                    inflate(R.layout.cardview_layout, parent, false);
+                    inflate(R.layout.facebookcardview_layout, parent, false);
             return new PhotoViewHolder(itemView);
         }
         else if (viewType == TYPE_HEADER){
             View itemView = LayoutInflater.
                     from(parent.getContext()).
-                    inflate(R.layout.search_header, parent, false);
+                    inflate(R.layout.searchactivity_header, parent, false);
             return new VHHeader(itemView);
         }
         else if (viewType == TYPE_FOOTER){
             View itemView = LayoutInflater.
                     from(parent.getContext()).
-                    inflate(R.layout.search_footer, parent, false);
+                    inflate(R.layout.searchactivity_footer, parent, false);
             return new VHFooter(itemView);
         }
 
@@ -303,10 +303,10 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         public PhotoViewHolder(View itemView) {
             super(itemView);
-            memeimage= (ImageView) itemView.findViewById(R.id.album_imageview);
-            date = (TextView) itemView.findViewById(R.id.album_textview);
-            caption = (TextView) itemView.findViewById(R.id.album_textview2);
-            showFBpost = (Button) itemView.findViewById(R.id.buttonToFB);
+            memeimage= (ImageView) itemView.findViewById(R.id.fbphoto_imageview);
+            date = (TextView) itemView.findViewById(R.id.timestamp_textview);
+            caption = (TextView) itemView.findViewById(R.id.caption_textview);
+            showFBpost = (Button) itemView.findViewById(R.id.viewonfb_button);
         }
     }
 
@@ -320,7 +320,7 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         public VHHeader(View itemView){
             super(itemView);
             searchbar = (EditText) itemView.findViewById(R.id.searchbar_edittext);
-            cardviewheader = (TextView) itemView.findViewById(R.id.cardview_title);
+            cardviewheader = (TextView) itemView.findViewById(R.id.cardviewtitle_textview);
         }
     }
 
@@ -332,7 +332,7 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         public VHFooter(View itemView){
             super(itemView);
-            showFBpage = (Button) itemView.findViewById(R.id.FBPage_button);
+            showFBpage = (Button) itemView.findViewById(R.id.tofbpage_button);
         }
     }
 }

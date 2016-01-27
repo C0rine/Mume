@@ -72,9 +72,9 @@ public class ResultsActivity extends AppCompatActivity {
         gridview = (GridView) findViewById(R.id.results_gridview);
         searchbar = (EditText) findViewById(R.id.searchbar_edittext);
         dummyLinearLayout = (LinearLayout) findViewById(R.id.dummy_linearlayout);
-        loadingPanel = (RelativeLayout) findViewById(R.id.loadingPanel);
+        loadingPanel = (RelativeLayout) findViewById(R.id.loadingpanel_relativelayout);
         noresultstext = (TextView) findViewById(R.id.noresults_textview);
-        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        progressBar = (ProgressBar) findViewById(R.id.loading_progressbar);
 
         // initially hide the no-results text (we only want to show this when we are sure there
         // are no results)

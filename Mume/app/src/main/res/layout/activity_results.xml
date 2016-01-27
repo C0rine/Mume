@@ -6,7 +6,7 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/top_linearlayout"
+    android:id="@+id/resultstop_linearlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -51,7 +51,7 @@
 
         <!-- Resource: http://stackoverflow.com/questions/5442183 -->
         <RelativeLayout
-            android:id="@+id/loadingPanel"
+            android:id="@+id/loadingpanel_relativelayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -59,7 +59,7 @@
             android:clickable="true">
 
             <ProgressBar
-                android:id="@+id/progress_bar"
+                android:id="@+id/loading_progressbar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:indeterminate="true"

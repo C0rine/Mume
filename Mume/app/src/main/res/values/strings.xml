@@ -4,8 +4,8 @@
 
 <resources>
     <string name="app_name">Mume</string>
+
     <string name="searchtitle_textview_text">Search</string>
-    <string name="startsearch_button_text">Go!</string>
     <string name="searchbar_edittext_hint">search for...</string>
     <string name="help_menuitem_title">Help</string>
     <string name="share_button_text">Share</string>
@@ -21,7 +21,6 @@
     <string name="sendto_shareintent_title">Share with...</string>
     <string name="undertitlesearch_textview_text">and make your own memes</string>
     <string name="fbimageheader_textview_text">Classical Art Memes:</string>
-    <string name="app_id">746901972078034</string>
     <string name="viewonfb_button_text">View on Facebook</string>
     <string name="openfbpage_button_text">Visit the Facebook page</string>
     <string name="nointernet_toast_text">No internet connection</string>
@@ -36,4 +35,8 @@
     <string name="facebooklogout_dialog_negativebutton">Cancel</string>
     <string name="facebooklogout_dialog_positivebutton">Logout</string>
     <string name="pleaseloginfb_textview_text">Login with Facebook to see the memes of the official Classical Art Memes Facebook page</string>
+
+    <!-- used by Facebook API: -->
+    <string name="app_id">746901972078034</string>
+
 </resources>

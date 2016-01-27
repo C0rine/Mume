@@ -95,7 +95,7 @@ public class ResultsAdapter extends BaseAdapter {
         if (convertView == null){
             //There is no view so we must create a new View. We will inflate it from a custom layout
             this.inflater = LayoutInflater.from(context);
-            convertView = inflater.inflate(R.layout.gridview_layout, parent, false);
+            convertView = inflater.inflate(R.layout.resultsgridview_layout, parent, false);
         }
 
         // For each item create:
