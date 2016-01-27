@@ -29,6 +29,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.NetworkImageView;
 import com.aviary.android.feather.sdk.AviaryIntent;
 import com.aviary.android.feather.sdk.internal.filters.ToolLoaderFactory;
 
@@ -40,7 +41,6 @@ import java.util.UUID;
 import nl.mprog.mume.Classes.MyApplication;
 import nl.mprog.mume.Classes.Parser;
 import nl.mprog.mume.Classes.VolleySingleton;
-import nl.mprog.mume.CustomView.TouchImageView;
 import nl.mprog.mume.Dialogs.HelpDialog;
 import nl.mprog.mume.R;
 
@@ -50,7 +50,7 @@ public class SelectedActivity extends AppCompatActivity {
     private TextView title_holder;
     private TextView dating_holder;
     private TextView materials_holder;
-    private TouchImageView image_holder;
+    private NetworkImageView image_holder;
     private ScrollView scrollView;
 
     private VolleySingleton volleySingleton;
@@ -77,7 +77,7 @@ public class SelectedActivity extends AppCompatActivity {
         title_holder = (TextView) findViewById(R.id.titleholder_textview);
         dating_holder = (TextView) findViewById(R.id.datingholder_textview);
         materials_holder = (TextView) findViewById(R.id.materialsholder_textview);
-        image_holder = (TouchImageView) findViewById(R.id.artimage_imageview);
+        image_holder = (NetworkImageView) findViewById(R.id.artimage_imageview);
         scrollView = (ScrollView) findViewById(R.id.selected_scrollview);
 
         // get the urls for the image and data from the intent

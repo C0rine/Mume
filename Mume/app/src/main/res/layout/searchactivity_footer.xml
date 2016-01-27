@@ -19,7 +19,7 @@
         android:layout_marginBottom="20dp"
         android:text="@string/openfbpage_button_text"
         android:textColor="#ffffff"
-        android:background="@drawable/custom_button"
+        android:background="@drawable/custom_round_button"
         android:padding="10dp"
         android:elevation="10dp"/>
 
