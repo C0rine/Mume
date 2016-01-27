@@ -266,7 +266,7 @@ public class SearchActivity extends AppCompatActivity {
                             } catch (JSONException e) {
                                 // something went wrong in the getting the request
                                 e.printStackTrace();
-                                Log.e("FACEBOOOK", "failed to get the photos");
+                                Log.e("FACEBOOK", "failed to get the photos");
                             }
                         }
                     }
@@ -292,16 +292,14 @@ public class SearchActivity extends AppCompatActivity {
         // initialize string to empty string so in case the parsing and formatting fails at least something can be returned
         String localDateString = "";
 
-        // use timezone of the user to show the correct time
+        // reformat the date to better readable one and time and return it
         long when = 0;
         try {
             when = fb_dateFormat.parse(utcLongDateTime).getTime();
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-        // reformat the date and time and return it
-        localDateString = my_dateFormat.format(new Date(when + TimeZone.getDefault().getRawOffset() + (TimeZone.getDefault().inDaylightTime(new Date()) ? TimeZone.getDefault().getDSTSavings() : 0)));
+        localDateString = my_dateFormat.format(new Date(when));
         return localDateString;
     }
 
