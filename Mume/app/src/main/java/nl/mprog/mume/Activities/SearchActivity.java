@@ -42,10 +42,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
-import java.util.TimeZone;
 import java.util.regex.Pattern;
 
 import nl.mprog.mume.Adapters.FacebookImagesAdapter;
@@ -239,10 +240,15 @@ public class SearchActivity extends AppCompatActivity {
                                         JSONObject currentNameObject = photosArray.getJSONObject(i);
                                         String theName = currentNameObject.getString("name");
                                         // append if found
-                                        nameBuilder.append(theName + "\n");
+                                        // we have to use something else than \n to split the names since
+                                        // captions themselves can contain a new line (\n)
+                                        // therefore we use a very unlikely to appear string of characters
+                                        nameBuilder.append(theName + " !@#$%^&*");
                                     } catch (JSONException e){
                                         // append just a space when there is none
-                                        nameBuilder.append(" \n");
+                                        // we have to use something else than \n to split the names since
+                                        // captions themselves can contain a new line (\n)
+                                        nameBuilder.append(" !@#$%^&*");
                                     }
                                 }
 
@@ -257,7 +263,10 @@ public class SearchActivity extends AppCompatActivity {
                                 String[] datesarray = alldates.split(Pattern.quote("\n"));
 
                                 String allnames = nameBuilder.toString();
-                                String[] namesarray = allnames.split(Pattern.quote("\n"));
+                                // we have to use something else than \n to split the names since
+                                // captions themselves can contain a new line (\n)
+                                String[] namesarray = allnames.split(Pattern.quote("!@#$%^&*"));
+                                Log.e("FB", "length: " + Integer.toString(namesarray.length) + ". array: " + Arrays.toString(namesarray));
 
                                 // send the string[]s to the adapter and set the adapter on the recyclerview
                                 FacebookImagesAdapter fia = new FacebookImagesAdapter(getApplicationContext(), urlarray, posturlarray, datesarray, namesarray);
