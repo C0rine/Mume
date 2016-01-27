@@ -42,10 +42,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.regex.Pattern;
 
@@ -102,15 +100,19 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onError(FacebookException exception) {
                 Log.e("FACEBOOK", "Login error:" + exception.getMessage());
-                Toast.makeText(MyApplication.getAppContext(), R.string.failfacebooklogin_toast_text, Toast.LENGTH_LONG).show();
+                Toast.makeText(MyApplication.getAppContext(), R.string.failfacebooklogin_toast_text,
+                        Toast.LENGTH_LONG).show();
             }
         });
-        // hide the login button (we handle the functionality of the button in the menu of the actionbar)
+        // hide the login button (we handle the functionality of the button in the menu of the
+        // actionbar)
         loginButton.setVisibility(View.GONE);
 
-        // if the user was not logged-in or did not just login, then send empty arrays to the adapter to make sure no cards are displayed
+        // if the user was not logged-in or did not just login, then send empty arrays to the
+        // adapter to make sure no cards are displayed
         recyclerView = (RecyclerView) findViewById(R.id.cardList);
-        FacebookImagesAdapter fia = new FacebookImagesAdapter(getApplicationContext(), emptyArray, emptyArray, emptyArray, emptyArray);
+        FacebookImagesAdapter fia = new FacebookImagesAdapter(getApplicationContext(), emptyArray,
+                emptyArray, emptyArray, emptyArray);
         recyclerView.setAdapter(fia);
 
         // set up the Recyclerview for the Facebook cardviews
@@ -133,7 +135,8 @@ public class SearchActivity extends AppCompatActivity {
             protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
                 if (currentAccessToken == null){
                     // user logged out, reset the UI to not displaying the FB images anymore
-                    FacebookImagesAdapter fia = new FacebookImagesAdapter(getApplicationContext(), emptyArray, emptyArray, emptyArray, emptyArray);
+                    FacebookImagesAdapter fia = new FacebookImagesAdapter(getApplicationContext(),
+                            emptyArray, emptyArray, emptyArray, emptyArray);
                     recyclerView.setAdapter(fia);
                 }
             }
@@ -170,14 +173,16 @@ public class SearchActivity extends AppCompatActivity {
             return true;
         }
         else if (id == R.id.searchFB_menubutton && isFBLoggedIn()){
-            // Open FB logout Dialog when the user presses the FB button when he/she is currently logged in
+            // Open FB logout Dialog when the user presses the FB button when he/she is currently
+            // logged in
             Log.e("FB", "user is logged in");
             DialogFragment newFragment = new FacebookLogoutDialog();
             newFragment.show(getFragmentManager(), "logout");
             return true;
         }
         else if (id == R.id.searchFB_menubutton && !isFBLoggedIn()){
-            // Open FB login Dialog when the user presses the FB button when he/she is currently logged out
+            // Open FB login Dialog when the user presses the FB button when he/she is currently
+            // logged out
             Log.e("FB", "user is logged out");
             DialogFragment newFragment = new FacebookLoginDialog();
             newFragment.show(getFragmentManager(), "login");
@@ -218,19 +223,23 @@ public class SearchActivity extends AppCompatActivity {
                                     // get the photo ids
                                     String currentId = photosArray.getJSONObject(i).getString("id");
                                     // create the image url based on the id:
-                                    String currentUrl = "http://graph.facebook.com/" + currentId + "/picture";
+                                    String currentUrl = "http://graph.facebook.com/" + currentId
+                                            + "/picture";
                                     // append the url to the StringBuilder
                                     urlStringBuilder.append(currentUrl + "\n");
 
-                                    // use the current id to get a posturl (directing to the post on FB)
+                                    // use the current id to get a posturl
+                                    // (directing to the post on FB)
                                     String currentPosturl = "http://facebook.com/" + currentId;
                                     // append this to other StringBuilder
                                     postUrlStringBuilder.append(currentPosturl + "\n");
 
 
                                     // get the photo timestamp
-                                    String currentTimestamp = photosArray.getJSONObject(i).getString("created_time");
-                                    // convert it to a easy human readable string (res: http://stackoverflow.com/questions/6882896/)
+                                    String currentTimestamp = photosArray.getJSONObject(i)
+                                            .getString("created_time");
+                                    // convert it to a easy human readable string
+                                    // resource: http://stackoverflow.com/questions/6882896/
                                     String date =  GetLocalDateStringFromUTCString(currentTimestamp);
                                     // append the date to the stringbuilder
                                     timestampStringBuilder.append(date + "\n");
@@ -240,19 +249,21 @@ public class SearchActivity extends AppCompatActivity {
                                         JSONObject currentNameObject = photosArray.getJSONObject(i);
                                         String theName = currentNameObject.getString("name");
                                         // append if found
-                                        // we have to use something else than \n to split the names since
-                                        // captions themselves can contain a new line (\n)
-                                        // therefore we use a very unlikely to appear string of characters
+                                        // we have to use something else than \n to split the names
+                                        // since captions themselves can contain a new line (\n)
+                                        // therefore we use a very unlikely to appear string of
+                                        // characters
                                         nameBuilder.append(theName + " !@#$%^&*");
                                     } catch (JSONException e){
                                         // append just a space when there is none
-                                        // we have to use something else than \n to split the names since
-                                        // captions themselves can contain a new line (\n)
+                                        // we have to use something else than \n to split the names
+                                        // since captions themselves can contain a new line (\n)
                                         nameBuilder.append(" !@#$%^&*");
                                     }
                                 }
 
-                                // convert the stringbuilders to a stringarrays so it can be used in the layout
+                                // convert the stringbuilders to a stringarrays so it can be used
+                                // in the layout
                                 String allurls = urlStringBuilder.toString();
                                 String[] urlarray = allurls.split(Pattern.quote("\n"));
 
@@ -266,10 +277,12 @@ public class SearchActivity extends AppCompatActivity {
                                 // we have to use something else than \n to split the names since
                                 // captions themselves can contain a new line (\n)
                                 String[] namesarray = allnames.split(Pattern.quote("!@#$%^&*"));
-                                Log.e("FB", "length: " + Integer.toString(namesarray.length) + ". array: " + Arrays.toString(namesarray));
 
-                                // send the string[]s to the adapter and set the adapter on the recyclerview
-                                FacebookImagesAdapter fia = new FacebookImagesAdapter(getApplicationContext(), urlarray, posturlarray, datesarray, namesarray);
+                                // send the string[]s to the adapter and set the adapter
+                                // on the recyclerview
+                                FacebookImagesAdapter fia = new FacebookImagesAdapter
+                                        (getApplicationContext(), urlarray, posturlarray,
+                                                datesarray, namesarray);
                                 recyclerView.setAdapter(fia);
 
                             } catch (JSONException e) {
@@ -284,7 +297,8 @@ public class SearchActivity extends AppCompatActivity {
         else {
             // there is no internet connection
             // use empty arrays
-            FacebookImagesAdapter fia = new FacebookImagesAdapter(getApplicationContext(), emptyArray, emptyArray, emptyArray, emptyArray);
+            FacebookImagesAdapter fia = new FacebookImagesAdapter(getApplicationContext(),
+                    emptyArray, emptyArray, emptyArray, emptyArray);
             recyclerView.setAdapter(fia);
             // notify no-internet error to user by showing a toast
             Toast.makeText(this, R.string.nointernet_toast_text, Toast.LENGTH_LONG).show();
@@ -298,7 +312,8 @@ public class SearchActivity extends AppCompatActivity {
         SimpleDateFormat fb_dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ssZZZZZ");
         SimpleDateFormat my_dateFormat = new SimpleDateFormat("dd-MM-yyyy  HH:mm");
 
-        // initialize string to empty string so in case the parsing and formatting fails at least something can be returned
+        // initialize string to empty string so in case the parsing and formatting fails
+        // at least something can be returned
         String localDateString = "";
 
         // reformat the date to better readable one and time and return it

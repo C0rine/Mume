@@ -40,7 +40,8 @@ public class ResultsAdapter extends BaseAdapter {
     private ImageLoader imageLoader;
     private ImageRetriever imageRetriever;
 
-    public ResultsAdapter(Context c, String[] artistnames, String[] objectids, String[] bigImageUrls) {
+    public ResultsAdapter(Context c, String[] artistnames, String[] objectids,
+                          String[] bigImageUrls) {
 
         // constructor
         this.context = c;
@@ -99,12 +100,14 @@ public class ResultsAdapter extends BaseAdapter {
 
         // For each item create:
         // 1) a textview to hold the artistname
-        final TextView thumbnailtitle = (TextView) convertView.findViewById(R.id.thumbnailtitle_textview);
+        final TextView thumbnailtitle = (TextView) convertView.
+                findViewById(R.id.thumbnailtitle_textview);
         String textviewtext = artistnames[position];
         thumbnailtitle.setText(textviewtext);
 
         // 2) an imageview to hold the thumbnail (which we will temporarily fill with filler image)
-        final ImageView thumbnailimage = (ImageView) convertView.findViewById(R.id.thumbnail_imageview);
+        final ImageView thumbnailimage = (ImageView) convertView.
+                findViewById(R.id.thumbnail_imageview);
         thumbnailimage.setScaleType(ImageView.ScaleType.CENTER_CROP);
         thumbnailimage.setImageResource(R.mipmap.image_viewfiller);
 
@@ -118,7 +121,8 @@ public class ResultsAdapter extends BaseAdapter {
 
         // retrieve the image
         // resource: http://stackoverflow.com/questions/28120029
-        imageRetriever.retrieveRMThumbnailArray(requestQueue, queryMaker, objectids[position], new ImageRetriever.VolleyCallback() {
+        imageRetriever.retrieveRMThumbnailArray(requestQueue, queryMaker, objectids[position],
+                new ImageRetriever.VolleyCallback() {
             @Override
             public void onSuccess(JSONArray result) {
                 JSONArray levels = result;
@@ -132,13 +136,15 @@ public class ResultsAdapter extends BaseAdapter {
                         public void onErrorResponse(VolleyError error) {
                             // Failed to get the image. Set a standard image in the view
                             thumbnailimage.setImageResource(R.mipmap.image_notavailable_icon);
-                            Log.e("RESULTSADAPTER", "There was an error in loading the thumbnail image: "
-                                    + error.getMessage());
+                            Log.e("RESULTSADAPTER", "There was an error in loading the thumbnail " +
+                                    "image: " + error.getMessage());
                         }
 
                         @Override
-                        public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
-                            // Success! there was an image url retrieved. Set this image in the imageview.
+                        public void onResponse(ImageLoader.ImageContainer response,
+                                               boolean isImmediate) {
+                            // Success! there was an image url retrieved
+                            // Set this image in the imageview, with fade in animation
                             thumbnailimage.setAlpha(0f);
                             thumbnailimage.setImageBitmap(response.getBitmap());
                             thumbnailimage.animate().alpha(1f).setDuration(1000);
@@ -150,7 +156,6 @@ public class ResultsAdapter extends BaseAdapter {
                 }
             }
         });
-
         return convertView;
     }
 }

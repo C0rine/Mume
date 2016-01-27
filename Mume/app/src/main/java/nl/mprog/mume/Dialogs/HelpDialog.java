@@ -2,7 +2,7 @@
    10001326
    Corine_J@MSN.com */
 
-/* Dialog fragment to show help
+/* Dialog fragment to show help when pressed on the help-icon in the actionbar.
    Resource: http://developer.android.com/guide/topics/ui/dialogs.html*/
 
 package nl.mprog.mume.Dialogs;
@@ -34,5 +34,4 @@ public class HelpDialog extends DialogFragment {
 
         return builder.create();
     }
-
 }

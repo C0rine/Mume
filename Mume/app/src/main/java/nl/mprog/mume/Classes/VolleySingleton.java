@@ -11,7 +11,6 @@
 package nl.mprog.mume.Classes;
 
 import android.graphics.Bitmap;
-import android.util.Log;
 import android.util.LruCache;
 
 import com.android.volley.RequestQueue;
@@ -56,7 +55,6 @@ public class VolleySingleton {
         }
 
         return sInstance;
-
     }
 
 

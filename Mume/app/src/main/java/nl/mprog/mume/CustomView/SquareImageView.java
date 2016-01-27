@@ -2,7 +2,9 @@
    10001326
    Corine_J@MSN.com */
 
-/* Custom imageview for the gridview to have square images
+/* Custom imageview for the gridview to have square images. Used for the imageviews in the
+   gridview in Results-Activity.
+   All credits to a.bertucci (see resource below)
    Resource: http://stackoverflow.com/questions/16506275 */
 
 package nl.mprog.mume.CustomView;
@@ -10,8 +12,6 @@ package nl.mprog.mume.CustomView;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ImageView;
-
-import com.android.volley.toolbox.NetworkImageView;
 
 public class SquareImageView extends ImageView {
 
@@ -35,6 +35,4 @@ public class SquareImageView extends ImageView {
         int width = getMeasuredWidth();
         setMeasuredDimension(width, width);
     }
-
-
 }

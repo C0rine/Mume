@@ -2,7 +2,8 @@
    10001326
    Corine_J@MSN.com */
 
-/* Shows one artrecord (image and metadata). Has a button to start editing the image */
+/* Shows one artrecord (image and metadata) based on the data send over from results-activity.
+   Has a button to start editing the image */
 
 package nl.mprog.mume.Activities;
 
@@ -55,6 +56,7 @@ public class SelectedActivity extends AppCompatActivity {
     private VolleySingleton volleySingleton;
     private ImageLoader imageLoader;
 
+    private String dataUrl;
     private String imageUrl;
 
     @Override
@@ -62,12 +64,12 @@ public class SelectedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selected);
 
-        // check if Aviary needs an update. Adobe recommonds to put this here
+        // check if Aviary needs an update. Adobe recommends to put this here
         // resource: https://creativesdk.adobe.com/docs/android/#/articles/imageediting/index.html
         Intent intent = AviaryIntent.createCdsInitIntent(getBaseContext());
         startService(intent);
 
-        // Volley and the imageloader are used to make network requests to get data and load images from url
+        // Volley and imageloader are to make network requests to get data and load images from url
         volleySingleton = VolleySingleton.getInstance();
         imageLoader = volleySingleton.getmImageLoader();
 
@@ -78,8 +80,8 @@ public class SelectedActivity extends AppCompatActivity {
         image_holder = (TouchImageView) findViewById(R.id.artimage_imageview);
         scrollView = (ScrollView) findViewById(R.id.selected_scrollview);
 
-        String dataUrl = getIntent().getStringExtra("dataUrl");
-
+        // get the urls for the image and data from the intent
+        dataUrl = getIntent().getStringExtra("dataUrl");
         imageUrl = getIntent().getStringExtra("imageUrl");
         image_holder.setImageUrl(imageUrl, imageLoader);
 
@@ -113,7 +115,7 @@ public class SelectedActivity extends AppCompatActivity {
         // create the request queue using Volley
         RequestQueue requestQueue = VolleySingleton.getInstance().getmRequestQueue();
 
-        // Request the results of the search with http GET request
+        // Get the metadata on the artobject using the dataurl in a http GET request
         JsonObjectRequest collectionrequest = new JsonObjectRequest(Request.Method.GET, dataUrl,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -122,15 +124,15 @@ public class SelectedActivity extends AppCompatActivity {
                         // handle the response of the request:
                         // parse the response
                         Parser parser = new Parser();
-                        Log.e("Selected Response", response.toString());
                         parser.parseRMcollectiondetail(response);
 
-                        // retrieve the parsed artistnames and object ids as a stringarray
+                        // retrieve the parsed data as strings
                         String artistname = parser.getRMprincipalmakers();
                         String title = parser.getRMtitle();
                         String dating = parser.getRMdating();
                         String materials = parser.getRMmaterials();
 
+                        // set the strings in their appropriate views
                         artisname_holder.setText(artistname);
                         title_holder.setText(title);
                         dating_holder.setText(dating);
@@ -141,13 +143,16 @@ public class SelectedActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error){
 
-                // handle any errors that might occur when trying to get the request
-                Log.e("VOLLEY", "There was an error in the response to the collection-endpoint:" + error.getMessage());
+                // handle any errors that might occur when trying to get the response
+                Log.e("VOLLEY", "There was an error in the response to the collection-endpoint:"
+                        + error.getMessage());
 
-                // if the error is caused because there is no internet connection, then notify the user of this with a toast
+                // if the error is caused because there is no internet connection, then notify
+                // the user of this with a toast
                 // resource: http://stackoverflow.com/questions/21011279/
                 if(error instanceof NoConnectionError) {
-                    Toast.makeText(MyApplication.getAppContext(), R.string.nointernet_toast_text, Toast.LENGTH_LONG).show();
+                    Toast.makeText(MyApplication.getAppContext(), R.string.nointernet_toast_text,
+                            Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -187,41 +192,49 @@ public class SelectedActivity extends AppCompatActivity {
 
 
     // gets executed when the 'Meme it' button gets pressed
+    // opens the Adobe Creative SDK (Aviary) activity for image editing with an intent
     public void startEdit(View view){
 
-        ToolLoaderFactory.Tools[] mTools = {ToolLoaderFactory.Tools.TEXT, ToolLoaderFactory.Tools.DRAW,
-                ToolLoaderFactory.Tools.CROP, ToolLoaderFactory.Tools.MEME};
+        // set the tools for the editor
+        ToolLoaderFactory.Tools[] mTools = {ToolLoaderFactory.Tools.TEXT,
+                ToolLoaderFactory.Tools.DRAW, ToolLoaderFactory.Tools.CROP,
+                ToolLoaderFactory.Tools.MEME};
 
-        /* 2) Create a new Intent */
+        // create the Intent
         Intent imageEditorIntent = new AviaryIntent.Builder(this)
+                // send the imageurl along to retrieve the image in the editor
                 .setData(Uri.parse(imageUrl))
                 .withToolList(mTools)
                 .build();
 
-        /* 3) Start the Image Editor with request code 1 */
+        // start the activity, 1 stands for what we want to do with the result of this activity
+        // (see onActivityResult)
         startActivityForResult(imageEditorIntent, 1);
     }
 
-    // what to do when we are done with the image-editing in the aviary activity:
+
+    // what to do when we are done with the image-editing in the Aviary / Adobe Creative SDK:
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
 
-                /* 4) Make a case for the request code we passed to startActivityForResult() */
+                // Make a case for the request code we passed to startActivityForResult()
                 case 1:
-
                     Uri mImageUri = data.getData();
                     try {
+                        // try to share the image using a share-intent
                         shareImage(mImageUri);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
+                        Log.e("ADOBE", "Could not share the image. Error message: "
+                                + e.getMessage());
                     }
-
                     break;
             }
         }
     }
+
 
     // method to open a share intent
     public void shareImage(Uri imageUri) throws FileNotFoundException {
@@ -229,8 +242,9 @@ public class SelectedActivity extends AppCompatActivity {
         String imageName = UUID.randomUUID().toString() + ".jpg";
 
         // The receiving application needs permission to access the data the Uri points to
-        // Use MediaStore for this
-        String url = MediaStore.Images.Media.insertImage(getContentResolver(), imageUri.getPath(), imageName, "made with mume");
+        // We save the image using mediastore to achieve this
+        String url = MediaStore.Images.Media.insertImage(getContentResolver(), imageUri.getPath(),
+                imageName, "Made with mume");
 
         // Opens a pop-up with all apps available to share an image
         Intent shareIntent = new Intent();

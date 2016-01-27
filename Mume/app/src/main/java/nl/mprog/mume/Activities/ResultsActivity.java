@@ -76,7 +76,8 @@ public class ResultsActivity extends AppCompatActivity {
         noresultstext = (TextView) findViewById(R.id.noresults_textview);
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
-        // initially hide the no-results text (we only want to show this when we are sure there are no results)
+        // initially hide the no-results text (we only want to show this when we are sure there
+        // are no results)
         noresultstext.setVisibility(View.GONE);
 
         // Building the query: we want to search the collection
@@ -89,11 +90,14 @@ public class ResultsActivity extends AppCompatActivity {
         // get the intent and the data from the previous (search) activity
         Intent intent = getIntent();
         final String searchwords = intent.getStringExtra("searchwords");
-        // perform a search (see method below) based on these searchwords and display them in the layout
+        // perform a search (see method below) based on these searchwords and display them in
+        // the layout
         performSearch(searchwords, queryMaker, requestQueue);
 
-        // put the searchwords in the hint of the edit-text so the user knows what he/she is searching
-        searchbar.setHint(Html.fromHtml("<i><small>Searching for \'" + searchwords.trim() + "\'</small></i>"));
+        // put the searchwords in the hint of the edit-text so the user knows what he/she
+        // is searching
+        searchbar.setHint(Html.fromHtml("<i><small>Searching for \'" + searchwords.trim()
+                + "\'</small></i>"));
 
 
         // What to do when an item in the gridview gets clicked?:
@@ -101,7 +105,8 @@ public class ResultsActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 // Open the next activity when one item is clicked
                 Intent showResult = new Intent(ResultsActivity.this, SelectedActivity.class);
-                // send the url for the detailed object info and the url for the image along with the intent
+                // send the url for the detailed object info and the url for the image along with
+                // the intent
                 String url = resultsAdapter.getItem(position);
                 String imageurl = resultsAdapter.getImage(position);
                 showResult.putExtra("dataUrl", url);
@@ -169,15 +174,16 @@ public class ResultsActivity extends AppCompatActivity {
 
 
     // perform a search
-    private void performSearch(String searchwords, QueryMaker queryMaker, RequestQueue requestQueue){
-
+    private void performSearch(String searchwords, QueryMaker queryMaker, RequestQueue requestQueue)
+    {
         // for each search reset the following items:
         noresultstext.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
         loadingPanel.animate().alpha(1f).setDuration(1);
 
         // Request the results of the search with http GET request
-        JsonObjectRequest collectionrequest = new JsonObjectRequest(Request.Method.GET, queryMaker.getRequestURL(searchwords),
+        JsonObjectRequest collectionrequest = new JsonObjectRequest(Request.Method.GET,
+                queryMaker.getRequestURL(searchwords),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response){
@@ -193,9 +199,11 @@ public class ResultsActivity extends AppCompatActivity {
                         // also retrieve the image urls (high res)
                         bigImageUrls = parser.getRMbigImageUrl();
 
-                        // set the parsed names and ids to the ResultsAdapter and set the adapter to the gridview
+                        // set the parsed names and ids to the ResultsAdapter and set the
+                        // adapter to the gridview
                         // to display the results
-                        resultsAdapter = new ResultsAdapter(getApplicationContext(), artistnames, objectids, bigImageUrls);
+                        resultsAdapter = new ResultsAdapter(getApplicationContext(), artistnames,
+                                objectids, bigImageUrls);
                         gridview.setAdapter(resultsAdapter);
 
                         if (objectids.length < 2){
@@ -226,12 +234,15 @@ public class ResultsActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error){
 
                 // handle any errors that might occur when trying to get the request
-                Log.e("VOLLEY", "There was an error in the response to the collection-endpoint:" + error.getMessage());
+                Log.e("VOLLEY", "There was an error in the response to the collection-endpoint:"
+                        + error.getMessage());
 
-                // if the error is caused because there is no internet connection, then notify the user of this with a toast
+                // if the error is caused because there is no internet connection, then notify
+                // the user of this with a toast
                 // resource: http://stackoverflow.com/questions/21011279/
                 if(error instanceof NoConnectionError) {
-                    Toast.makeText(MyApplication.getAppContext(), R.string.nointernet_toast_text, Toast.LENGTH_LONG).show();
+                    Toast.makeText(MyApplication.getAppContext(), R.string.nointernet_toast_text,
+                            Toast.LENGTH_LONG).show();
                 }
 
             }

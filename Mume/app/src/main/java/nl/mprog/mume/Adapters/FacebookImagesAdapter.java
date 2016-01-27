@@ -6,7 +6,7 @@
    the images, a header with the searchbar and some textviews and a footer with a button to the Classical Art Memes
    Facebook page.
    Resource: https://www.binpress.com/tutorial/android-l-recyclerview-and-cardview-tutorial/156
-   resource for header and footer: http://stackoverflow.com/questions/26530685 */
+   Resource for header and footer: http://stackoverflow.com/questions/26530685 */
 
 package nl.mprog.mume.Adapters;
 
@@ -49,7 +49,8 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private static final int TYPE_BODYITEM = 1;
     private static final int TYPE_FOOTER = 2;
 
-    public FacebookImagesAdapter(Context context, String[] urls, String[] posturls, String[] dates, String[] names){
+    public FacebookImagesAdapter(Context context, String[] urls, String[] posturls, String[] dates,
+                                 String[] names){
         // constructor
         this.context = context;
         this.urls = urls;
@@ -61,7 +62,6 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         volleySingleton = VolleySingleton.getInstance();
         // the imageloader is used to load images from a url
         imageLoader = volleySingleton.getmImageLoader();
-
     }
 
 
@@ -87,8 +87,8 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             return new VHFooter(itemView);
         }
 
-        throw new RuntimeException("there is not type that matches the type " + viewType
-                + " make sure your using types correctly");
+        throw new RuntimeException("There is not type that matches the type " + viewType
+                + ". Make sure your using types correctly.");
     }
 
 
@@ -114,8 +114,8 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 public void onErrorResponse(VolleyError error) {
                     // Failure: set a standard image if this image could not load
                     bodyitem.memeimage.setImageResource(R.mipmap.image_notavailable_icon);
-                    Log.e("FACEBOOK IMAGES ADAPTER", "There was an error in loading the Facebook image: "
-                            + error.getMessage());
+                    Log.e("FACEBOOK IMAGES ADAPTER", "There was an error in loading the " +
+                            "Facebook image: " + error.getMessage());
                 }
 
                 @Override
@@ -135,15 +135,19 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     // open the post in the Facebook app if it is present. If not, open in browser.
                     try {
                         // open in FB app
-                        // resource: http://stackoverflow.com/questions/4810803/open-facebook-page-from-android-app
+                        // resource: http://stackoverflow.com/questions/4810803
                         context.getPackageManager().getPackageInfo("com.facebook.katana", 0);
                         String id = pageurl.substring(20);
-                        Intent openFacebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("fb://facewebmodal/f?href=" + "https://www.facebook.com/classicalartmemes/photos/a.595162167262642.1073741827.595155763929949/" + id));
+                        Intent openFacebookIntent = new Intent(Intent.ACTION_VIEW,
+                                Uri.parse("fb://facewebmodal/f?href=" + "https://www.facebook.com" +
+                                        "/classicalartmemes/photos/a.595162167262642.1073741827." +
+                                        "595155763929949/" + id));
                         openFacebookIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         MyApplication.getAppContext().startActivity(openFacebookIntent);
                     } catch (Exception e) {
                         // open in browser
-                        Intent openBrowserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(pageurl));
+                        Intent openBrowserIntent = new Intent(Intent.ACTION_VIEW,
+                                Uri.parse(pageurl));
                         openBrowserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         MyApplication.getAppContext().startActivity(openBrowserIntent);
                     }
@@ -160,13 +164,15 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
                     if (event.getAction() == MotionEvent.ACTION_UP) {
-                        if (event.getRawX() >= (header.searchbar.getRight() - header.searchbar.getCompoundDrawables()
-                                [2].getBounds().width())) {
+                        if (event.getRawX() >= (header.searchbar.getRight() -
+                                header.searchbar.getCompoundDrawables()[2]
+                                        .getBounds().width())) {
                             // open new activity to show the results of the search
                             Intent startSearch = new Intent(context, ResultsActivity.class);
                             startSearch.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             // send the searchwords along to the next activity
-                            startSearch.putExtra("searchwords", header.searchbar.getText().toString());
+                            startSearch.putExtra("searchwords", header.searchbar.getText()
+                                    .toString());
                             context.startActivity(startSearch);
                             // empty the edittext (just show a hint)
                             header.searchbar.setText("");
@@ -199,7 +205,8 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 }
             });
 
-            // if there a no items (besides the header and footer) show the user that he/she needs to login to view the items (photos)
+            // if there a no items (besides the header and footer) show the user that he/she needs
+            // to login to view the items (photos)
             if (getItemCount() < 3){
                 header.cardviewheader.setText(R.string.pleaseloginfb_textview_text);
             }
@@ -214,12 +221,15 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     // open the page in the Facebook app if it is present. If not, open in browser.
                     try {
                         context.getPackageManager().getPackageInfo("com.facebook.katana", 0);
-                        // resource: http://stackoverflow.com/questions/4810803/open-facebook-page-from-android-app
-                        Intent openFacebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("fb://facewebmodal/f?href=" + "https://www.facebook.com/classicalartmemes"));
+                        // resource: http://stackoverflow.com/questions/4810803
+                        Intent openFacebookIntent = new Intent(Intent.ACTION_VIEW,
+                                Uri.parse("fb://facewebmodal/f?href=" + "https://www.facebook.com" +
+                                        "/classicalartmemes"));
                                 openFacebookIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         MyApplication.getAppContext().startActivity(openFacebookIntent);
                     } catch (Exception e) {
-                        Intent openBrowserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/classicalartmemes"));
+                        Intent openBrowserIntent = new Intent(Intent.ACTION_VIEW,
+                                Uri.parse("https://www.facebook.com/classicalartmemes"));
                         openBrowserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         MyApplication.getAppContext().startActivity(openBrowserIntent);
                     }
@@ -233,10 +243,10 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
     }
 
-    // how many items do we want in our recyclerview
+    // how many items do we want in our recyclerview?:
     @Override
     public int getItemCount() {
-        // +2 fot the footer and header
+        // +2 for the footer and header
         return urls.length + 2;
     }
 
@@ -283,7 +293,7 @@ public class FacebookImagesAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
 
-    // initialize the view for body items
+    // initialize the views for body items
     public static class PhotoViewHolder extends RecyclerView.ViewHolder{
 
         public ImageView memeimage;
