@@ -4,7 +4,7 @@ Corine Jacobs
 Studentnr.: 10001326  
 Corine_J@MSN.com or MuseumMemes@outlook.com
   
-Platform: Android
+Platform: Android  
 Minimum API level: 19  
 Target API level: 22  
 
