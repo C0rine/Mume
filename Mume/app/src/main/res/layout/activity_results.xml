@@ -39,43 +39,10 @@
         android:imeOptions="actionGo"
         android:inputType="text"/>
 
-    <LinearLayout
-        android:id="@+id/navigationbuttonholder_linearlayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:elevation="15dp">
-
-        <Button
-            android:id="@+id/prevpage_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="5dp"
-            android:background="@drawable/custom_round_button"
-            android:elevation="10dp"
-            android:layout_weight="1"
-            android:text="prev page"
-            android:textColor="#ffffff"
-            android:onClick="prevPage"/>
-
-        <Button
-            android:id="@+id/nextpage_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="5dp"
-            android:background="@drawable/custom_round_button"
-            android:elevation="10dp"
-            android:layout_weight="1"
-            android:text="next page"
-            android:textColor="#ffffff"
-            android:onClick="nextPage"/>
-
-    </LinearLayout>
-
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
 
         <GridView
             android:id="@+id/results_gridview"
@@ -113,5 +80,38 @@
         </RelativeLayout>
 
     </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/navigationbuttonholder_linearlayout"
+        android:background="@drawable/custom_square_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="15dp">
+
+        <Button
+            android:id="@+id/prevpage_button"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:elevation="10dp"
+            android:layout_weight="1"
+            android:text="@string/prevpage_button_text"
+            android:textColor="#000000"
+            android:onClick="prevPage"/>
+
+        <Button
+            android:id="@+id/nextpage_button"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:elevation="10dp"
+            android:layout_weight="1"
+            android:text="@string/nextpage_button_text"
+            android:textColor="#000000"
+            android:onClick="nextPage"/>
+
+    </LinearLayout>
 
 </LinearLayout>
