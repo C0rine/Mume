@@ -69,6 +69,7 @@ public class ResultsActivity extends AppCompatActivity {
 
     final QueryMaker queryMaker = new QueryMaker();
     private String searchwords;
+    int currentpage;
     // get the Volley request queue to append networkrequests to
     final RequestQueue requestQueue = VolleySingleton.getInstance().getmRequestQueue();
 
@@ -94,6 +95,9 @@ public class ResultsActivity extends AppCompatActivity {
         // get the intent and the data from the previous (search) activity
         Intent intent = getIntent();
         searchwords = intent.getStringExtra("searchwords");
+        // reset the page for the results:
+        currentpage = 1;
+        queryMaker.setPage("p=1");
         // perform a search (see method below) based on these searchwords and display them in
         // the layout
         performSearch(searchwords, queryMaker, requestQueue);
@@ -126,6 +130,9 @@ public class ResultsActivity extends AppCompatActivity {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     if (event.getRawX() >= (searchbar.getRight() - searchbar.getCompoundDrawables()
                             [2].getBounds().width())) {
+                        // reset the page for the results:
+                        currentpage = 1;
+                        queryMaker.setPage("p=1");
                         // perform the new search
                         performSearchFromSearchbar(queryMaker, requestQueue);
                         return true;
@@ -142,6 +149,9 @@ public class ResultsActivity extends AppCompatActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_GO) {
+                    // reset the page for the results:
+                    currentpage = 1;
+                    queryMaker.setPage("p=1");
                     // perform the new search
                     performSearchFromSearchbar(queryMaker, requestQueue);
                     handled = true;
@@ -178,8 +188,7 @@ public class ResultsActivity extends AppCompatActivity {
 
 
     // perform a search
-    private void performSearch(String searchwords, final QueryMaker queryMaker, RequestQueue requestQueue)
-    {
+    private void performSearch(String searchwords, final QueryMaker queryMaker, RequestQueue requestQueue) {
         // for each search reset the following items:
         noresultstext.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
@@ -202,8 +211,10 @@ public class ResultsActivity extends AppCompatActivity {
                         try{
                             totalnumberresults = response.getInt("count");
                             Log.e("CALC", "results: " + Integer.toString(totalnumberresults));
-                            // every page has 10 results, calculate the no of pages
-                            resultspages = (int) Math.ceil((double) totalnumberresults / 10.0);
+                            // every page has a certain number of results, get this from the
+                            // querymaker and calculate the no of pages
+                            resultspages = (int) Math.ceil((double) totalnumberresults /
+                                    (double) queryMaker.getResultscount());
                             Log.e("CALC", "pages: " + Integer.toString(resultspages));
                         } catch (JSONException e){
                             totalnumberresults = 0;
@@ -296,7 +307,7 @@ public class ResultsActivity extends AppCompatActivity {
 
     public void nextPage(View view) {
         // check first what no the current page is
-        int currentpage = Integer.parseInt(queryMaker.getPage().substring(2));
+        currentpage = Integer.parseInt(queryMaker.getPage().substring(2));
         // set the page to the next page
         Log.e("CALC", "next page: " + Integer.toString(currentpage + 1));
         queryMaker.setPage("p=" + Integer.toString(currentpage + 1));
