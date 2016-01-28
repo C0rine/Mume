@@ -338,13 +338,24 @@ public class ResultsActivity extends AppCompatActivity {
         nextpageButton.setVisibility(View.VISIBLE);
 
         // check if there is a previous page
-        if (currentpage > 1){
+        if (currentpage > 2){
+            // before the previous page is another previous page, so we can leave the prev-button
             currentpage = Integer.parseInt(queryMaker.getPage().substring(2));
-            // set the page to the next page
+            // set the page to the previous page
             queryMaker.setPage("p=" + Integer.toString(currentpage - 1));
 
             // restart a search with the new page number in the query:
             performSearch(searchwords, queryMaker, requestQueue);
+        }
+        else if (currentpage == 2){
+            // before the previous page are no more pages, so remove the prev-button
+            currentpage = Integer.parseInt(queryMaker.getPage().substring(2));
+            // set the page to the previous page
+            queryMaker.setPage("p=" + Integer.toString(currentpage - 1));
+
+            // restart a search with the new page number in the query:
+            performSearch(searchwords, queryMaker, requestQueue);
+            prevpageButton.setVisibility(View.INVISIBLE);
         }
         else {
             // hide the previous button

@@ -45,10 +45,10 @@
     <string name="pleaseloginfb_textview_text">Login with Facebook to see the memes of the official
         Classical Art Memes Facebook page</string>
     <string name="copyrightwarning_toast_text">Image not available due to copyright reasons</string>
+    <string name="nextpage_button_text">next page &gt;</string>
+    <string name="prevpage_button_text">&lt; prev page</string>
 
     <!-- used by Facebook API: -->
     <string name="app_id">746901972078034</string>
-    <string name="nextpage_button_text">next page</string>
-    <string name="prevpage_button_text">prev page</string>
 
 </resources>
