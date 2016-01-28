@@ -40,23 +40,35 @@
         android:inputType="text"/>
 
     <LinearLayout
+        android:id="@+id/navigationbuttonholder_linearlayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:elevation="15dp">
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/prevpage_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:background="@drawable/custom_round_button"
+            android:elevation="10dp"
             android:layout_weight="1"
             android:text="prev page"
+            android:textColor="#ffffff"
             android:onClick="prevPage"/>
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/nextpage_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:background="@drawable/custom_round_button"
+            android:elevation="10dp"
             android:layout_weight="1"
             android:text="next page"
+            android:textColor="#ffffff"
             android:onClick="nextPage"/>
 
     </LinearLayout>

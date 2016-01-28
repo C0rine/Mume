@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
@@ -58,6 +59,9 @@ public class ResultsActivity extends AppCompatActivity {
     private RelativeLayout loadingPanel;
     private TextView noresultstext;
     private ProgressBar progressBar;
+    private Button nextpageButton;
+    private Button prevpageButton;
+    private LinearLayout navigationbuttons;
 
     private String[] artistnames;
     private String[] objectids;
@@ -84,6 +88,9 @@ public class ResultsActivity extends AppCompatActivity {
         loadingPanel = (RelativeLayout) findViewById(R.id.loadingpanel_relativelayout);
         noresultstext = (TextView) findViewById(R.id.noresults_textview);
         progressBar = (ProgressBar) findViewById(R.id.loading_progressbar);
+        nextpageButton = (Button) findViewById(R.id.nextpage_button);
+        prevpageButton = (Button) findViewById(R.id.prevpage_button);
+        navigationbuttons = (LinearLayout) findViewById(R.id.navigationbuttonholder_linearlayout);
 
         // initially hide the no-results text (we only want to show this when we are sure there
         // are no results)
@@ -95,11 +102,9 @@ public class ResultsActivity extends AppCompatActivity {
         // get the intent and the data from the previous (search) activity
         Intent intent = getIntent();
         searchwords = intent.getStringExtra("searchwords");
-        // reset the page for the results:
-        currentpage = 1;
-        queryMaker.setPage("p=1");
         // perform a search (see method below) based on these searchwords and display them in
         // the layout
+        resetSearch();
         performSearch(searchwords, queryMaker, requestQueue);
 
         // put the searchwords in the hint of the edit-text so the user knows what he/she
@@ -130,10 +135,8 @@ public class ResultsActivity extends AppCompatActivity {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     if (event.getRawX() >= (searchbar.getRight() - searchbar.getCompoundDrawables()
                             [2].getBounds().width())) {
-                        // reset the page for the results:
-                        currentpage = 1;
-                        queryMaker.setPage("p=1");
                         // perform the new search
+                        resetSearch();
                         performSearchFromSearchbar(queryMaker, requestQueue);
                         return true;
                     }
@@ -149,10 +152,9 @@ public class ResultsActivity extends AppCompatActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_GO) {
-                    // reset the page for the results:
-                    currentpage = 1;
-                    queryMaker.setPage("p=1");
+
                     // perform the new search
+                    resetSearch();
                     performSearchFromSearchbar(queryMaker, requestQueue);
                     handled = true;
                 }
@@ -188,10 +190,12 @@ public class ResultsActivity extends AppCompatActivity {
 
 
     // perform a search
-    private void performSearch(String searchwords, final QueryMaker queryMaker, RequestQueue requestQueue) {
+    private void performSearch(String searchwords, final QueryMaker queryMaker, final RequestQueue requestQueue) {
         // for each search reset the following items:
         noresultstext.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
+        navigationbuttons.setVisibility(View.GONE);
+
         loadingPanel.animate().alpha(1f).setDuration(1);
 
         // Request the results of the search with http GET request
@@ -210,12 +214,15 @@ public class ResultsActivity extends AppCompatActivity {
                         // of results pages there are
                         try{
                             totalnumberresults = response.getInt("count");
-                            Log.e("CALC", "results: " + Integer.toString(totalnumberresults));
                             // every page has a certain number of results, get this from the
                             // querymaker and calculate the no of pages
                             resultspages = (int) Math.ceil((double) totalnumberresults /
                                     (double) queryMaker.getResultscount());
-                            Log.e("CALC", "pages: " + Integer.toString(resultspages));
+                            // if there is more than one result page, we want to show the
+                            // next and prev page buttons
+                            if (resultspages > 1) {
+                                navigationbuttons.setVisibility(View.VISIBLE);
+                            }
                         } catch (JSONException e){
                             totalnumberresults = 0;
                         }
@@ -305,15 +312,60 @@ public class ResultsActivity extends AppCompatActivity {
 
     }
 
+    // used to load the next page of searchresults
     public void nextPage(View view) {
-        // check first what no the current page is
+        // check first what number of the current page is
         currentpage = Integer.parseInt(queryMaker.getPage().substring(2));
-        // set the page to the next page
-        Log.e("CALC", "next page: " + Integer.toString(currentpage + 1));
-        queryMaker.setPage("p=" + Integer.toString(currentpage + 1));
+        prevpageButton.setVisibility(View.VISIBLE);
 
-        // restart a search with the new page number in the query:
-        performSearch(searchwords, queryMaker, requestQueue);
+        // check if there is a next page
+        if (currentpage != resultspages || currentpage < resultspages){
+            // set the page to the next page
+            Log.e("CALC", "next page: " + Integer.toString(currentpage + 1));
+            queryMaker.setPage("p=" + Integer.toString(currentpage + 1));
 
+            // restart a search with the new page number in the query:
+            performSearch(searchwords, queryMaker, requestQueue);
+        }
+        else {
+            // hide the next page button
+            nextpageButton.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    // used to load the prev page of searchresults
+    public void prevPage(View view) {
+        // check first what number of the current page is
+        currentpage = Integer.parseInt(queryMaker.getPage().substring(2));
+        nextpageButton.setVisibility(View.VISIBLE);
+
+        // check if there is a previous page
+        if (currentpage > 1){
+            currentpage = Integer.parseInt(queryMaker.getPage().substring(2));
+            // set the page to the next page
+            Log.e("CALC", "prev page: " + Integer.toString(currentpage - 1));
+            queryMaker.setPage("p=" + Integer.toString(currentpage - 1));
+
+            // restart a search with the new page number in the query:
+            performSearch(searchwords, queryMaker, requestQueue);
+        }
+        else {
+            // hide the previous button
+            prevpageButton.setVisibility(View.INVISIBLE);
+        }
+
+    }
+
+
+    // resets layout elements and some variables for when the user wants to make a new search
+    // with different searchwords
+    public void resetSearch(){
+        // reset the page for the results:
+        currentpage = 1;
+        queryMaker.setPage("p=1");
+        // reset the visibility for views
+        navigationbuttons.setVisibility(View.VISIBLE);
+        prevpageButton.setVisibility(View.INVISIBLE);
+        nextpageButton.setVisibility(View.VISIBLE);
     }
 }
