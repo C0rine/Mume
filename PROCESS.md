@@ -169,4 +169,30 @@ I had hoped to fix a lot more bugs than I was able to do today. I hope I can acc
 - I have moved the functionality of the FB login/logout button to a button in the actionbar. I will have to change the logo for this later.
 
 #Day 17
-**Tue 26 Jan 2016** 
+**Tue 26 Jan 2016**  
+- Fixed loading of FB images.
+- Implemented a toast that is shown to the user when the phone does not have internetconnection (thus could not retrieve results or FB images).
+- Implemented a response to show 'no search-results' when there are no results.
+- Refactored code for the activities and the adapters
+
+#Day 18
+**Wed 27 Jan 2016**  
+- Refactored all code (important changes: removed edit-activity which is replaced by the android SDK, removed ArtRecord class, which I did not use, replaced TouchImageView with regular ImageView due to lack of time to adjust the activity (selected-activity) that contains them, removed support for landscape orientation).
+- I did some bugfixing by resolving some of the issues
+- I added a custom launcher icon
+
+#Day 19
+**Thu 28 Jan 2016** 
+- Finished the Help-dialog
+- Fixed crash on results without a webImg
+- Made some layout changes
+- Implemented buttons to navigate to next and previous pages of search results
+- Fixed the double save of edited images
+- Added a dialog to ask the user what they want to do with the edited image
+- Finalized Code!
+- Completed Repository!
+- Prepared Presentation!
+
+#Day 20
+**Fri 29 Jan 2016**  
+D-Day!
