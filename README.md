@@ -33,6 +33,9 @@ For large resolution images of these screenshots please see the doc folder (imag
 - [Rijksmuseum API](http://rijksmuseum.github.io/)
 - [Classical Art Memes Facebook Album](https://www.facebook.com/media/set/?set=a.595162167262642.1073741827.595155763929949&type=3) (timeline photos)
 
+###SDKs
+- [Adobe Creative Suite (image editor)](https://creativesdk.adobe.com/)
+
 ### Sources of External Code
 All of the resources used are referenced within the code using comments. Below the most important resources are listed: 
 - For setting up the Volley Singleton: http://developer.android.com/training/volley/simple.html (official developer guide)
@@ -43,4 +46,5 @@ All of the resources used are referenced within the code using comments. Below t
 - For the implementation of the header and footer in the RecyclerView: http://stackoverflow.com/questions/26530685 (stackoverflow answers)
 - For setting up the Adobe SDK: https://creativesdk.adobe.com/docs/android/#/articles/gettingstarted/index.html (official guide)
 - For implementing the Adobe SDK image-editor: https://creativesdk.adobe.com/docs/android/#/articles/imageediting/index.html (official guide)
-- For the implementation of the custom ImageView (SquareImageView): http://stackoverflow.com/questions/16506275 (stackoverflow answer)
+- For the implementation of the custom ImageView (SquareImageView): http://stackoverflow.com/questions/16506275 (stackoverflow answer)  
+As far as I could find these sources contained no license, nor copyright.
