@@ -30,11 +30,11 @@ Screenshot descriptions (left to right, top to bottom): search-activity, results
 For large resolution images of these screenshots please see the doc folder (images from 28 jan 2016).
 
 ### Datasources  
-- [Rijksmuseum API](http://rijksmuseum.github.io/)
-- [Classical Art Memes Facebook Album](https://www.facebook.com/media/set/?set=a.595162167262642.1073741827.595155763929949&type=3) (timeline photos)
+- [Rijksmuseum API](http://rijksmuseum.github.io/): click [here](https://www.rijksmuseum.nl/en/api/terms-and-conditions-of-use) for license/copyright information.
+- [Classical Art Memes Facebook Album](https://www.facebook.com/media/set/?set=a.595162167262642.1073741827.595155763929949&type=3) (timeline photos): click [here](https://developers.facebook.com/policy/) for license/copyright information.
 
 ###SDKs
-- [Adobe Creative Suite (image editor)](https://creativesdk.adobe.com/)
+- [Adobe Creative Suite (image editor)](https://creativesdk.adobe.com/): click [here](http://wwwimages.adobe.com/content/dam/Adobe/en/legal/servicetou/Creative_SDK-en_US.pdf) for license/copyright information.
 
 ### Sources of External Code
 All of the resources used are referenced within the code using comments. Below the most important resources are listed: 
@@ -47,4 +47,5 @@ All of the resources used are referenced within the code using comments. Below t
 - For setting up the Adobe SDK: https://creativesdk.adobe.com/docs/android/#/articles/gettingstarted/index.html (official guide)
 - For implementing the Adobe SDK image-editor: https://creativesdk.adobe.com/docs/android/#/articles/imageediting/index.html (official guide)
 - For the implementation of the custom ImageView (SquareImageView): http://stackoverflow.com/questions/16506275 (stackoverflow answer)  
+
 As far as I could find these sources contained no license, nor copyright.
