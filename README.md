@@ -13,7 +13,7 @@ Copyright Statement: [Creative Commons Attribution-NonCommercial-NoDerivatives 4
 This app was tested on a Samsung Galaxy Core Prime (SM-G361F) and HTC ONE mini.
 
 #### Summary:
-Mume (MUseum MEmes) is an Android App that uses images from the databases of museums (for this project only the database of the Rijksmuseum isbe used) to create memes. Based on the popular Facebook-page: https://www.facebook.com/classicalartmemes  
+Mume (MUseum MEmes) is an Android App that uses images from the databases of museums (for this project only the database of the Rijksmuseum is used) to create memes. Based on the popular Facebook-page: https://www.facebook.com/classicalartmemes  
 
 *User gap: to facilitate making and sharing Classical Art Memes.*  
 *Underlying idea: introduce art history more into popular-/webculture.*  
