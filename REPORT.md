@@ -10,16 +10,16 @@ Mume (MUseum MEmes) is an Android App that uses images from the databases of mus
 
 ###Technical Design
 **Activities and Adapters**  
-- SearchActivity: contains a searchbar to start a search, with below that a RecyclerView with CardViews that hold images from the Facebook page. An adapter (FacebookImagesAdapter) is used to fill the RecyclerView with the items from Facebook.
+- SearchActivity: contains a searchbar to start a search, with below that a RecyclerView with CardViews that hold images from the Facebook page. An adapter (FacebookImagesAdapter) is used to fill the RecyclerView with the items from Facebook.  
 ![SearchActivity](/doc/searchactivity28jan2016.jpg)  
 
-- ResultsActivity: contains a gridview in which each item has an ImageView that contains a thumbnail of the searchresult and a TextView with the artistname of the searchresult. There is also a searchbar in this activity so the user can quickly enter a new search. At the bottom of the Activity are two buttons to navigate between the results-pages. An Adapter (ResultsAdapter) is used to fill the gridview with the searchresults. None of the searchresults are saved to local storage. Everything is only cached. 
+- ResultsActivity: contains a gridview in which each item has an ImageView that contains a thumbnail of the searchresult and a TextView with the artistname of the searchresult. There is also a searchbar in this activity so the user can quickly enter a new search. At the bottom of the Activity are two buttons to navigate between the results-pages. An Adapter (ResultsAdapter) is used to fill the gridview with the searchresults. None of the searchresults are saved to local storage. Everything is only cached.  
 ![ResultsActivity](/doc/resultsactivity28jan2016.jpg)  
 
 - SelectedActivity: Shows the selected image from the ResultsActivity with below that metadata on the image in a TableLayout. Between the ImageView and the TableLayout is a button that launches the Image Editor.  
 ![SelectedActivity](/doc/selectedactivity28jan2016.jpg)  
 
-- Image Editor: Is completely created by the [Adobe SDK](https://creativesdk.adobe.com/). The activity gets started from the SelectedActivity which sends the image url along with the intent to start a new activity. The url is used by the SDK to get the image. After editing is done, the Image Editor sends the edited image back to the SelecetedActivity where the user will be asked in a Dialog if they only want to save the image or would also like to share. The image gets saved to local storage on the Android Device.
+- Image Editor: Is completely created by the [Adobe SDK](https://creativesdk.adobe.com/). The activity gets started from the SelectedActivity which sends the image url along with the intent to start a new activity. The url is used by the SDK to get the image. After editing is done, the Image Editor sends the edited image back to the SelecetedActivity where the user will be asked in a Dialog if they only want to save the image or would also like to share. The image gets saved to local storage on the Android Device.  
 ![ImageEditor](/doc/imageeditor28jan2016.jpg)  
 
 - Share Intent: If the user chooses to share the image, a Share Intent will be launched.  
