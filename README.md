@@ -1,4 +1,5 @@
-# Mume (Museum Memes)  
+# Mume 
+### (Museum Memes)  
 Corine Jacobs  
 Studentnr.: 10001326  
 Corine_J@MSN.com or MuseumMemes@outlook.com
@@ -9,12 +10,10 @@ Target API level: 22
 
 Copyright Statement: [Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License](https://github.com/C0rine/Mume/blob/master/LICENSE.md) 
   
-This app was test on a Samsung Galaxy Core Prime (SM-G361F) and HTC ONE mini.
+This app was tested on a Samsung Galaxy Core Prime (SM-G361F) and HTC ONE mini.
 
 #### Summary:
-Mume (MUseum MEmes) is an Android App that uses images from the databases of museums (for this project only the database of the Rijksmuseum will be used) to create memes. 
-
-Based on the popular Facebook-page: https://www.facebook.com/classicalartmemes  
+Mume (MUseum MEmes) is an Android App that uses images from the databases of museums (for this project only the database of the Rijksmuseum isbe used) to create memes. Based on the popular Facebook-page: https://www.facebook.com/classicalartmemes  
 
 *User gap: to facilitate making and sharing Classical Art Memes.*  
 *Underlying idea: introduce art history more into popular-/webculture.*  
@@ -26,12 +25,13 @@ Features:
 - View the latest memes of the [Classical Art Memes](https://www.facebook.com/classicalartmemes) Facebook page.
 
 ### Screenshots 
-Screenshot description (left to right top to bottom): search-activity, results-activity, selected-activty, image-editor (Adobe SDK), Share-Intent.
+Screenshot descriptions (left to right, top to bottom): search-activity, results-activity, selected-activty, image-editor (Adobe SDK), Share-Intent.
 ![Preliminary sketches](/doc/allscreenshots28jan2016.jpg)  
-For larger resolution images of these screenshots please see the doc folder (images from 28 jan 2016).
+For large resolution images of these screenshots please see the doc folder (images from 28 jan 2016).
 
 ### Datasources  
-For this project I have chosen the database of the Rijksmuseum since they provide a clear API with plenty documentation and examples. Moreover: "All data and all images made available through the API are either in the public domain or are subject to a CC0 license. The data and images are royalty-free and may be copied, distributed, modified and used without the permission of the Rijksmuseum.". More information on the API: https://www.rijksmuseum.nl/en/api.
+- [Rijksmuseum API](http://rijksmuseum.github.io/)
+- [Classical Art Memes Facebook Album](https://www.facebook.com/media/set/?set=a.595162167262642.1073741827.595155763929949&type=3) (timeline photos)
 
 ### Sources of External Code
 
