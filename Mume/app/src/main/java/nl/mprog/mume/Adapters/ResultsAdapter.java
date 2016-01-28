@@ -22,7 +22,6 @@ import com.android.volley.toolbox.ImageLoader;
 
 import org.json.JSONArray;
 
-import java.util.Arrays;
 import java.util.Objects;
 
 import nl.mprog.mume.Classes.ImageRetriever;
@@ -69,7 +68,6 @@ public class ResultsAdapter extends BaseAdapter {
 
     // get the url for the big image
     public String getImage(int position){
-        Log.e("Images", Arrays.toString(bigImageUrls));
         if (!Objects.equals(bigImageUrls[position], " ")){
             return bigImageUrls[position];
         }
