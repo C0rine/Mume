@@ -4,9 +4,9 @@ Studentnr.: 10001326
 Corine_J@MSN.com or MuseumMemes@outlook.com
   
 **Copyright Statement: [Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License](https://github.com/C0rine/Mume/blob/master/LICENSE.md)**
-##### Platform: Android Studio
+#### Platform: Android Studio
 
-##### To run:
+#### To run:
 - Open the project in Android Studio
 - This app uses Volley (https://github.com/mcxiaoke/android-volley)
   
@@ -22,8 +22,10 @@ Based on the popular Facebook-page: https://www.facebook.com/classicalartmemes
 - Add text to these images
 - Share these images online or with friends through apps already installed on the Android device 
 
-### Preliminary Sketches  
-![Preliminary sketches](/doc/preliminarysketches.jpg)  
+### Screenshots 
+Screenshot description (left to right top to bottom): search-activity, results-activity, selected-activty, image-editor (Adobe SDK), Share-Intent.
+![Preliminary sketches](/doc/allscreenshots28jan2016.jpg)  
+For larger resolution images of these screenshots please see the doc folder (images from 28 jan 2016).
 
 ### Datasources  
 For this project I have chosen the database of the Rijksmuseum since they provide a clear API with plenty documentation and examples. Moreover: "All data and all images made available through the API are either in the public domain or are subject to a CC0 license. The data and images are royalty-free and may be copied, distributed, modified and used without the permission of the Rijksmuseum.". More information on the API: https://www.rijksmuseum.nl/en/api.
