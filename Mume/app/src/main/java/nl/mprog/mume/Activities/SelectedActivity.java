@@ -39,6 +39,7 @@ import com.aviary.android.feather.sdk.internal.filters.ToolLoaderFactory;
 
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.UUID;
 
@@ -232,6 +233,10 @@ public class SelectedActivity extends AppCompatActivity {
         // We save the image using mediastore to achieve this
         String url = MediaStore.Images.Media.insertImage(getContentResolver(), imageUri.getPath(),
                 imageName, "Made with mume");
+        // We delete the image saved by the Android SDK to prevent duplicates
+        String filepath = imageUri.getPath();
+        File file = new File(filepath);
+        file.delete();
 
         // Opens a pop-up with all apps available to share an image
         Intent shareIntent = new Intent();
