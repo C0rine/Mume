@@ -7,7 +7,11 @@
 
 package nl.mprog.mume.Activities;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -16,7 +20,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ScrollView;
@@ -60,6 +63,7 @@ public class SelectedActivity extends AppCompatActivity {
 
     private String dataUrl;
     private String imageUrl;
+    private Uri imageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,32 +103,6 @@ public class SelectedActivity extends AppCompatActivity {
             memeit_button.setClickable(false);
         }
 
-        // prevent scrolling of scrollview when the user uses the image to zoom
-        image_holder.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                int action = event.getAction();
-                switch (action) {
-                    case MotionEvent.ACTION_DOWN:
-                        // Disallow ScrollView to intercept touch events.
-                        scrollView.requestDisallowInterceptTouchEvent(true);
-                        // Disable touch on transparent view
-                        return false;
-
-                    case MotionEvent.ACTION_UP:
-                        // Allow ScrollView to intercept touch events.
-                        scrollView.requestDisallowInterceptTouchEvent(false);
-                        return true;
-
-                    case MotionEvent.ACTION_MOVE:
-                        scrollView.requestDisallowInterceptTouchEvent(true);
-                        return false;
-
-                    default:
-                        return true;
-                }
-            }
-        });
 
         // create the request queue using Volley
         RequestQueue requestQueue = VolleySingleton.getInstance().getmRequestQueue();
@@ -235,15 +213,10 @@ public class SelectedActivity extends AppCompatActivity {
 
                 // Make a case for the request code we passed to startActivityForResult()
                 case 1:
-                    Uri mImageUri = data.getData();
-                    try {
-                        // try to share the image using a share-intent
-                        shareImage(mImageUri);
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                        Log.e("ADOBE", "Could not share the image. Error message: "
-                                + e.getMessage());
-                    }
+                    imageUri = data.getData();
+                    // Ask the user if he/she wants to just save the image or also share it:
+                    DialogFragment newFragment = new ShareSaveDialog();
+                    newFragment.show(getFragmentManager(), "sharesave");
                     break;
             }
         }
@@ -266,6 +239,42 @@ public class SelectedActivity extends AppCompatActivity {
         shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(url));
         shareIntent.setType("image/jpg");
         startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.sendto_shareintent_title)));
+    }
+
+
+    // dialog needs to be innerclass to use the response of the Adobe SDK
+    @SuppressLint("ValidFragment")
+    public class ShareSaveDialog extends DialogFragment {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+            builder.setTitle(R.string.sharesave_dialog_title);
+            builder.setMessage(R.string.sharesave_dialog_message);
+            builder.setNegativeButton(R.string.sharesave_dialog_negativebutton, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // User cancelled the dialog
+                    // Android automatically closes the dialog on the button press
+                    // the image already got saved automatically by the Adobe SDK
+                }
+            });
+            builder.setPositiveButton(R.string.sharesave_dialog_positivebutton,
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            try {
+                                // try to share the image using a share-intent
+                                shareImage(imageUri);
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                                Log.e("ADOBE", "Could not share the image. Error message: "
+                                        + e.getMessage());
+                            }
+                        }
+                    });
+            return builder.create();
+        }
     }
 }
 

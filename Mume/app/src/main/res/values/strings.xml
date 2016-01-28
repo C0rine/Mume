@@ -47,6 +47,10 @@
     <string name="copyrightwarning_toast_text">Image not available due to copyright reasons</string>
     <string name="nextpage_button_text">next page &gt;</string>
     <string name="prevpage_button_text">&lt; prev page</string>
+    <string name="sharesave_dialog_title">Sharing is caring</string>
+    <string name="sharesave_dialog_message">Want to share the meme with your friends or would you only like to save the image?</string>
+    <string name="sharesave_dialog_negativebutton">Only save</string>
+    <string name="sharesave_dialog_positivebutton">Save and Share!</string>
 
     <!-- used by Facebook API: -->
     <string name="app_id">746901972078034</string>
