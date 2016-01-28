@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,6 +51,7 @@ public class SelectedActivity extends AppCompatActivity {
     private TextView title_holder;
     private TextView dating_holder;
     private TextView materials_holder;
+    private Button memeit_button;
     private NetworkImageView image_holder;
     private ScrollView scrollView;
 
@@ -77,13 +79,25 @@ public class SelectedActivity extends AppCompatActivity {
         title_holder = (TextView) findViewById(R.id.titleholder_textview);
         dating_holder = (TextView) findViewById(R.id.datingholder_textview);
         materials_holder = (TextView) findViewById(R.id.materialsholder_textview);
+        memeit_button = (Button) findViewById(R.id.memeit_button);
         image_holder = (NetworkImageView) findViewById(R.id.artimage_imageview);
         scrollView = (ScrollView) findViewById(R.id.selected_scrollview);
 
         // get the urls for the image and data from the intent
         dataUrl = getIntent().getStringExtra("dataUrl");
         imageUrl = getIntent().getStringExtra("imageUrl");
-        image_holder.setImageUrl(imageUrl, imageLoader);
+        // check if there actually is a imageUrl
+        if(imageUrl != null){
+            // there is an image. Set it in the view:
+            image_holder.setImageUrl(imageUrl, imageLoader);
+        }
+        else{
+            // there was no image. This is due to copyright reasons.
+            image_holder.setDefaultImageResId(R.mipmap.image_notavailable_icon);
+            Toast.makeText(this, R.string.copyrightwarning_toast_text, Toast.LENGTH_LONG).show();
+            //disable the button to meme the image
+            memeit_button.setClickable(false);
+        }
 
         // prevent scrolling of scrollview when the user uses the image to zoom
         image_holder.setOnTouchListener(new View.OnTouchListener() {

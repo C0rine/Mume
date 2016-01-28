@@ -38,5 +38,6 @@
 
     <!-- used by Facebook API: -->
     <string name="app_id">746901972078034</string>
+    <string name="copyrightwarning_toast_text">Image not available due to copyright reasons</string>
 
 </resources>

@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@mipmap/seamless_paper_texture"/>
+        android:src="@mipmap/flaking_paint_texture"/>
 
     <!-- dummy linear layout for layoutcolor reasons -->
     <LinearLayout

@@ -58,31 +58,31 @@ public class Parser {
                 JSONObject currentArtwork = artarray.getJSONObject(i);
 
                 // find the artistname in the object
-                String maker = currentArtwork.getString("principalOrFirstMaker");
-                // save the name in the stringbuilder
-                if (maker != null && !maker.equals("")){
+                try{
+                    String maker = currentArtwork.getString("principalOrFirstMaker");
+                    // save the name in the stringbuilder
                     names.append(maker + "\n");
                 }
-                else {
+                catch (JSONException e) {
                     names.append(" \n");
                 }
 
                 // find the objectnumber in the object
-                String objectnumber = currentArtwork.getString("id");
-                // save the objectnumber in the stringbuilder
-                if (objectnumber != null && !objectnumber.equals("")){
+                try {
+                    // save the objectnumber in the stringbuilder
+                    String objectnumber = currentArtwork.getString("id");
                     ids.append(objectnumber + "\n");
                 }
-                else {
+                catch (JSONException e){
                     ids.append(" \n");
                 }
 
                 // find the url to the bigger image of the artwork
-                String url = currentArtwork.getJSONObject("webImage").getString("url");
-                if (url != null && !url.equals("")){
+                try {
+                    String url = currentArtwork.getJSONObject("webImage").getString("url");
                     urlBigImages.append(url + "\n");
                 }
-                else{
+                catch (JSONException e){
                     urlBigImages.append(" \n");
                 }
             }
@@ -158,28 +158,42 @@ public class Parser {
             JSONArray namesarray = theobject.getJSONArray("makers");
             int length = namesarray.length();
             for (int i = 0; i < length; i ++){
-                principalMakers.append(namesarray.getJSONObject(i).getString("name") + "\n");
+                try{
+                    principalMakers.append(namesarray.getJSONObject(i).getString("name") + "\n");
+                }
+                catch (JSONException e){
+                    principalMakers.append("n/a\n");
+                }
             }
 
             // get and safe the title
-            titles.append(theobject.getString("title")  + "\n");
+            try {
+                titles.append(theobject.getString("title")  + "\n");
+            }
+            catch (JSONException e){
+                titles.append("n/a\n");
+            }
 
             // get and safe the dating
-            if (theobject.getJSONObject("dating").getString("year") == null){
-                datings.append("unknown"  + "\n");
-            }
-            else{
+            try{
                 datings.append(Integer.toString(theobject.getJSONObject("dating").getInt("year")));
+            }
+            catch (JSONException e){
+                datings.append("n/a\n");
             }
 
             // get and safe the materials
             JSONArray materialsarray = theobject.getJSONArray("materials");
             int length2 = materialsarray.length();
             for (int i = 0; i < length2; i ++){
-                materials.append(materialsarray.getString(i)  + "\n");
+                try{
+                    materials.append(materialsarray.getString(i)  + "\n");
+                }
+                catch (JSONException e){
+                    materials.append("n/a\n");
+                }
             }
-
-
+            
         } catch (JSONException e){
             // Handle any possible errors
             Log.e("PARSER", "There was an error in parsing for RM collection-detail endpoint: "
