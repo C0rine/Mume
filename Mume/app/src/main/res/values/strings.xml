@@ -16,7 +16,13 @@
     <string name="datingtitle_textview_text">Dating</string>
     <string name="materialstitle_textview_text">Materials</string>
     <string name="gobackhelp_dialog_negativebutton">Go back</string>
-    <string name="helptext_dialog_message">here is some unuseful help...</string>
+    <string name="helptext_dialog_message">Museum Memes (Mume) is an app to make memes using images from
+        the Rijksmuseum collection. Start your search from the searchbar, then select the image you
+        would like to edit. Once the image is selected you can press the \'meme it\'-button to start
+        editing.\n\nOn the opening screen of the app you can also view the latest memes from the official
+        \'Classical Art Memes\' Facebook page. Please make sure you are logged in to Facebook to
+        see these images. You can log in by clicking the Facebook logo at the top of the screen.\n\nFor
+        questions and suggestions please contact me: museummemes@outlook.com.</string>
     <string name="helptitle_dialog_title">Help</string>
     <string name="sendto_shareintent_title">Share with...</string>
     <string name="undertitlesearch_textview_text">and make your own memes</string>
@@ -26,18 +32,21 @@
     <string name="nointernet_toast_text">No internet connection</string>
     <string name="noresults_textview_text">No search-results</string>
     <string name="failfacebooklogin_toast_text">Facebook login failed</string>
-    <string name="facebooklogin_dialog_title">Facebook Login</string>
-    <string name="facebooklogin_dialog_message">Login with Facebook to see the latest memes from the official \"Classical Art Memes\" Facebook page</string>
+    <string name="facebooklogin_dialog_title">Facebook</string>
+    <string name="facebooklogin_dialog_message">Login with Facebook to see the latest memes from the
+        official \'Classical Art Memes\' Facebook page.</string>
     <string name="facebooklogin_dialog_negativebutton">No thanks</string>
     <string name="facebooklogin_dialog_positivebutton">Login</string>
-    <string name="facebooklogout_dialog_title">Facebook Logout</string>
-    <string name="facebooklogout_dialog_message">Would you like to log out of Facebook?</string>
+    <string name="facebooklogout_dialog_title">Facebook</string>
+    <string name="facebooklogout_dialog_message">You are currently logged in to Facebook. Would you
+        like to log out?</string>
     <string name="facebooklogout_dialog_negativebutton">Cancel</string>
     <string name="facebooklogout_dialog_positivebutton">Logout</string>
-    <string name="pleaseloginfb_textview_text">Login with Facebook to see the memes of the official Classical Art Memes Facebook page</string>
+    <string name="pleaseloginfb_textview_text">Login with Facebook to see the memes of the official
+        Classical Art Memes Facebook page</string>
+    <string name="copyrightwarning_toast_text">Image not available due to copyright reasons</string>
 
     <!-- used by Facebook API: -->
     <string name="app_id">746901972078034</string>
-    <string name="copyrightwarning_toast_text">Image not available due to copyright reasons</string>
 
 </resources>
