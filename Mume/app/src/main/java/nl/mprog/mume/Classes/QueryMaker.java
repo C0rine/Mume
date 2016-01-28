@@ -20,7 +20,6 @@ public class QueryMaker {
     private String apikey = "key=e0SrHwkM";
     private String dataformat = "format=json";
     private String imageonly = "imgonly=True";
-
     private int resultscount = 12;
     private String resultsperpage = "ps=" + Integer.toString(resultscount);
 
@@ -47,7 +46,8 @@ public class QueryMaker {
             // Build up the request url to retrieve json from the collection endpoint
             urlbase = "https://www.rijksmuseum.nl/api/en/collection?q=";
             this.requesturl = urlbase + this.searchwords + "&" + this.imageonly + "&s=relevance"
-                    + "&" + this.apikey + "&" + this.dataformat + "&" + this.resultsperpage + "&" + getPage();
+                    + "&" + this.apikey + "&" + this.dataformat + "&" + this.resultsperpage + "&"
+                    + getPage();
             return this.requesturl;
         }
         else if ((searchtype == "image") && (this.searchwords.length() > 3)){
@@ -100,6 +100,7 @@ public class QueryMaker {
     public void setPage(String page) {
         this.page = page;
     }
+
 
     public int getResultscount() {
         return resultscount;

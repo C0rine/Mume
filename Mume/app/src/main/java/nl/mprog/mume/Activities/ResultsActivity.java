@@ -152,7 +152,6 @@ public class ResultsActivity extends AppCompatActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_GO) {
-
                     // perform the new search
                     resetSearch();
                     performSearchFromSearchbar(queryMaker, requestQueue);
@@ -260,8 +259,6 @@ public class ResultsActivity extends AppCompatActivity {
                                 }
                             }, 1500);
                         }
-
-
                     }
                 }, new Response.ErrorListener(){
             @Override
@@ -312,16 +309,16 @@ public class ResultsActivity extends AppCompatActivity {
 
     }
 
+
     // used to load the next page of searchresults
     public void nextPage(View view) {
-        // check first what number of the current page is
+        // check first what the number of the current page is
         currentpage = Integer.parseInt(queryMaker.getPage().substring(2));
         prevpageButton.setVisibility(View.VISIBLE);
 
         // check if there is a next page
         if (currentpage != resultspages || currentpage < resultspages){
             // set the page to the next page
-            Log.e("CALC", "next page: " + Integer.toString(currentpage + 1));
             queryMaker.setPage("p=" + Integer.toString(currentpage + 1));
 
             // restart a search with the new page number in the query:
@@ -333,9 +330,10 @@ public class ResultsActivity extends AppCompatActivity {
         }
     }
 
+
     // used to load the prev page of searchresults
     public void prevPage(View view) {
-        // check first what number of the current page is
+        // check first what the number of the current page is
         currentpage = Integer.parseInt(queryMaker.getPage().substring(2));
         nextpageButton.setVisibility(View.VISIBLE);
 
@@ -343,7 +341,6 @@ public class ResultsActivity extends AppCompatActivity {
         if (currentpage > 1){
             currentpage = Integer.parseInt(queryMaker.getPage().substring(2));
             // set the page to the next page
-            Log.e("CALC", "prev page: " + Integer.toString(currentpage - 1));
             queryMaker.setPage("p=" + Integer.toString(currentpage - 1));
 
             // restart a search with the new page number in the query:
@@ -353,7 +350,6 @@ public class ResultsActivity extends AppCompatActivity {
             // hide the previous button
             prevpageButton.setVisibility(View.INVISIBLE);
         }
-
     }
 
 
