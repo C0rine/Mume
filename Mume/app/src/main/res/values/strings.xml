@@ -16,13 +16,14 @@
     <string name="datingtitle_textview_text">Dating</string>
     <string name="materialstitle_textview_text">Materials</string>
     <string name="gobackhelp_dialog_negativebutton">Go back</string>
-    <string name="helptext_dialog_message">Museum Memes (Mume) is an app to make memes using images from
-        the Rijksmuseum collection. Start your search from the searchbar, then select the image you
-        would like to edit. Once the image is selected you can press the \'meme it\'-button to start
-        editing.\n\nOn the opening screen of the app you can also view the latest memes from the official
-        \'Classical Art Memes\' Facebook page. Please make sure you are logged in to Facebook to
-        see these images. You can log in by clicking the Facebook logo at the top of the screen.\n\nFor
-        questions and suggestions please contact me: museummemes@outlook.com.</string>
+    <string name="helptext_dialog_message">Museum Memes (Mume) is an app to make memes using images
+        from the Rijksmuseum collection. Start your search from the searchbar, then select the image
+        you would like to edit. Once the image is selected you can press the \'meme it\'-button to
+        start editing.\n\nOn the opening screen of the app you can also view the latest memes from
+        the official \'Classical Art Memes\' Facebook page. Please make sure you are logged in to
+        Facebook to see these images. You can log in by clicking the Facebook logo at the top of
+        the screen.\n\nFor questions and suggestions please contact me at: 
+        museummemes@outlook.com.</string>
     <string name="helptitle_dialog_title">Help</string>
     <string name="sendto_shareintent_title">Share with...</string>
     <string name="undertitlesearch_textview_text">and make your own memes</string>
@@ -47,10 +48,12 @@
     <string name="copyrightwarning_toast_text">Image not available due to copyright reasons</string>
     <string name="nextpage_button_text">next page &gt;</string>
     <string name="prevpage_button_text">&lt; prev page</string>
-    <string name="sharesave_dialog_title">Sharing is caring</string>
-    <string name="sharesave_dialog_message">Want to share the meme with your friends or would you only like to save the image?</string>
+    <string name="sharesave_dialog_title">Sharing is Caring</string>
+    <string name="sharesave_dialog_message">Want to share the meme with your friends or would you
+        only like to save the image?</string>
     <string name="sharesave_dialog_negativebutton">Only save</string>
     <string name="sharesave_dialog_positivebutton">Save and Share!</string>
+    <string name="imagesaved_toast_text">Image saved</string>
 
     <!-- used by Facebook API: -->
     <string name="app_id">746901972078034</string>

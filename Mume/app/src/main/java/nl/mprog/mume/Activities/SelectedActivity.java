@@ -99,7 +99,8 @@ public class SelectedActivity extends AppCompatActivity {
         else{
             // there was no image. This is due to copyright reasons.
             image_holder.setDefaultImageResId(R.mipmap.image_notavailable_icon);
-            Toast.makeText(this, R.string.copyrightwarning_toast_text, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.copyrightwarning_toast_text,
+                    Toast.LENGTH_LONG).show();
             //disable the button to meme the image
             memeit_button.setClickable(false);
         }
@@ -263,6 +264,9 @@ public class SelectedActivity extends AppCompatActivity {
                     // User cancelled the dialog
                     // Android automatically closes the dialog on the button press
                     // the image already got saved automatically by the Adobe SDK
+                    // make sure the user know it has been saved
+                    Toast.makeText(getApplicationContext(), R.string.imagesaved_toast_text,
+                            Toast.LENGTH_LONG).show();
                 }
             });
             builder.setPositiveButton(R.string.sharesave_dialog_positivebutton,
@@ -271,6 +275,9 @@ public class SelectedActivity extends AppCompatActivity {
                             try {
                                 // try to share the image using a share-intent
                                 shareImage(imageUri);
+                                // notify the user that the image was also saved
+                                Toast.makeText(getApplicationContext(), "Image saved",
+                                        Toast.LENGTH_LONG).show();
                             } catch (FileNotFoundException e) {
                                 e.printStackTrace();
                                 Log.e("ADOBE", "Could not share the image. Error message: "
