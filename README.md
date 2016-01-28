@@ -38,3 +38,5 @@ All of the resources used are referenced within the code using comments. Below t
 - For the implementation of Volley and learning how to use JSON: 
 - For the configuration of the GridView that holds the search results: 
 - For the implementation of the Facebook Graph Call to get the album: https://developers.facebook.com/docs/graph-api/reference/v2.5/album (official documentation)
+- Used to set up the RecyclerView with the CardViews for Facebook: https://www.binpress.com/tutorial/android-l-recyclerview-and-cardview-tutorial/156 (tutorial)
+- For implementing the Adobe SDK image-editor: https://creativesdk.adobe.com/docs/android/#/articles/imageediting/index.html (official guide)
