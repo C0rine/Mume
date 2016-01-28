@@ -34,10 +34,13 @@ For large resolution images of these screenshots please see the doc folder (imag
 - [Classical Art Memes Facebook Album](https://www.facebook.com/media/set/?set=a.595162167262642.1073741827.595155763929949&type=3) (timeline photos)
 
 ### Sources of External Code
-All of the resources used are referenced within the code using comments. Below the most important resources are listed:  
-- For the implementation of Volley and learning how to use JSON: https://www.youtube.com/watch?v=hJRjCurwXVw&index=30&list=PLonJJ3BVjZW6CtAMbJz1XD8ELUs1KXaTD
+All of the resources used are referenced within the code using comments. Below the most important resources are listed: 
+- For setting up the Volley Singleton: http://developer.android.com/training/volley/simple.html (official developer guide)
+- For the implementation of Volley and learning how to use JSON: https://www.youtube.com/watch?v=hJRjCurwXVw&index=30&list=PLonJJ3BVjZW6CtAMbJz1XD8ELUs1KXaTD (YouTube tutorials)
 - For the configuration of the GridView that holds the search results: http://developer.android.com/guide/topics/ui/layout/gridview.html (official developer guide)
 - For the implementation of the Facebook Graph Call to get the album: https://developers.facebook.com/docs/graph-api/reference/v2.5/album (official documentation)
 - Used to set up the RecyclerView with the CardViews for Facebook: https://www.binpress.com/tutorial/android-l-recyclerview-and-cardview-tutorial/156 (tutorial)
 - For the implementation of the header and footer in the RecyclerView: http://stackoverflow.com/questions/26530685 (stackoverflow answers)
+- For setting up the Adobe SDK: https://creativesdk.adobe.com/docs/android/#/articles/gettingstarted/index.html (official guide)
 - For implementing the Adobe SDK image-editor: https://creativesdk.adobe.com/docs/android/#/articles/imageediting/index.html (official guide)
+- For the implementation of the custom ImageView (SquareImageView): http://stackoverflow.com/questions/16506275 (stackoverflow answer)
