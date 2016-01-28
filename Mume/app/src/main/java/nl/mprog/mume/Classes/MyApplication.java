@@ -4,7 +4,7 @@
 
 /* Used to get the context for making the Volley RequestQueue in VolleySingleton.java
    and various other classes that need to get the application context
-   Resources: https://www.youtube.com/watch?v=T4SF7S6pYfE*/
+   Resources: https://www.youtube.com/watch?v=T4SF7S6pYfE */
 
 /* Also used by the Image editor of the Adobe Creative SDK, to initialize it
    Resources: https://creativesdk.adobe.com/docs/android/#/articles/gettingstarted/index.html */
