@@ -38,6 +38,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import nl.mprog.mume.Classes.MyApplication;
@@ -60,9 +61,16 @@ public class ResultsActivity extends AppCompatActivity {
 
     private String[] artistnames;
     private String[] objectids;
-    private String[] bigImageUrls;
+    private String[] largeimageurl;
+    private int totalnumberresults;
+    private int resultspages;
 
     private ResultsAdapter resultsAdapter;
+
+    final QueryMaker queryMaker = new QueryMaker();
+    private String searchwords;
+    // get the Volley request queue to append networkrequests to
+    final RequestQueue requestQueue = VolleySingleton.getInstance().getmRequestQueue();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,15 +89,11 @@ public class ResultsActivity extends AppCompatActivity {
         noresultstext.setVisibility(View.GONE);
 
         // Building the query: we want to search the collection
-        final QueryMaker queryMaker = new QueryMaker();
         queryMaker.setSearchtype("collection");
-
-        // get the Volley request queue to append networkrequests to
-        final RequestQueue requestQueue = VolleySingleton.getInstance().getmRequestQueue();
 
         // get the intent and the data from the previous (search) activity
         Intent intent = getIntent();
-        final String searchwords = intent.getStringExtra("searchwords");
+        searchwords = intent.getStringExtra("searchwords");
         // perform a search (see method below) based on these searchwords and display them in
         // the layout
         performSearch(searchwords, queryMaker, requestQueue);
@@ -174,7 +178,7 @@ public class ResultsActivity extends AppCompatActivity {
 
 
     // perform a search
-    private void performSearch(String searchwords, QueryMaker queryMaker, RequestQueue requestQueue)
+    private void performSearch(String searchwords, final QueryMaker queryMaker, RequestQueue requestQueue)
     {
         // for each search reset the following items:
         noresultstext.setVisibility(View.GONE);
@@ -193,17 +197,29 @@ public class ResultsActivity extends AppCompatActivity {
                         Parser parser = new Parser();
                         parser.parseRMCollection(response);
 
+                        // calculate the total amount of results and therefore the total amount
+                        // of results pages there are
+                        try{
+                            totalnumberresults = response.getInt("count");
+                            Log.e("CALC", "results: " + Integer.toString(totalnumberresults));
+                            // every page has 10 results, calculate the no of pages
+                            resultspages = (int) Math.ceil((double) totalnumberresults / 10.0);
+                            Log.e("CALC", "pages: " + Integer.toString(resultspages));
+                        } catch (JSONException e){
+                            totalnumberresults = 0;
+                        }
+
                         // retrieve the parsed artistnames and object ids as a String-array
                         artistnames = parser.getRMartistnames();
                         objectids = parser.getRMobjectids();
                         // also retrieve the image urls (high res)
-                        bigImageUrls = parser.getRMbigImageUrl();
+                        largeimageurl = parser.getRMbigImageUrl();
 
                         // set the parsed names and ids to the ResultsAdapter and set the
                         // adapter to the gridview
                         // to display the results
                         resultsAdapter = new ResultsAdapter(getApplicationContext(), artistnames,
-                                objectids, bigImageUrls);
+                                objectids, largeimageurl);
                         gridview.setAdapter(resultsAdapter);
 
                         if (objectids.length < 2){
@@ -259,15 +275,15 @@ public class ResultsActivity extends AppCompatActivity {
     public void performSearchFromSearchbar(QueryMaker queryMaker, RequestQueue requestQueue){
 
         // get the new searchwords from the edittext
-        String newsearchwords = searchbar.getText().toString();
+        searchwords = searchbar.getText().toString();
 
         // perform the new search
-        performSearch(newsearchwords, queryMaker, requestQueue);
+        performSearch(searchwords, queryMaker, requestQueue);
 
         // reset the edittext and show the current searchwords
         searchbar.setText("");
         // resource: http://stackoverflow.com/questions/3465576
-        searchbar.setHint(Html.fromHtml("<i><small>Searching for \'" + newsearchwords.trim()
+        searchbar.setHint(Html.fromHtml("<i><small>Searching for \'" + searchwords.trim()
                 + "\'</small></i>"));
 
         // get rid of the on screen keyboard
@@ -275,6 +291,18 @@ public class ResultsActivity extends AppCompatActivity {
         imm.hideSoftInputFromWindow(searchbar.getWindowToken(), 0);
         // remove focus away from the edittext again, to also get rid of the cursor
         dummyLinearLayout.requestFocus();
+
+    }
+
+    public void nextPage(View view) {
+        // check first what no the current page is
+        int currentpage = Integer.parseInt(queryMaker.getPage().substring(2));
+        // set the page to the next page
+        Log.e("CALC", "next page: " + Integer.toString(currentpage + 1));
+        queryMaker.setPage("p=" + Integer.toString(currentpage + 1));
+
+        // restart a search with the new page number in the query:
+        performSearch(searchwords, queryMaker, requestQueue);
 
     }
 }
