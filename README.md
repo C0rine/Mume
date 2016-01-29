@@ -33,8 +33,9 @@ For large resolution images of these screenshots please see the doc folder (imag
 - [Rijksmuseum API](http://rijksmuseum.github.io/): click [here](https://www.rijksmuseum.nl/en/api/terms-and-conditions-of-use) for license/copyright information.
 - [Classical Art Memes Facebook Album](https://www.facebook.com/media/set/?set=a.595162167262642.1073741827.595155763929949&type=3) (timeline photos): click [here](https://developers.facebook.com/policy/) for license/copyright information.
 
-###SDKs
+###SDKs and other Tools
 - [Adobe Creative Suite (image editor)](https://creativesdk.adobe.com/): click [here](http://wwwimages.adobe.com/content/dam/Adobe/en/legal/servicetou/Creative_SDK-en_US.pdf) for license/copyright information.
+- [Volley](http://developer.android.com/training/volley/index.html) (used to make the network requests).
 
 ### Sources of External Code
 All of the resources used are referenced within the code using comments. Below the most important resources are listed: 
