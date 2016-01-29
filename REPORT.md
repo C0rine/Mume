@@ -59,7 +59,7 @@ I struggled with this for many many hours. Eventually I did find a solution, but
 The recycling of the GridView in the ResultsActivity is also something I spend many hours on. The app loads the images mostly correctly but sometimes the views do not get refreshed on a recycle or the old image lingers in the view for a while before being replaced. I mostly solved this with some work arounds, but the way the GridView gets filled first is very spastic (views flying over the screen until all the network requests are complete). To hide this I wanted to use a loading screen, but I could not figure out a way to check if all the requests are done. The problem was that the requests were not being executed on the UI thread and that Volley does not have method to check if the Requestqueue is empty/finished. I have now hardcoded the time the loading screen is displayed, but it would be better ofcourse if the loadingscreen would last until all network requests are done and the UI is loaded.
 
 ###Final Solution
-The final results is something I am very happy with altough not everything looks the way I want it to. The most important aspect for me is that all functionalities are there. Sometimes however I would have liked the UI to behave better (i.e. GridView in ResultsActivity). But this is something I could also work on after the final presentations.  
+The final result is something I am very happy with although not everything looks the way I want it to. The most important aspect for me is that all functionalities are there. Sometimes however I would have liked the UI to behave better (i.e. GridView in ResultsActivity), but this is something I could also work on after the final presentations.  
 
 
 
