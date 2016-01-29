@@ -41,6 +41,21 @@ Permissions needed:
 - `"android.permission.WRITE_EXTERNAL_STORAGE"`: To save the edited image to local storage
 
 
-###Challenges
+###The Process
+**Important Changes**  
+- In the beginning I wanted to code the image editor myself. I eventually went with the Adobe SDK since this would save me a lot of time, but also made more sense. The editor of Adobe worked way better then I could ever code an editor myself. It left me with a lot more time to focus on other things I found important.
+- In the first week I had created a UML diagram (see DESIGN.md) with the classes I planned on using. The classes I have eventually created look nothing like the classes in that diagram. Reasons for this great deviation is that I had no idea in the first week how Volley worked. Upon implementing Volley it quickly became clear I had to change things drastically. Also the ArtRecord class is completely gone. Reason for this is that I thought I would save the metadata longer or would create a ArtRecord object for each thumbnail in the searchresults. In the end this did not seem efficient since I actually needed String[]s of the same metadata (i.e. only artistnames) to use in the Adapter to fill the GridView.
+- I thought I would have to merge imagetiles for the thumbnails. Eventually I did not have to do this which saves me a lot of calculations and network requests, but does make the app look less good on for example tablets. (We only use one tile which does show most of the image, but does have a low resolution.)
+- Eventually there were also some changes I made due to a lack of time:
+	- Removed support for landscape orientation
+	- I did not plan to use buttons to navigate through the searchresults in the ResultsActivity. I wanted to append new searchresults to the GridView (instead of a new GridView) when the user scrolled almost to the end of it. But with the limited time left, I decided that for the deadline I would just use the buttons instead.
+	-  
+
+**Challenges**  
+- It was a hassle to get the thumbnail images in the GridView of the ResultsActivity. It became clear the Rijksmuseum API is not tailored at all for Android. It was very difficult to get an appropriate image from the collection-image endpoint (for all issues I ran into see PROCESS.md). I struggled with this for many many hours. Eventually I did find a solution, but for this I had to hardcode some dimensions. This does make the app a lot less suitable for for example tablet. 
+- The recycling of the GridView is also something I spend many hours on. The app loads the images mostly correctly but sometimes with the recycling the view did not get refreshed or the old image would linger in there for a while. I mostly solved this with some work arounds, but the way the GridView gets filled first is very spastics (views flying over the screen until all the network requests are complete). To hide this I wanted to use a loading screen, but I could not figure out a way to check if all the requests are done. The problem for me with this was that the requests were not being executed on the UI theard and that Volley does not have method to check if the Requestqueue is empty/finished. I have now hardcoded the time the loading screen is displayed, but it would be better ofcourse if the loadingscreen would last until all network requests are done. 
+
+**Possible Improvements**
+
 
 ###Final Solution
