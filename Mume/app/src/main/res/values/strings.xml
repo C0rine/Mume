@@ -16,15 +16,25 @@
     <string name="datingtitle_textview_text">Dating</string>
     <string name="materialstitle_textview_text">Materials</string>
     <string name="gobackhelp_dialog_negativebutton">Go back</string>
-    <string name="helptext_dialog_message">Museum Memes (Mume) is an app to make memes using images
+    <string name="helptext_dialog_message">HELP\n\nMuseum Memes (Mume) is an app to make memes using images
         from the Rijksmuseum collection. Start your search from the searchbar, then select the image
         you would like to edit. Once the image is selected you can press the \'meme it\'-button to
         start editing.\n\nOn the opening screen of the app you can also view the latest memes from
         the official \'Classical Art Memes\' Facebook page. Please make sure you are logged in to
         Facebook to see these images. You can log in by clicking the Facebook logo at the top of
         the screen.\n\nFor questions and suggestions please contact me at: 
-        museummemes@outlook.com.</string>
-    <string name="helptitle_dialog_title">Help</string>
+        museummemes@outlook.com.\n\n\nAPIs\n\nThis app was developed using the Rijksmuseum API, Facebook Graph API
+        and the Adobe Creative Suite.\n\n\nREPORTING BUGS\n\nWant to report a bug? Please send me an email
+        with a detailed description of the bug: museummemes@outlook.com\n\n\nPRIVACY POLICY\n\nNo personal
+        information will be collected nor used by this app. We do not give, share, sell, or transfer any
+        personal information to a third party unless required by law. The Facebook login is only used to retrieve the
+        Classical Art Memes photos.\nThe privacy policy may be updated. Please check this dialog regularly
+        to ensure you are familiar with any changes.\nIf you have
+        any concerns regarding your personal info or have any questions,
+        please contact me at: museummemes@outlook.com\n\n\nLEGAL\n\nFor any other legal concerns
+        (i.e. copyright) please also contact me at: museummemes@outlook.com
+    </string>
+    <string name="helptitle_dialog_title">Information</string>
     <string name="sendto_shareintent_title">Share with...</string>
     <string name="undertitlesearch_textview_text">and make your own memes</string>
     <string name="fbimageheader_textview_text">Classical Art Memes:</string>
