@@ -1,14 +1,14 @@
-#Final Report  
+# Final Report  
 Corine Jacobs  
 10001326
 
-###Short Description
+### Short Description
 Mume (MUseum MEmes) is an Android App that uses images from the databases of museums (for this project only the database of the Rijksmuseum is used) to create memes. Based on the popular Facebook-page: https://www.facebook.com/classicalartmemes  
 
 *User gap: to facilitate making and sharing Classical Art Memes.*  
 *Underlying idea: introduce art history more into popular-/webculture.*  
 
-###Technical Design
+### Technical Design
 **Activities and Adapters**  
 - SearchActivity: contains a searchbar to start a search, with below that a RecyclerView with CardViews that hold images from the Facebook page. An adapter (FacebookImagesAdapter) is used to fill the RecyclerView with the items from Facebook.  
 ![SearchActivity](/doc/searchactivity28jan2016.jpg)  
@@ -41,7 +41,7 @@ Permissions needed:
 - `"android.permission.WRITE_EXTERNAL_STORAGE"`: To save the edited image to local storage.
 
 
-###The Process
+### The Process
 **Important Changes and Arguments for the Changes**  
 - At the start of the project I wanted to code the image editor myself. In week 3 however I decided not to do this and just use the Adobe SDK. This would save me a lot of time, but also made more sense. The editor of Adobe worked way better then any editor I would code myself. It left me with a lot more time to focus on other things I found important. And gave me time to implement the Facebook API for loading the Facebook images.
 - In the first week I had created a UML diagram (see DESIGN.md) with the classes I planned on using. The classes I have eventually created look nothing like the classes in that diagram. One of the main reasons for this is that during the first week I had no idea how Volley worked. Upon implementing Volley it quickly became clear I had to change things drastically (i.e. use the singleton and having to make most of the requests from within the activities). Also the ArtRecord class is completely gone. In week 1 I thought it would be convient to save all the search-results as separate objects. But in the end this did not seem efficient. I actually needed string arrays of the same metadata (i.e. only artistnames) to use in the Adapter to fill the GridView. Also there is no need to save this metadata for long. It just needs to be loaded into views and is not shared between different activities. 
@@ -58,7 +58,7 @@ I struggled with this for many many hours. Eventually I did find a solution, but
 
 The recycling of the GridView in the ResultsActivity is also something I spend many hours on. The app loads the images mostly correctly but sometimes the views do not get refreshed on a recycle or the old image lingers in the view for a while before being replaced. I mostly solved this with some work arounds, but the way the GridView gets filled first is very spastic (views flying over the screen until all the network requests are complete). To hide this I wanted to use a loading screen, but I could not figure out a way to check if all the requests are done. The problem was that the requests were not being executed on the UI thread and that Volley does not have method to check if the Requestqueue is empty/finished. I have now hardcoded the time the loading screen is displayed, but it would be better ofcourse if the loadingscreen would last until all network requests are done and the UI is loaded.
 
-###Final Solution
+### Final Solution
 The final result is something I am very happy with although not everything looks the way I want it to. The most important aspect for me is that all functionalities are there. Sometimes however I would have liked the UI to behave better (i.e. GridView in ResultsActivity), but this is something I could also work on after the final presentations.  
 
 
