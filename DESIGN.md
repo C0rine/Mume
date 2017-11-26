@@ -1,30 +1,30 @@
 # Design Document
-#####Activities  
+##### Activities  
 (see sketches below)
 - Search
 - Results
 - Selected
 - Edit 
 
-###Advanced Sketches UI
+### Advanced Sketches UI
 ![Advanced Sketches UI](/doc/advancedsketches_activities.jpg)    
 ![Advanced Sketches UI](/doc/advancedsketches_other.jpg)
 
-###Use Case
+### Use Case
 Based on tutorial by [Derek Banas](https://www.youtube.com/watch?v=OkC7HKtiZC0).
 
-#####Description
+##### Description
 The user types searchword(s) in the searchbar. These words are used to make a query to the Rijksmuseum database. The Rijksmuseum API sends back a list of results. The results as displayed to the user as images with artistname. The user selects one image. A query is made to the Rijksmuseum database to get more information on the specific artwork. The result is displayed with a bigger image and more metadata. The user presses a button that he/she wants to meme the image. The image gets downloaded to the device. The image gets opened to be edited. The user edits the image. The user presses a button to share the image. The user picks an app to share the image with. The image gets send to the appropriate app. 
 
-#####Actors
+##### Actors
 - User
 - Rijksmuseum API
 
-#####Preconditions
+##### Preconditions
 - Internet connection
 - Rijksmuseum website needs to be available
 
-#####Goals
+##### Goals
 Succesful Conclusions:  
 - Retrieve data from Rijksmuseum
 - Send an edited image to another app  
@@ -36,7 +36,7 @@ Cases in which the system will fail or will stop processing before going through
 - There were no searchresults for the query that was made
 - The downloading of the image failed
 
-#####Requirements  
+##### Requirements  
 *Shall (MVP)*  
 - Searchbar to search Rijksmuseum collection
 - Ability to view searchresults 
@@ -52,14 +52,14 @@ Cases in which the system will fail or will stop processing before going through
 - Crop image to be edited
 - Add borders to the image to be edited
 
-###Class Diagram
+### Class Diagram
 ![Class Diagram](/doc/classdiagram.jpg) 
   
 ---
 
-#Implementation Details
-###API implementation
-####1) Connection to the search activity
+# Implementation Details
+### API implementation
+#### 1) Connection to the search activity
 The search activity will have a searchbar. The searchwords used in this bar will be provided to the API.  
 Example query: `https://www.rijksmuseum.nl/api/en/collection?q=Q&imgonly=True&key=fakekey&format=json`  
 
@@ -90,11 +90,11 @@ When the user taps one artwork the objectNumber of that artwork should be retrie
 - "materials" : [] 
 - Also add a button to the Rijksmuseum webpage record of this image for more information. This could be sent from the previous activity ("links" : "web") or found in this activity by adding "links" : "search" to "objectNumber". 
 
-###Image Editing
+### Image Editing
 [Download Image using AsyncTask in Android](http://javatechig.com/android/download-image-using-asynctask-in-android) (multithreading). I can convert to/download as a bitmp by using the [Android BitmapFactory Class](http://developer.android.com/reference/android/graphics/BitmapFactory.html). If I download the image from the tile-API of the Rijksmuseum then I do need to find a way to correctly display those tiles of the image next to eachother. They do have x, y values that indicate their position, but I do not know yet how to specifically implement this in Android Studio. 
 
 To implement the image editing options an Android [Canvas](http://developer.android.com/reference/android/graphics/Canvas.html) will be used. The bitmap image can be used as the basis/background for the canvas.
 
-###Image Sharing
+### Image Sharing
 To share the canvas it has to be converted back to an image again. For this I can use a [OutputStream](http://stackoverflow.com/questions/13533471/how-to-save-view-from-canvas-to-png-file) and compress to JPG or PNG.
 After this is done the image can be shared through a "Share Intent" by [sending binary content](http://developer.android.com/training/sharing/send.html). This will show a pop-up to show all the apps on the Android Device that can do something (sharing/editing) with the image (i.e. WhatsApp, Facebook, Twitter, Google Drive, etc..). This way the actual sharing of the image is passed on to other apps. 
